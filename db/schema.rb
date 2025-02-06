@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_06_114737) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_06_125904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,8 +60,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_06_114737) do
     t.integer "level"
     t.integer "total_xp"
     t.string "profile_pic"
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_profiles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -80,4 +82,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_06_114737) do
   add_foreign_key "puzzles", "users"
   add_foreign_key "unlocks", "upgrades"
   add_foreign_key "unlocks", "users"
+  add_foreign_key "user_profiles", "users"
 end
