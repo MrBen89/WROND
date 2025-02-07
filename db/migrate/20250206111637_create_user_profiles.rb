@@ -8,7 +8,6 @@ class CreateUserProfiles < ActiveRecord::Migration[7.1]
       t.integer :total_xp
       t.string :profile_pic
       t.references :user, null: false, foreign_key: true
-
       t.timestamps
     end
   end
