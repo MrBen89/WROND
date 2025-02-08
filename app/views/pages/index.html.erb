@@ -1,14 +1,19 @@
-
-<div class="container d-flex justify-content-center align-items-center vh-100">
-  <div class="text-center">
-    <%= link_to '漢字', class: 'btn btn-success btn-lg mb-4' %>
-
-    <%= link_to '物語', class: 'btn btn-success btn-lg mb-4' %>
+<% kanji_cards.each do |card| %>
+  <div class="card">
+    <div class="stars">
+      <% card[:stars].times do %>
+        star
+      <% end %>
+      <% (5 - card[:stars]).times do %>
+        empty star
+      <% end %>
+    </div>
+    <div class="level">level</div>
+    <div class="question-mark">?</div>
+    <div class="label">Kanji No. <%= card[:number] %></div>
   </div>
-</div>
+<% end %>
 
-<h1>Kanji mode allows you to practice individual kanji</h5>
-<h1>The Classic Mode!</h1>
-<h2>Choose a Mode!</h2>
+
 
 <button class="play-button">Play!</button>
