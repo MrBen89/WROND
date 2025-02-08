@@ -9,8 +9,8 @@
   </div>
 
   <div class="puzzle-window">
-    <div class="puzzle" id="puzzle">
-    <h2>This is where the magic (puzzle) happens</h2>
+    <div class="puzzle" id="puzzle" data-controller="puzzle" data-puzzle-target="rootDiv" data-puzzle-variable=<%=@kanji.puzzleInfo.to_json%>>
+      This is where the magic (puzzle) happens
     </div>
   </div>
 </div>
