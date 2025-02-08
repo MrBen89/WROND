@@ -1,25 +1,29 @@
 <div class="main-container">
-  <div class="left-side">
-    <p>Random paragraph 1</p>
-    <p>Random paragraph 2</p>
-    <p>Random paragraph 3</p>
-    <p>Random paragraph 4</p>
-  </div>
+    <div class="left-side">
+      <p>Kanji</p>
+      <p>Random paragraph 2</p>
+      <p>Random paragraph 3</p>
+      <p>Random paragraph 4</p>
+    </div>
 
   <div class="right-side">
     <div class="card-container">
-        <div class="card">
-          <div class="stars">
-            ★★★☆☆
+      <% @kanji.each_with_index do |kanji, index| %>
+          <div class="card">
+            <div class="stars">
+              ★★★☆☆
+            </div>
+              <div class="level">N5
+              </div>
+                <div class="white-box-for">
+                  <div class="question-mark"><%= kanji.kanji %>
+                  </div>
+                </div>
+            <div class="label">Kanji No. <%= kanji.id %>
           </div>
-        <div class="level">N5</div>
-        <div class="white-box-for">
-        <div class="question-mark">?</div>
         </div>
-      <div class="label">Kanji No. </div>
+      <% end %>
       </div>
-</div>
-
     <button class="play-button-right">Play!</button>
   </div>
 </div>
