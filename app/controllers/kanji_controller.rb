@@ -4,7 +4,7 @@ class KanjiController < ApplicationController
     authorize @kanji
   end
   def show
-    @user = UserProfile.find(current_user.id)
-    authorize @user
+    @kanji = Kanji.find(params[:id])  # Find Kanji by ID from the URL
+    authorize @kanji
   end
 end
