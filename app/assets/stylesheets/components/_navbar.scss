@@ -31,21 +31,3 @@ width: 35px;
   width: 120px;
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
 }
-
-.bottom-bar {
-  background: #c0c0c0;
-  border-top: 2px solid black;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-}
-.bottom-bar span {
-  font-size: 12px;
-  font-family: "Chicago", "Press Start 2P", monospace;
-  text-transform: uppercase;
-  padding: 4px 8px;
-  align-items: center;
-  justify-content: center;
-}
