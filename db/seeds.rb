@@ -59,31 +59,22 @@ puzzle_data = JSON.parse(File.read(puzzle_file_path))
 # extract the mappings
 puzzle_mapping = puzzle_data["puzzles"].map { |p| [p["name"], p["value"]] }.to_h
 
-# getting kanji data
-KANJI_API_URL = URI("https://kanjiapi.dev/v1/kanji/all")
-response = Net::HTTP.get(KANJI_API_URL)
-kanji_list = JSON.parse(response)
+# only needed kanji
 
-puts "Fetched #{kanji_list.size} kanji from API"
+KANJI_API_URL = "https://kanjiapi.dev/v1/kanji/joyo"
+kanji_list = JSON.parse(Net::HTTP.get(URI(KANJI_API_URL)))
 
-# seed kanji and puzzles.
-kanji_list.each do |kanji|
-  next unless puzzle_mapping.key?(kanji)
+puts "Fetched #{kanji_list.size} Kanji from API"
 
-  kanji_record = Kanji.create!(
+kanji_records = kanji_list.map do |kanji|
+  {
     kanji: kanji,
-    puzzleInfo: [],
-    jlptLevel: nil,
-    grade: nil,
-    strokeCount: nil,
-    meaning: []
-  )
-
-  Puzzle.create!(
-    kanji: kanji_record,
-    user: default_user,
-    puzzle_data: puzzle_mapping[kanji]
-  )
+    puzzleInfo: puzzle_mapping[kanji] || [],
+    created_at: Time.now,
+    updated_at: Time.now
+  }
 end
 
-puts "Seeded #{Kanji.count} kanji and #{Puzzle.count} puzzles!"
+Kanji.insert_all(kanji_records) if kanji_records.any?
+
+puts " Seeded #{Kanji.count} kanji! "
