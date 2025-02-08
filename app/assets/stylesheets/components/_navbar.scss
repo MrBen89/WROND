@@ -1,6 +1,14 @@
 .navbar-lewagon {
+  background: #c0c0c0;
+  border-bottom: 2px solid black;
+  font-family: "Chicago", "Press Start 2P", monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  height: 30px;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  background: white;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -9,4 +17,13 @@
 
 .navbar-lewagon .navbar-brand img {
   width: 40px;
+}
+
+.bottom-bar {
+  background: #c0c0c0;
+  border-top: 2px solid black;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  align-items: center;
 }
