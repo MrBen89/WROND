@@ -1,8 +1,9 @@
 class KanjiController < ApplicationController
+
   def index
-    @kanji = Kanji.all
-    authorize @kanji
+    @kanji = policy_scope(Kanji)
   end
+
   def show
     @user = UserProfile.find(current_user.id)
     authorize @user
