@@ -9,6 +9,7 @@
   <div class="right-side">
     <div class="card-container">
       <% @kanji.each_with_index do |kanji, index| %>
+        <%= link_to kanji_path(kanji), class: "card-link" do %>
           <div class="card">
             <div class="stars">
               ★★★☆☆
@@ -22,6 +23,7 @@
             <div class="label">Kanji No. <%= kanji.id %>
           </div>
         </div>
+        <% end %>
       <% end %>
       </div>
     <button class="play-button-right">Play!</button>
