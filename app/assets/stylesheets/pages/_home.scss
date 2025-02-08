@@ -96,3 +96,26 @@ button {
   margin-top: 10px;
   cursor: pointer;
 }
+
+.game-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.mode-selection {
+  flex: 1;
+}
+
+.gif-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.game-gif {
+  width: 250px;
+  height: auto;
+  image-rendering: pixelated;
+}
