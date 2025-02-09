@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= meta_title %></title>
+    <%= display_meta_tags site: "WROND!" %>
+    <%= favicon_link_tag %>
+    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="<%= meta_description %>">
+    <meta name="description" content="<%= description "Learn Kanji - The Fun Way" %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <!– Facebook Open Graph data –>
-    <meta property=”og:title” content=”<%= meta_title %>” />
+    <meta property=”og:title” content=”<%= title "WROND!" %>” />
     <meta property=”og:type” content=”website” />
     <meta property=”og:url” content=”<%= request.original_url %>” />
-    <meta property=”og:image” content=”<%= meta_image %>” />
-    <meta property=”og:description” content=”<%= meta_description %>” />
-    <meta property=”og:site_name” content=”<%= meta_title %>” />
+    <meta property=”og:description” content=”<%= description "Learn Kanji - The Fun Way!"%>” />
+    <meta property=”og:site_name” content=”<%= title "WROND!"%>” />
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
