@@ -51,11 +51,25 @@ let yWriter = ((puzzledata) => {
   }
   return yValues;
 })
+var seconds = 0;
+var minutes = 0;
+
+let timer = (() => {setInterval(() => {
+  document.getElementById('timerBox').innerHTML=
+  (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+  seconds ++;
+  if (seconds >= 60) {
+      minutes ++;
+      seconds = 0
+    }
+  }, 1000);
+})
 
 // Connects to data-controller="puzzle"
 export default class extends Controller {
   static targets = ["rootDiv"]
   connect() {
+    timer()
     //current patern is the working array
     let current_pattern = []
     //puzzledata is the solution array
@@ -68,11 +82,13 @@ export default class extends Controller {
     const rootDiv = this.rootDivTarget;
 
     //create a puzzle guides row
-    let row = document.createElement("div")
+    let row = document.createElement("div");
     row.classList.add("header");
     row.classList.add("row");
-    let box = document.createElement("div")
-    box.classList.add("cornerBlock")
+    let box = document.createElement("div");
+    box.classList.add("cornerBlock");
+    box.setAttribute("id", "timerBox");
+    box.innerText = "00:00";
     row.appendChild(box);
     for (let i = 0; i < 16; i ++){
       let box = document.createElement("div")
@@ -114,7 +130,7 @@ export default class extends Controller {
 
             //check for win
             if (checkArrays(current_pattern, puzzledata)){
-                window.alert("Done")
+                window.alert(`${minutes}:${seconds}`)
             }
         })
         //add everything to the mount
