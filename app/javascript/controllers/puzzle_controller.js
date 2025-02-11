@@ -136,27 +136,33 @@ export default class extends Controller {
           box.dataset.x = n;
           box.dataset.y = i;
 
-          //add click listener to each cell
-          box.addEventListener("mousedown", () => {
+          const handleClick = () => {
             current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
-            event.currentTarget.classList.toggle("selected")
+              event.currentTarget.classList.toggle("selected")
 
-            //check for win
-            if (checkArrays(current_pattern, puzzledata)){
-                window.alert(`${minutes}:${seconds}`)
-                this.stop_puzzle()
-            }
-        })
+
+              //check for win
+              if (checkArrays(current_pattern, puzzledata)){
+                  this.stop_puzzle(handleClick)
+              }
+          }
+
+          //add click listener to each cell
+          box.addEventListener("mousedown", handleClick)
+
+
         //add everything to the mount
         row.appendChild(box);
       }
     }
   }
-  stop_puzzle() {
+  stop_puzzle(handleClick) {
     console.log("done");
     let cells = document.getElementsByClassName("cell");
-    cells.forEach((cell) => {
+    for (const cell of cells) {
+      cell.removeEventListener("mousedown", handleClick)
       cell.classList.add("finished")
-    })
+    }
+
   };
 }
