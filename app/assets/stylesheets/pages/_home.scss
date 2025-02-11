@@ -16,9 +16,10 @@
 
 .status-text {
   color: #6abe30;
-  font-size: 24px;
+  font-size: 35px;
   text-transform: uppercase;
   text-align: center;
+  font-family: 'Press Start 2P';
 }
 
 .mode-selection {
@@ -61,7 +62,7 @@
 }
 
 .mode-description {
-  font-size: 12px;
+  font-size: 17px;
   color: #333;
 }
 
@@ -77,7 +78,7 @@
 
 .mode-box.active {
   background: #6abe30;
-  color: #fff;
+  color: black;
 }
 
 .play-button.active {
@@ -124,3 +125,15 @@ button {
   height: auto;
   image-rendering: pixelated;
 }
+
+// @keyframes walkAnimation {
+//   0% {
+//     background-position: 0;
+//   }
+//   25% {
+//     left: 100px;
+//   }
+//   100% {
+//     background-position: -32px;
+//   }
+// }

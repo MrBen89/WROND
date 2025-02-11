@@ -1,9 +1,15 @@
 <div class="main-container">
   <div class="left-side">
-    <div class="info-card">
+  <div class="info-card">
       <p>Kanji:</p>
       <p><span id="kanji-display">KANJI</span></p>
-      <p>Random paragraph 4</p>
+      <p><strong>JLPT Level:</strong> <span id="jlpt-level"></span></p>
+      <p><strong>Meaning:</strong> <span id="meaning">meaning</span></p>
+      <p><strong>Onyomi:</strong> <span id="onyomi"></span></p>
+      <p><strong>Kunyomi:</strong> <span id="kunyomi"></span></p>
+      <p><strong>Stroke Count:</strong> <span id="stroke-count"></span></p>
+      <p><strong>Grade:</strong> <span id="grade"></span></p>
+      <p><strong>Puzzle Info</strong> <span id="puzzle-info"></span></p>
     </div>
   </div>
 
@@ -27,42 +33,58 @@
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const leftSide = document.querySelector(".left-side");
-    const rightSide = document.querySelector(".right-side");
-    const cards = document.querySelectorAll(".card");
-    const playButton = document.getElementById("play-btn");
-    const selectedKanjiInput = document.getElementById("selected-kanji");
-    const kanjiDisplay = document.getElementById("kanji-display");
+  const leftSide = document.querySelector(".left-side");
+  const rightSide = document.querySelector(".right-side");
+  const cards = document.querySelectorAll(".card");
+  const playButton = document.getElementById("play-btn");
+  const selectedKanjiInput = document.getElementById("selected-kanji");
+  const kanjiDisplay = document.getElementById("kanji-display");
+  const jlptLevel = document.getElementById("jlpt-level");
+  const meaning = document.getElementById("meaning");
+  const kunyomi = document.getElementById("kunyomi");
+  const onyomi = document.getElementById("onyomi");
+  const strokeCount = document.getElementById("stroke-count");
+  const grade = document.getElementById("grade");
+  const puzzleInfo = document.getElementById("puzzle-info");
 
-    let isExpanded = false;
+  let isExpanded = false;
 
-    cards.forEach((card) => {
-      card.addEventListener("click", function () {
-        if (!isExpanded) {
-          leftSide.classList.add("expanded");
-          rightSide.style.flex = "60%";
-          leftSide.style.display = "block";
-          isExpanded = true;
-        }
-
-        cards.forEach((btn) => btn.classList.remove("active"));
-        this.classList.add("active");
-
-        selectedKanjiInput.value = this.getAttribute("data-kanji");
-
-        kanjiDisplay.textContent = this.getAttribute("data-kanji");
-
-        playButton.removeAttribute("disabled");
-
-        playButton.setAttribute("data-url", this.getAttribute("data-url"));
-      });
-    });
-
-    playButton.addEventListener("click", function () {
-      const url = playButton.getAttribute("data-url");
-      if (url) {
-        window.location.href = url;
+  cards.forEach((card) => {
+    card.addEventListener("click", function () {
+      if (!isExpanded) {
+        leftSide.classList.add("expanded");
+        rightSide.style.flex = "60%";  // Shrink right-side to 60%
+        leftSide.style.display = "block";  // Show the left side when expanded
+        isExpanded = true;
       }
+
+      cards.forEach((btn) => btn.classList.remove("active"));
+      this.classList.add("active");
+
+      const kanjiData = this.dataset;
+
+      selectedKanjiInput.value = kanjiData.kanji;
+      kanjiDisplay.textContent = kanjiData.kanji;
+      jlptLevel.textContent = kanjiData.jlpt;
+      meaning.textContent = kanjiData.meaning;
+      kunyomi.textContent = kanjiData.kunyomi;
+      onyomi.textContent = kanjiData.onyomi;
+      strokeCount.textContent = kanjiData.strokeCount;
+      grade.textContent = kanjiData.grade;
+      puzzleInfo.textContent = kanjiData.puzzleInfo;
+
+      playButton.removeAttribute("disabled");
+      playButton.setAttribute("data-url", kanjiData.url);
     });
   });
+
+  playButton.addEventListener("click", function () {
+    const url = playButton.getAttribute("data-url");
+    if (url) {
+      window.location.href = url;
+    }
+  });
+});
+
+
 </script>

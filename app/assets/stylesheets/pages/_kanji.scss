@@ -46,11 +46,12 @@
   min-width: 200px;
   flex-basis: 10%;
   margin: 3px;
+  gap: 5px;
 }
 
 .card.active {
   background: #6abe30;
-  color: white;
+  color: black;
 }
 
 .card:hover {
@@ -98,7 +99,30 @@
 .white-box-for {
   background: white;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 20px;
   width: 75%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.info-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  #kanji-display {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 6px;
+  }
 }
