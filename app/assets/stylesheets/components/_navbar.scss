@@ -1,12 +1,33 @@
 .navbar-lewagon {
+  background: #c0c0c0;
+  border-bottom: 2px solid black;
+  font-family: "Chicago", "Press Start 2P", monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  padding: 4px 8px;
+  height: 35px;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  background: white;
 }
 
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
+  justify-content: flex-end;
 }
 
+.navbar-lewagon .avatar {
+width: 35px;
+}
+
+.navbar-lewagon .navbar-brand {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
 .navbar-lewagon .navbar-brand img {
-  width: 40px;
+  display: flex;
+  justify-content: center;
+  width: 120px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
 }

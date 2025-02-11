@@ -1,5 +1,17 @@
-<h1>Show page for Kanji</h1>
+<h1 class="puzzle-header">Puzzle number <%= @kanji.id %></h1>
 
-<div class="puzzle" id="puzzle">
-  This is where the magic (puzzle) happens
+<div class="puzzle-col d-flex">
+  <div class="puzzle-hints">
+    <h2>Puzzle Hints</h2>
+    <h1><%= @kanji.kanji %></h1>
+    <div>
+
+    </div>
+  </div>
+
+  <div class="puzzle-window">
+    <div class="puzzle" id="puzzle" data-controller="puzzle" data-puzzle-target="rootDiv" data-puzzle-variable=<%=@kanji.puzzleInfo.to_json%>>
+      This is where the magic (puzzle) happens
+    </div>
+  </div>
 </div>

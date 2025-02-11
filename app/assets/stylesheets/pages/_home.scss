@@ -1,1 +1,121 @@
-// Specific CSS for your home-page
+.white-box {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 3px 3px 0px #000;
+}
+
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: none;
+
+}
+
+.status-text {
+  color: #6abe30;
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.mode-selection {
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.mode-options {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.mode-box {
+  background: #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 3px 3px 0px #000;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.kanji-text {
+  font-size: 32px;
+  display: block;
+}
+
+.mode-label {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.mode-description {
+  font-size: 12px;
+  color: #333;
+}
+
+.mode-box:hover {
+  background: #bbb;
+  transform: scale(1.05);
+}
+
+.play-button:hover {
+  background: #bbb;
+  transform: scale(1.05);
+}
+
+.mode-box.active {
+  background: #6abe30;
+  color: #fff;
+}
+
+.play-button.active {
+  background: #6abe30;
+  color: #fff;
+}
+
+button {
+  all: unset;
+}
+
+.play-button {
+  background: #ccc;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.game-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.mode-selection {
+  flex: 1;
+}
+
+.gif-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.game-gif {
+  width: 250px;
+  height: auto;
+  image-rendering: pixelated;
+}

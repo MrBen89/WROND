@@ -1,0 +1,95 @@
+
+.puzzle-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  margin-bottom: 20px;
+
+}
+.puzzle-header h1 {
+  font-family: Chicago, "Press Start 2P", monospace;
+  font-size: 24px;
+}
+.puzzle-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.puzzle-hints {
+  background-color:rgb(208, 224, 192);
+  display: flex;
+  height: 900px;
+  width: 500px;
+  margin-left: 20px;
+  border-radius: 10px;
+}
+.puzzle-hints h2 {
+  font-family: Chicago, "Press Start 2P", monospace;
+  font-size: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+.puzzle-hints h1 {
+  font-size: 70px;
+}
+
+.puzzle-window {
+  background-color: rgb(251, 255, 248);
+  flex: 1;
+  height: 900px;
+  width: 1000px;
+  position: absolute;
+  right: 20px;
+  align-items: center;
+  margin-left: 20px;
+  border-radius: 10px;
+}
+
+.puzzle-window h2 {
+  font-family: Chicago, "Press Start 2P", monospace;
+  font-size: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+.cell {
+  width: 25px;
+  height: 25px;
+  background-color: antiquewhite;
+  border: 1px black solid;
+  padding: 0;
+}
+
+.selected {
+  background-color: black;
+}
+
+.xGuide {
+  width: 25px;
+  height: 50px;
+  background-color: aquamarine;
+  border: 1px grey solid;
+  font-size: x-small;
+  text-align: center;
+  padding: 0;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.yGuide {
+  width: 50px;
+  height: 25px;
+  background-color: aquamarine;
+  border: 1px grey solid;
+  padding: 0;
+  text-align: right;
+  padding-right: 1px;;
+}
+
+.cornerBlock {
+  width: 50px;
+  height: 50px;
+  padding: 0;
+}
