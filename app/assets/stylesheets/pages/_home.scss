@@ -15,8 +15,9 @@
 }
 
 .mode-selection {
+  margin-top: 200px;
   border-radius: 8px;
-  padding: 20px;
+  padding: 50px;
   text-align: center;
 }
 
@@ -105,10 +106,12 @@ button {
   flex: 1;
   display: flex;
   justify-content: center;
+  min-width: 250px;
 }
 
 .game-gif {
-  width: 250px;
+  width: 100%;
   height: auto;
   image-rendering: pixelated;
+  max-width: 250px;
 }
