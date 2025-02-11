@@ -10,10 +10,11 @@
 
 
 require 'faker'
-require 'open-uri'
 require 'json'
 require 'net/http'
 require 'uri'
+require 'httparty'
+
 
 UserProfile.destroy_all
 User.destroy_all
@@ -24,7 +25,6 @@ default_user = User.create!(
   email: 'default_user@gmail.com',
   password: 'password'
 )
-
 
 users = [
   { username: 'miaracoon', email: 'miaracoon@gmail.com' },
@@ -50,31 +50,25 @@ users.each do |user_data|
   )
 end
 
-puts "Seeded #{User.count} users and #{UserProfile.count} profiles!"
+puts " Seeded #{User.count} users and #{UserProfile.count} profiles!"
 
-#loads puzzle data
-puzzle_file_path = File.join(Rails.root, 'db', 'puzzles.json')
-puzzle_data = JSON.parse(File.read(puzzle_file_path))
+kanji_file_path = File.join(Rails.root, 'db', 'kanji_data.json')
+kanji_data = JSON.parse(File.read(kanji_file_path))
 
-# extract the mappings
-puzzle_mapping = puzzle_data["puzzles"].map { |p| [p["name"], p["value"]] }.to_h
-
-# only needed kanji
-
-KANJI_API_URL = "https://kanjiapi.dev/v1/kanji/joyo"
-kanji_list = JSON.parse(Net::HTTP.get(URI(KANJI_API_URL)))
-
-puts "Fetched #{kanji_list.size} Kanji from API"
-
-kanji_records = kanji_list.map do |kanji|
+kanji_records = kanji_data.map do |kanji, details|
   {
     kanji: kanji,
-    puzzleInfo: puzzle_mapping[kanji] || [],
+    jlptLevel: details["jlpt"],
+    meaning: details["meanings"],
+    kunyomi: details["kun_readings"]&.join(", "),
+    onyomi: details["on_readings"]&.join(", "),
+    stroke_count: details["stroke_count"],
+    grade: details["grade"],
     created_at: Time.now,
     updated_at: Time.now
   }
 end
 
-Kanji.insert_all(kanji_records) if kanji_records.any?
+Kanji.insert_all(kanji_records)
 
-puts " Seeded #{Kanji.count} kanji! "
+puts "Seeded #{Kanji.count} kanji from JSON!"
