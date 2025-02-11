@@ -1,8 +1,8 @@
 <div class="main-container">
   <div class="left-side">
     <div class="info-card">
-      <p>Kanji</p>
-      <p>Random paragraph 3</p>
+      <p>Kanji:</p>
+      <p><span id="kanji-display">KANJI</span></p>
       <p>Random paragraph 4</p>
     </div>
   </div>
@@ -33,6 +33,7 @@
     const cards = document.querySelectorAll(".card");
     const playButton = document.getElementById("play-btn");
     const selectedKanjiInput = document.getElementById("selected-kanji");
+    const kanjiDisplay = document.getElementById("kanji-display");
 
     let isExpanded = false;
 
@@ -49,6 +50,8 @@
         this.classList.add("active");
 
         selectedKanjiInput.value = this.getAttribute("data-kanji");
+
+        kanjiDisplay.textContent = this.getAttribute("data-kanji");
 
         playButton.removeAttribute("disabled");
 
