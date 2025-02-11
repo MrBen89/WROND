@@ -9,25 +9,38 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-grow: 1;
 }
 
 .navbar-lewagon .navbar-collapse {
   flex-grow: 0;
   justify-content: flex-end;
+  margin-left: auto;
+}
+
+.navbar-lewagon .avatar-container {
+  display: flex;
+  justify-content: center; /* Center the avatar horizontally */
+  flex-grow: 1;
+  padding-top: 1px;
 }
 
 .navbar-lewagon .avatar {
-width: 35px;
+  display: flex;
+  height: 31px;
+  width: 31px;
+  border-radius: 0;
+  outline: rgb(10, 218, 10) solid;
+  padding-top: 1px;
 }
 
 .navbar-lewagon .navbar-brand {
   display: flex;
   justify-content: center;
   flex-grow: 1;
+  margin-left: 230px;
 }
 .navbar-lewagon .navbar-brand img {
   display: flex;
-  justify-content: center;
   width: 120px;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.2);
 }
