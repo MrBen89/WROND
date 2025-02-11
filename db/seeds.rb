@@ -53,7 +53,13 @@ end
 puts " Seeded #{User.count} users and #{UserProfile.count} profiles!"
 
 kanji_file_path = File.join(Rails.root, 'db', 'kanji_data.json')
+puzzle_file_path = File.join(Rails.root, 'db', 'puzzles.json')
+
 kanji_data = JSON.parse(File.read(kanji_file_path))
+puzzle_data = JSON.parse(File.read(puzzle_file_path))["puzzles"]
+
+kanji_puzzle_map = puzzle_data.to_h { |p| [p["name"], p["value"]] }
+
 
 kanji_records = kanji_data.map do |kanji, details|
   {
@@ -62,13 +68,24 @@ kanji_records = kanji_data.map do |kanji, details|
     meaning: details["meanings"],
     kunyomi: details["kun_readings"]&.join(", "),
     onyomi: details["on_readings"]&.join(", "),
-    stroke_count: details["stroke_count"],
+    strokeCount: details["stroke_count"],
     grade: details["grade"],
-    created_at: Time.now,
-    updated_at: Time.now
+    puzzleInfo: kanji_puzzle_map[kanji] || []
   }
 end
 
 Kanji.insert_all(kanji_records)
 
+
+
 puts "Seeded #{Kanji.count} kanji from JSON!"
+
+kanji_ids = Kanji.pluck(:kanji, :id).to_h
+
+puzzle_records = puzzle_data.filter_map do |p|
+  { kanji_id: kanji_ids[p["name"]], user_id: default_user.id } if kanji_ids[p["name"]]
+end
+
+Puzzle.insert_all(puzzle_records) if puzzle_records.any?
+
+puts "✅ Seeded #{Puzzle.count} puzzles!"
