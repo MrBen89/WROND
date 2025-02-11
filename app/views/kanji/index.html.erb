@@ -1,14 +1,20 @@
 <div class="main-container">
-    <div class="left-side">
-      <p>Kanji</p>
-      <p>Random paragraph 2</p>
-      <p>Random paragraph 3</p>
-      <p>Random paragraph 4</p>
-    </div>
+  <div class="left-side">
+    <p>Kanji</p>
+    <p>Random paragraph 2</p>
+    <p>Random paragraph 3</p>
+    <p>Random paragraph 4</p>
+  </div>
 
   <div class="right-side">
     <div class="card-container">
       <% @kanji.each_with_index do |kanji, index| %>
+        <div class="card" data-kanji="<%= kanji.kanji %>" data-url="<%= kanji_path(kanji) %>">
+          <div class="stars">★★★☆☆</div>
+          <div class="level">N5</div>
+          <div class="white-box-for">
+            <div class="question-mark"><%= kanji.kanji %></div>
+            
         <%= link_to kanji_path(kanji), class: "card-link" do %>
           <div class="card">
             <div class="stars">
@@ -22,10 +28,118 @@
                 </div>
             <div class="label">Kanji No. <%= kanji.id %>
           </div>
+          <div class="label">Kanji No. <%= kanji.id %></div>
         </div>
         <% end %>
       <% end %>
-      </div>
-    <button class="play-button-right">Play!</button>
+    </div>
+    <form action="/kanji/index" method="get">
+      <input type="hidden" name="selected_kanji" id="selected-kanji">
+      <button type="submit" class="play-button-right" id="play-btn" disabled>Play!</button>
+    </form>
   </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+  const leftSide = document.querySelector(".left-side");
+  const rightSide = document.querySelector(".right-side");
+  const cards = document.querySelectorAll(".card");
+  const playButton = document.getElementById("play-btn");
+  const selectedKanjiInput = document.getElementById("selected-kanji");
+
+  let isExpanded = false;
+
+  cards.forEach((card) => {
+    card.addEventListener("click", function () {
+      if (!isExpanded) {
+        leftSide.classList.add("expanded");
+        rightSide.style.flex = "70%";
+        isExpanded = true;
+      }
+
+      cards.forEach((btn) => btn.classList.remove("active"));
+      this.classList.add("active");
+
+      selectedKanjiInput.value = this.getAttribute("data-kanji");
+      playButton.removeAttribute("disabled");
+
+      playButton.setAttribute("data-url", this.getAttribute("data-url"));
+    });
+  });
+
+  playButton.addEventListener("click", function () {
+    const url = playButton.getAttribute("data-url");
+    if (url) {
+      window.location.href = url;
+    }
+  });
+});
+
+</script>
+
+<style>
+  .main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    width: 100vw;
+    height: 100vh;
+    transition: all 0.5s ease-in-out;
+  }
+
+  .left-side {
+    flex: 0;
+    padding-right: 20px;
+    display: none;
+    transition: flex 0.5s ease-in-out;
+  }
+
+  .right-side {
+    flex: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    transition: flex 0.5s ease-in-out;
+  }
+
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 30px;
+    overflow-y: auto;
+    max-height: 500px;
+    width: 100%;
+  }
+
+  .card {
+    background: #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 3px 3px 0px #000;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+
+  .card.active {
+    background: #6abe30;
+    color: white;
+  }
+
+  .play-button-right {
+    background: #ccc;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .play-button-right:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }
+</style>
