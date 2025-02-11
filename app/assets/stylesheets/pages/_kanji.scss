@@ -1,32 +1,39 @@
 .main-container {
   display: flex;
-  justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+  transition: all 0.5s ease-in-out;
   padding: 20px;
+  justify-content: space-between;
 }
 
 .left-side {
-  flex: 1;
+  flex: 0;
+  display: none;
+  background-color: #f0f0f0;
+  padding: 20px;
   padding-right: 20px;
+  transition: flex 0.5s ease-in-out;
 }
 
 .right-side {
-  flex: 1;
+  flex: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
+  padding: 20px;
   gap: 20px;
-  height: 800px;
-  width: 300px;
+  transition: flex 0.5s ease-in-out;
 }
 
 .card-container {
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping of cards into rows */
-  gap: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 30px;
   overflow-y: auto;
   max-height: 500px;
-  width: 100%; /* Adjust to make it take full width */
+  width: 100%;
 }
 
 .card {
@@ -41,11 +48,18 @@
   align-items: center;
   width: 10%;
   min-width: 200px;
-}
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
 
-.card:hover {
-  background: #bbb;
-  transform: scale(1);
+  &:hover {
+    background: #bbb;
+    transform: scale(1.05);
+  }
+
+  &.active {
+    background: #6abe30;
+    color: white;
+  }
 }
 
 .stars {
@@ -79,16 +93,16 @@
   cursor: pointer;
   margin-top: 20px;
   margin-bottom: 20px;
-}
 
-.play-button-right:hover {
-  background: #bbb;
-  transform: scale(1.05);
-}
+  &:hover {
+    background: #bbb;
+    transform: scale(1.05);
+  }
 
-.play-button-right.active {
-  background: #6abe30;
-  color: #fff;
+  &:disabled {
+    background: #aaa;
+    cursor: not-allowed;
+  }
 }
 
 .white-box-for {
