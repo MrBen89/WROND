@@ -160,9 +160,13 @@ export default class extends Controller {
     console.log("done");
     let cells = document.getElementsByClassName("cell");
     for (const cell of cells) {
-      cell.removeEventListener("mousedown", handleClick)
+      cell.replaceWith(cell.cloneNode(true))
       cell.classList.add("finished")
     }
-
+    setTimeout(() => {
+      let cells = document.getElementsByClassName("cell");
+      for (const cell of cells) {
+        cell.classList.add("finished")
+      }},1);
   };
 }
