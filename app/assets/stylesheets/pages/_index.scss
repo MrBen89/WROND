@@ -1,3 +1,13 @@
 @import "home";
 @import "kanji";
 @import "show";
+
+a {
+  outline: none;
+  text-decoration: none; /* Optional: Remove underline from links */
+}
+
+.card-link {
+  display: block; /* Ensure the link covers the entire card */
+  color: inherit; /* Inherit text color from parent */
+}

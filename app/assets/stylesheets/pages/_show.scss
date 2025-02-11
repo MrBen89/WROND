@@ -57,29 +57,69 @@
 .cell {
   width: 25px;
   height: 25px;
-  background-color: antiquewhite;
-  border: 1px black solid;
+  background-color: rgb(255, 255, 255);
+  border-right: 1px rgb(103, 103, 103) solid;
+  border-bottom: 1px rgb(103, 103, 103) solid;
+  padding: 0;
+}
+
+.row {
+  width: fit-content;
+}
+
+.col0, .col4, .col8, .col12 {
+  border-left: 1px black solid;
+}
+
+.row0, .row4, .row8, .row12 {
+  border-top: 1px black solid;
+}
+
+.row15 {
+  border-bottom: 1px black solid;
+}
+
+.col15 {
+  border-right: 1px black solid;
 }
 
 .selected {
   background-color: black;
 }
 
+.flagged {
+  background-color: rgb(200, 200, 200);
+}
+
 .xGuide {
   width: 25px;
-  height: 50px;
-  background-color: aquamarine;
+  height: 100px;
+  background-color: rgb(200, 200, 200);
   border: 1px grey solid;
+  font-size: x-small;
+  text-align: center;
+  padding: 0;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .yGuide {
-  width: 50px;
+  width: 100px;
   height: 25px;
-  background-color: aquamarine;
+  line-height: 25px;
+  background-color: rgb(200, 200, 200);
   border: 1px grey solid;
+  font-size: x-small;
+  padding: 0;
+  text-align: right;
+  padding-right: 1px;;
 }
 
 .cornerBlock {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  padding: 0;
+  font-size: x-small;
+  text-align: center;
 }

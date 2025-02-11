@@ -47,15 +47,29 @@ let xWriter = ((puzzledata) => {
 let yWriter = ((puzzledata) => {
   let yValues = [];
   for (let i = 0; i < 16; i ++) {
-    yValues.push(numberWriter(puzzledata[i]))
+    yValues.push(numberWriter(puzzledata[i]).replaceAll("\n", " "))
   }
   return yValues;
+})
+var seconds = 0;
+var minutes = 0;
+
+let timer = (() => {setInterval(() => {
+  document.getElementById('timerBox').innerHTML=
+  (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+  seconds ++;
+  if (seconds >= 60) {
+      minutes ++;
+      seconds = 0
+    }
+  }, 1000);
 })
 
 // Connects to data-controller="puzzle"
 export default class extends Controller {
   static targets = ["rootDiv"]
   connect() {
+    timer()
     //current patern is the working array
     let current_pattern = []
     //puzzledata is the solution array
@@ -68,11 +82,13 @@ export default class extends Controller {
     const rootDiv = this.rootDivTarget;
 
     //create a puzzle guides row
-    let row = document.createElement("div")
+    let row = document.createElement("div");
     row.classList.add("header");
     row.classList.add("row");
-    let box = document.createElement("div")
-    box.classList.add("cornerBlock")
+    let box = document.createElement("div");
+    box.classList.add("cornerBlock");
+    box.setAttribute("id", "timerBox");
+    box.innerText = "00:00";
     row.appendChild(box);
     for (let i = 0; i < 16; i ++){
       let box = document.createElement("div")
@@ -108,15 +124,22 @@ export default class extends Controller {
           box.dataset.y = i;
 
           //add click listener to each cell
-          box.addEventListener("mousedown", () => {
+          box.addEventListener("click", () => {
             current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
-            event.currentTarget.classList.toggle("selected")
+            event.currentTarget.classList.remove("flagged");
+            event.currentTarget.classList.toggle("selected");
 
             //check for win
             if (checkArrays(current_pattern, puzzledata)){
-                window.alert("Done")
+                window.alert(`${minutes}:${seconds}`)
             }
-        })
+          })
+          box.addEventListener("contextmenu", () => {
+            current_pattern[i][n] = "0"
+            event.preventDefault();
+            event.currentTarget.classList.remove("selected");
+            event.currentTarget.classList.toggle("flagged");
+          })
         //add everything to the mount
         row.appendChild(box);
       }

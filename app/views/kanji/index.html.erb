@@ -14,9 +14,23 @@
           <div class="level">N5</div>
           <div class="white-box-for">
             <div class="question-mark"><%= kanji.kanji %></div>
+            
+        <%= link_to kanji_path(kanji), class: "card-link" do %>
+          <div class="card">
+            <div class="stars">
+              ★★★☆☆
+            </div>
+              <div class="level">N5
+              </div>
+                <div class="white-box-for">
+                  <div class="question-mark"><%= kanji.kanji %>
+                  </div>
+                </div>
+            <div class="label">Kanji No. <%= kanji.id %>
           </div>
           <div class="label">Kanji No. <%= kanji.id %></div>
         </div>
+        <% end %>
       <% end %>
     </div>
     <form action="/kanji/index" method="get">
