@@ -1,61 +1,36 @@
 <div class="game-container">
   <div class="mode-selection">
-    <h1 class="status-text">WRONG!</h1>
+    <h1 class="status-text">WROND!</h1>
 
-    <div class="mode-options">
-      <button type="button" class="mode-box" id="kanji-btn" data-mode="kanji">
-        <div class="white-box">
-          <span class="kanji-text">漢字</span>
-        </div>
-        <p class="mode-label">KANJI MODE</p>
-      </button>
+    <form action="/kanji/index" method="get">
+      <div class="mode-options">
+        <button class="mode-box">
+          <div class="white-box">
+            <span class="kanji-text">漢字</span>
+          </div>
+          <p class="mode-label">KANJI MODE</p>
+        </button>
+    </form>
 
-      <button type="button" class="mode-box" id="story-btn" data-mode="story">
-        <div class="white-box">
-          <span class="kanji-text">物語</span>
-        </div>
-        <p class="mode-label">STORY MODE</p>
-      </button>
-    </div>
+    <form action="/kanji/index" method="get">
+        <button class="mode-box">
+          <div class="white-box">
+            <span class="kanji-text">物語</span>
+          </div>
+          <p class="mode-label">STORY MODE</p>
+        </button>
+      </div>
+    </form>
 
     <p class="mode-description">
       Kanji mode allows you to practice individual kanji.<br>
       The classic mode!<br><br>
       Choose a mode!
     </p>
-
-    <form action="/kanji/index" method="get">
-      <input type="hidden" name="mode" id="selected-mode" value="">
-      <button type="submit" class="play-button" id="play-btn" disabled>Play!</button>
-    </form>
+    <button class="play-button">Play!</button>
   </div>
 </div>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const buttons = document.querySelectorAll(".mode-box");
-    const playButton = document.getElementById("play-btn");
-    const selectedModeInput = document.getElementById("selected-mode");
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", function () {
-        if (this.classList.contains("active")) {
-          this.classList.remove("active");
-          selectedModeInput.value = "";
-          playButton.setAttribute("disabled", "true");
-        } else {
-          buttons.forEach(btn => btn.classList.remove("active"));
-
-          this.classList.add("active");
-
-          selectedModeInput.value = this.getAttribute("data-mode");
-
-          playButton.removeAttribute("disabled");
-        }
-      });
-    });
-  });
-</script>
 <div class="gif-container">
     <%= image_tag "tanuki.gif", class: "game-gif" %>
 </div>

@@ -36,20 +36,18 @@
 
 .mode-box {
   background: #ddd;
-  padding: 10px;
+  padding: 20px;
   border-radius: 8px;
   text-align: center;
   box-shadow: 3px 3px 0px #000;
   border: none;
   cursor: pointer;
   font-family: inherit;
-  transition: background-color 0.3s ease-in-out;
+  transition: transform 0.2s, background 0.2s;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  border: 2px solid black;
 }
 
 .kanji-text {
@@ -99,10 +97,6 @@ button {
   cursor: pointer;
 }
 
-.play-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  
 .game-container {
   display: flex;
   justify-content: space-between;
