@@ -1,5 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
+let staqtus = 0;
+
 //compares if the target and current array arre the same
 let checkArrays = (arr1, arr2) => {
   for (let i=0; i<16; i++){
@@ -69,17 +71,28 @@ let timer = (() => {setInterval(() => {
 export default class extends Controller {
   static targets = ["rootDiv"]
   connect() {
+    //rootDiv is where to mount the puzzle
+    const rootDiv = this.rootDivTarget;
+    this.start_puzzle = this.start_puzzle.bind(this);
+    this.stop_puzzle = this.stop_puzzle.bind(this);
+    let button = document.createElement("button");
+    button.innerHTML = "START!"
+    button.addEventListener("click", this.start_puzzle);
+    rootDiv.appendChild(button);
+  }
+
+  start_puzzle() {
     timer()
     //current patern is the working array
     let current_pattern = []
     //puzzledata is the solution array
+    console.log(this.data.get("variable"))
     const puzzledata = JSON.parse(this.data.get("variable"));
     //create the hints arrays
     let xValues = xWriter(puzzledata);
     let yValues = yWriter(puzzledata);
 
-    //rootDiv is where to mount the puzzle
-    const rootDiv = this.rootDivTarget;
+    const rootDiv = this.rootDivTarget
 
     //create a puzzle guides row
     let row = document.createElement("div");
@@ -131,6 +144,7 @@ export default class extends Controller {
             //check for win
             if (checkArrays(current_pattern, puzzledata)){
                 window.alert(`${minutes}:${seconds}`)
+                this.stop_puzzle()
             }
         })
         //add everything to the mount
@@ -138,5 +152,11 @@ export default class extends Controller {
       }
     }
   }
-
+  stop_puzzle() {
+    console.log("done");
+    let cells = document.getElementsByClassName("cell");
+    cells.forEach((cell) => {
+      cell.classList.add("finished")
+    })
+  };
 }
