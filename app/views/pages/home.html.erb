@@ -27,10 +27,39 @@
       The classic mode!<br><br>
       Choose a mode!
     </p>
-    <button class="play-button">Play!</button>
+    <form action="/kanji/index" method="get">
+      <input type="hidden" name="mode" id="selected-mode" value="">
+      <button type="submit" class="play-button" id="play-btn" disabled>Play!</button>
+    </form>
   </div>
 </div>
 
 <div class="gif-container">
     <%= image_tag "tanuki.gif", class: "game-gif" %>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".mode-box");
+    const playButton = document.getElementById("play-btn");
+    const selectedModeInput = document.getElementById("selected-mode");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", function () {
+        if (this.classList.contains("active")) {
+          this.classList.remove("active");
+          selectedModeInput.value = "";
+          playButton.setAttribute("disabled", "true");
+        } else {
+          buttons.forEach(btn => btn.classList.remove("active"));
+
+          this.classList.add("active");
+
+          selectedModeInput.value = this.getAttribute("data-mode");
+
+          playButton.removeAttribute("disabled");
+        }
+      });
+    });
+  });
+</script>
