@@ -44,9 +44,9 @@
              data-url="<%= kanji_path(kanji) %>">
 
           <div class="stars">★★★☆☆</div>
-          <div class="level">N5</div>
+          <div class="level">N5<%= kanji.kanji %></div>
           <div class="white-box-for">
-            <div class="question-mark"><%= kanji.kanji %></div>
+            <div class="question-mark">?</div>
           </div>
         </div>
       <% end %>
@@ -98,6 +98,9 @@ document.addEventListener("DOMContentLoaded", function () {
       strokeCount.textContent = kanjiData.strokeCount;
       grade.textContent = kanjiData.grade;
 
+      const questionMark = this.querySelector('.question-mark');
+      questionMark.textContent = kanjiData.kanji;
+
       playButton.removeAttribute("disabled");
       playButton.setAttribute("data-url", kanjiData.url);
     });
@@ -110,5 +113,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
 
 </script>
