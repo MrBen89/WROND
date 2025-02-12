@@ -133,11 +133,11 @@ button {
   animation: walkAnimation 10s linear infinite alternate; /* Smooth left-right movement */
 }
 
-@keyframes walkAnimation {
-  0% {
-    left: 0;
-  }
-  100% {
-    left: calc(100% - 250px); /* Moves to the right edge */
-  }
-}
+// @keyframes walkAnimation {
+//   0% {
+//     left: 0;
+//   }
+//   100% {
+//     left: calc(100% - 250px); /* Moves to the right edge */
+//   }
+// }
