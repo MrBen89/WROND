@@ -157,16 +157,33 @@ export default class extends Controller {
     }
   }
   stop_puzzle(handleClick) {
-    console.log("done");
+    let block = document.querySelector(".cornerBlock");
+    block.classList.add("cleared");
     let cells = document.getElementsByClassName("cell");
     for (const cell of cells) {
       cell.replaceWith(cell.cloneNode(true))
       cell.classList.add("finished")
     }
+    let guides = document.getElementsByClassName("xGuide");
+    for (const guide of guides) {
+      guide.classList.add("cleared")
+    }
+    guides = document.getElementsByClassName("yGuide");
+    for (const guide of guides) {
+      guide.classList.add("cleared")
+    }
     setTimeout(() => {
       let cells = document.getElementsByClassName("cell");
       for (const cell of cells) {
         cell.classList.add("finished")
-      }},1);
+      }
+      for (const guide of guides) {
+        guide.innerText = ""
+      }
+      guides = document.getElementsByClassName("xGuide");
+      for (const guide of guides) {
+        guide.innerText = ""
+      }
+    },1);
   };
 }
