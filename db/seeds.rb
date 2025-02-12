@@ -10,10 +10,11 @@
 
 
 require 'faker'
-require 'open-uri'
 require 'json'
 require 'net/http'
 require 'uri'
+require 'httparty'
+
 
 UserProfile.destroy_all
 User.destroy_all
@@ -24,7 +25,6 @@ default_user = User.create!(
   email: 'default_user@gmail.com',
   password: 'password'
 )
-
 
 users = [
   { username: 'miaracoon', email: 'miaracoon@gmail.com' },
@@ -50,31 +50,42 @@ users.each do |user_data|
   )
 end
 
-puts "Seeded #{User.count} users and #{UserProfile.count} profiles!"
+puts " Seeded #{User.count} users and #{UserProfile.count} profiles!"
 
-#loads puzzle data
+kanji_file_path = File.join(Rails.root, 'db', 'kanji_data.json')
 puzzle_file_path = File.join(Rails.root, 'db', 'puzzles.json')
-puzzle_data = JSON.parse(File.read(puzzle_file_path))
 
-# extract the mappings
-puzzle_mapping = puzzle_data["puzzles"].map { |p| [p["name"], p["value"]] }.to_h
+kanji_data = JSON.parse(File.read(kanji_file_path))
+puzzle_data = JSON.parse(File.read(puzzle_file_path))["puzzles"]
 
-# only needed kanji
+kanji_puzzle_map = puzzle_data.to_h { |p| [p["name"], p["value"]] }
 
-KANJI_API_URL = "https://kanjiapi.dev/v1/kanji/joyo"
-kanji_list = JSON.parse(Net::HTTP.get(URI(KANJI_API_URL)))
 
-puts "Fetched #{kanji_list.size} Kanji from API"
-
-kanji_records = kanji_list.map do |kanji|
+kanji_records = kanji_data.map do |kanji, details|
   {
     kanji: kanji,
-    puzzleInfo: puzzle_mapping[kanji] || [],
-    created_at: Time.now,
-    updated_at: Time.now
+    jlptLevel: details["jlpt"],
+    meaning: details["meanings"],
+    kunyomi: details["kun_readings"]&.join(", "),
+    onyomi: details["on_readings"]&.join(", "),
+    strokeCount: details["stroke_count"],
+    grade: details["grade"],
+    puzzleInfo: kanji_puzzle_map[kanji] || []
   }
 end
 
-Kanji.insert_all(kanji_records) if kanji_records.any?
+Kanji.insert_all(kanji_records)
 
-puts " Seeded #{Kanji.count} kanji! "
+
+
+puts "Seeded #{Kanji.count} kanji from JSON!"
+
+kanji_ids = Kanji.pluck(:kanji, :id).to_h
+
+puzzle_records = puzzle_data.filter_map do |p|
+  { kanji_id: kanji_ids[p["name"]], user_id: default_user.id } if kanji_ids[p["name"]]
+end
+
+Puzzle.insert_all(puzzle_records) if puzzle_records.any?
+
+puts "✅ Seeded #{Puzzle.count} puzzles!"

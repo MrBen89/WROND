@@ -49,7 +49,7 @@ let xWriter = ((puzzledata) => {
 let yWriter = ((puzzledata) => {
   let yValues = [];
   for (let i = 0; i < 16; i ++) {
-    yValues.push(numberWriter(puzzledata[i]))
+    yValues.push(numberWriter(puzzledata[i]).replaceAll("\n", " "))
   }
   return yValues;
 })
@@ -138,6 +138,7 @@ export default class extends Controller {
 
           const handleClick = () => {
             current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
+              event.currentTarget.classList.remove("flagged");
               event.currentTarget.classList.toggle("selected")
 
 
@@ -149,8 +150,12 @@ export default class extends Controller {
 
           //add click listener to each cell
           box.addEventListener("mousedown", handleClick)
-
-
+          box.addEventListener("contextmenu", () => {
+            current_pattern[i][n] = "0"
+            event.preventDefault();
+            event.currentTarget.classList.remove("selected");
+            event.currentTarget.classList.toggle("flagged");
+          })
         //add everything to the mount
         row.appendChild(box);
       }

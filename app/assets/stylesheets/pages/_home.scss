@@ -97,6 +97,11 @@ button {
   cursor: pointer;
 }
 
+.play-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .game-container {
   display: flex;
   justify-content: space-between;
