@@ -118,22 +118,26 @@ button {
   flex: 1;
   display: flex;
   justify-content: center;
+  align-items: center; /* Center the GIF vertically */
+  position: relative;
+  width: 100%; /* Ensure it takes full width */
+  height: 210px; /* Adjust height if needed */
+  overflow: hidden; /* Prevents scrollbars */
 }
 
 .game-gif {
   width: 250px;
   height: auto;
   image-rendering: pixelated;
+  position: absolute;
+  animation: walkAnimation 10s linear infinite alternate; /* Smooth left-right movement */
 }
 
-// @keyframes walkAnimation {
-//   0% {
-//     background-position: 0;
-//   }
-//   25% {
-//     left: 100px;
-//   }
-//   100% {
-//     background-position: -32px;
-//   }
-// }
+@keyframes walkAnimation {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: calc(100% - 250px); /* Moves to the right edge */
+  }
+}
