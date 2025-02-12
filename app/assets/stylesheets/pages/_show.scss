@@ -58,14 +58,17 @@
   width: 25px;
   height: 25px;
   transition: border 1s ease;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(220, 220, 220);
   border-right: 1px rgb(103, 103, 103) solid;
   border-bottom: 1px rgb(103, 103, 103) solid;
   padding: 0;
 }
 
 .row {
+  border: none;
   width: fit-content;
+  transition: border 1s ease;
+  transition: background-color 1s ease;
 }
 
 .col0, .col4, .col8, .col12 {
@@ -102,9 +105,7 @@
   padding: 0;
   display: flex;
   flex-direction: column-reverse;
-  transition: border 1s ease;
-  transition: background-color 1s ease;
-  transition: color 1s ease;
+  transition: all 1s ease;
 }
 
 .yGuide {
@@ -117,9 +118,7 @@
   padding: 0;
   text-align: right;
   padding-right: 1px;
-  transition: border 1s ease;
-  transition: background-color 1s ease;
-  transition: color 1s ease;
+  transition: all 1s ease;
 }
 
 .cornerBlock {

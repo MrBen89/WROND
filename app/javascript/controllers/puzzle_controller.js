@@ -115,7 +115,6 @@ export default class extends Controller {
     //create rows
     for (let i = 0; i < 16; i++){
       let row = document.createElement("div")
-      row.classList.add(`row${i}`);
       row.classList.add("row");
       rootDiv.appendChild(row);
       //add rows to current_pattern
@@ -131,6 +130,7 @@ export default class extends Controller {
           current_pattern[i].push("0")
           let box = document.createElement("div");
           box.classList.add(`col${n}`);
+          box.classList.add(`row${i}`);
           box.classList.add(`cell`);
           box.dataset.add
           box.dataset.x = n;
