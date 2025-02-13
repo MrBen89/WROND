@@ -1,0 +1,39 @@
+.level-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 15px;
+}
+
+.level-filter {
+  width: 100px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  border: 2px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #ddd;
+  }
+
+  &:active {
+    background-color: #bbb;
+  }
+}
+
+.level-1 { background-color: red; }
+.level-2 { background-color: orange; }
+.level-3 { background-color: yellow; }
+.level-4 { background-color: #6abe30; }
+.level-5 { background-color: #0897f6; }
+.level-all { background-color: #7407e1;
+  color: white;
+  font-size: 15px;
+  justify-content: center;
+}

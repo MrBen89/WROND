@@ -3,16 +3,14 @@
 
     <form action="/kanji/index" method="get">
       <div class="mode-options">
-        <button class="mode-box">
+        <button type="button" class="mode-box" data-mode="kanji">
           <div class="white-box">
             <span class="kanji-text">漢字</span>
           </div>
           <p class="mode-label">KANJI MODE</p>
         </button>
-    </form>
 
-    <form action="/kanji/index" method="get">
-        <button class="mode-box">
+        <button type="button" class="mode-box" data-mode="story">
           <div class="white-box">
             <span class="kanji-text">物語</span>
           </div>
@@ -21,11 +19,10 @@
       </div>
     </form>
 
-    <p class="mode-description">
-      Kanji mode allows you to practice individual kanji.<br>
-      The classic mode!<br><br>
+    <p class="mode-description" id="mode-description">
       Choose a mode!
     </p>
+
     <form action="/kanji/index" method="get">
       <input type="hidden" name="mode" id="selected-mode" value="">
       <button type="submit" class="play-button" id="play-btn" disabled>Play!</button>
@@ -34,7 +31,7 @@
 </div>
 
 <div class="gif-container">
-    <%= image_tag "tanuki.gif", class: "game-gif" %>
+  <%= image_tag "tanuki.gif", class: "game-gif" %>
 </div>
 
 <script>
@@ -42,6 +39,13 @@
     const buttons = document.querySelectorAll(".mode-box");
     const playButton = document.getElementById("play-btn");
     const selectedModeInput = document.getElementById("selected-mode");
+    const modeDescription = document.getElementById("mode-description"); // Get the description element
+
+    // Mode descriptions
+    const descriptions = {
+      kanji: "Kanji mode allows you to practice individual kanji.<br>The classic mode!<br><br>Choose a mode!",
+      story: "HEEHEE"
+    };
 
     buttons.forEach((button) => {
       button.addEventListener("click", function () {
@@ -49,14 +53,18 @@
           this.classList.remove("active");
           selectedModeInput.value = "";
           playButton.setAttribute("disabled", "true");
+          modeDescription.innerHTML = "Choose a mode!";
         } else {
           buttons.forEach(btn => btn.classList.remove("active"));
 
           this.classList.add("active");
 
-          selectedModeInput.value = this.getAttribute("data-mode");
-
+          const mode = this.getAttribute("data-mode");
+          selectedModeInput.value = mode;
           playButton.removeAttribute("disabled");
+
+          // Change the description based on the selected mode
+          modeDescription.innerHTML = descriptions[mode];
         }
       });
     });
