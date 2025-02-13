@@ -1,7 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
 
-let staqtus = 0;
-
 //compares if the target and current array arre the same
 let checkArrays = (arr1, arr2) => {
   for (let i=0; i<16; i++){
@@ -53,13 +51,15 @@ let yWriter = ((puzzledata) => {
   }
   return yValues;
 })
-var seconds = 0;
-var minutes = 0;
+let seconds = 0;
+let minutes = 0;
+let seconds_absolute = 0;
 
 let timer = (() => {setInterval(() => {
   document.getElementById('timerBox').innerHTML=
   (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
   seconds ++;
+  seconds_absolute ++;
   if (seconds >= 60) {
       minutes ++;
       seconds = 0
@@ -77,11 +77,14 @@ export default class extends Controller {
     this.stop_puzzle = this.stop_puzzle.bind(this);
     let button = document.createElement("button");
     button.innerHTML = "START!"
+    button.classList.add("startButton")
     button.addEventListener("click", this.start_puzzle);
     rootDiv.appendChild(button);
   }
 
   start_puzzle() {
+
+    document.querySelector(".startButton").remove()
     timer()
     //current patern is the working array
     let current_pattern = []
@@ -148,26 +151,33 @@ export default class extends Controller {
               }
           }
 
-          //add click listener to each cell
-          box.addEventListener("mousedown", handleClick)
-          box.addEventListener("contextmenu", () => {
-            current_pattern[i][n] = "0"
+          const handleRightClick = () => {
+            current_pattern[i][n] = "0";
             event.preventDefault();
             event.currentTarget.classList.remove("selected");
             event.currentTarget.classList.toggle("flagged");
-          })
+          }
+
+          //add click listener to each cell
+          box.addEventListener("mousedown", handleClick)
+          box.addEventListener("contextmenu", handleRightClick)
         //add everything to the mount
         row.appendChild(box);
       }
     }
   }
+
+  create_puzzle_record() {
+    document.getElementById("time_field").value = seconds_absolute;
+    document.getElementById("puzzle_form").requestSubmit();
+  }
+
   stop_puzzle(handleClick) {
     let block = document.querySelector(".cornerBlock");
     block.classList.add("cleared");
     let cells = document.getElementsByClassName("cell");
     for (const cell of cells) {
       cell.replaceWith(cell.cloneNode(true))
-      cell.classList.add("finished")
     }
     let guides = document.getElementsByClassName("xGuide");
     for (const guide of guides) {
@@ -180,6 +190,7 @@ export default class extends Controller {
     setTimeout(() => {
       let cells = document.getElementsByClassName("cell");
       for (const cell of cells) {
+        cell.classList.remove("flagged")
         cell.classList.add("finished")
       }
       for (const guide of guides) {
@@ -190,6 +201,6 @@ export default class extends Controller {
         guide.innerText = ""
       }
     },1);
-    $('#conclussionModal').modal()
+    this.create_puzzle_record()
   };
 }
