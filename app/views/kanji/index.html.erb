@@ -46,7 +46,7 @@
              data-url="<%= kanji_path(kanji) %>">
 
           <div class="stars">★★★☆☆</div>
-          <div class="level">N<%= kanji.jlptLevel %></div>
+          <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
           <div class="white-box-for">
             <div class="question-mark">?</div>
           </div>
@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const onyomi = document.getElementById("onyomi");
   const strokeCount = document.getElementById("stroke-count");
   const grade = document.getElementById("grade");
+  const levelFilters = document.querySelectorAll(".level-filter");
 
   let isExpanded = false;
 
@@ -114,7 +115,21 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = url;
     }
   });
+
+  levelFilters.forEach((filter) => {
+    filter.addEventListener("click", function () {
+      const selectedLevel = this.classList[1];
+
+      cards.forEach((card) => {
+        const cardLevel = card.dataset.jlpt;
+
+        if (selectedLevel === "level-all" || `level-${cardLevel}` === selectedLevel) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  });
 });
-
-
 </script>
