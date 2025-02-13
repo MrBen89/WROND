@@ -13,7 +13,7 @@
   </div>
 
   <div class="puzzle-window">
-    <div class="puzzle" id="puzzle" data-controller="puzzle" data-puzzle-target="rootDiv" data-puzzle-variable=<%=@kanji.puzzleInfo.to_json%>>
+    <div class="puzzle" id="puzzle" data-controller="puzzle" data-puzzle-target="rootDiv" data-puzzle-variable=<%=@kanji.puzzleInfo.to_json%> data-level-color-level-value="<%= level_color(current_user.user_profiles.first.level)%>">
     </div>
   </div>
 </div>

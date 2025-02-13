@@ -1,5 +1,14 @@
 import { Controller } from "@hotwired/stimulus"
 
+const levelColors = {
+  1: "purple",
+  2: "blue",
+  3: "green",
+  4: "yellow",
+  5: "orange",
+  6: "red",
+};
+
 //compares if the target and current array arre the same
 let checkArrays = (arr1, arr2) => {
   for (let i=0; i<16; i++){
@@ -70,6 +79,7 @@ let timer = (() => {setInterval(() => {
 // Connects to data-controller="puzzle"
 export default class extends Controller {
   static targets = ["rootDiv"]
+  static values = { level: Number };
   connect() {
     //rootDiv is where to mount the puzzle
     const rootDiv = this.rootDivTarget;
@@ -80,6 +90,10 @@ export default class extends Controller {
     button.classList.add("startButton")
     button.addEventListener("click", this.start_puzzle);
     rootDiv.appendChild(button);
+    const level = this.levelValue || 0; // Default to 0 if not provided
+    this.element.style.backgroundColor = levelColors[level] || "gray"; // Default color
+    const levelColor = this.element.dataset.levelColorLevelValue;
+    this.rootDivTarget.style.backgroundColor = levelColor;
   }
 
   start_puzzle() {
