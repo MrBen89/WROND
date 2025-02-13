@@ -52,7 +52,7 @@ end
 
 puts " Seeded #{User.count} users and #{UserProfile.count} profiles!"
 
-kanji_file_path = File.join(Rails.root, 'db', 'kanji_data.json')
+kanji_file_path = File.join(Rails.root, 'db', 'jisho_kanji.json')
 puzzle_file_path = File.join(Rails.root, 'db', 'puzzles.json')
 
 kanji_data = JSON.parse(File.read(kanji_file_path))
@@ -64,12 +64,10 @@ kanji_puzzle_map = puzzle_data.to_h { |p| [p["name"], p["value"]] }
 kanji_records = kanji_data.map do |kanji, details|
   {
     kanji: kanji,
-    jlptLevel: details["jlpt"],
+    jlptLevel: details["jlptLevel"]&.gsub("jlpt-", "N"),
     meaning: details["meanings"],
-    kunyomi: details["kun_readings"]&.join(", "),
-    onyomi: details["on_readings"]&.join(", "),
-    strokeCount: details["stroke_count"],
-    grade: details["grade"],
+    kunyomi: details["kunyomi"].is_a?(Array) ? details["kunyomi"].join(", ") : "",
+    onyomi: details["onyomi"].is_a?(Array) ? details["onyomi"].join(", ") : "",
     puzzleInfo: kanji_puzzle_map[kanji] || []
   }
 end
