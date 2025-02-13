@@ -1,31 +1,118 @@
+<div class="level-buttons">
+  <div class="level-filter level-1">N1</div>
+  <div class="level-filter level-2">N2</div>
+  <div class="level-filter level-3">N3</div>
+  <div class="level-filter level-4">N4</div>
+  <div class="level-filter level-5">N5</div>
+  <div class="level-filter level-all">All!</div>
+</div>
+
 <div class="main-container">
-    <div class="left-side">
-      <p>Kanji</p>
-      <p>Random paragraph 2</p>
-      <p>Random paragraph 3</p>
-      <p>Random paragraph 4</p>
+  <div class="left-side">
+    <div class="info-card">
+      <p>Kanji:</p>
+      <p><span id="kanji-display">KANJI</span></p>
+      <p><strong>Meaning:</strong> <span id="meaning">meaning</span></p>
+      <p><strong>Onyomi:</strong> <span id="onyomi"></span></p>
+      <p><strong>Kunyomi:</strong> <span id="kunyomi"></span></p>
+      <p><strong>Stroke Count:</strong> <span id="stroke-count"></span></p>
+      <p><strong>Grade:</strong> <span id="grade"></span></p>
+      <p><strong>JLPT Level:</strong> <span id="jlpt-level"></span></p>
     </div>
+
+    <% @kanji.each do |kanji| %>
+      <div class="hidden-kanji-data"
+           data-kanji="<%= kanji.kanji %>"
+           data-meaning="<%= kanji.meaning %>"
+           data-onyomi="<%= kanji.onyomi %>"
+           data-kunyomi="<%= kanji.kunyomi %>"
+           data-stroke-count="<%= kanji.stroke_count %>"
+           data-grade="<%= kanji.grade %>">
+      </div>
+    <% end %>
+  </div>
 
   <div class="right-side">
     <div class="card-container">
       <% @kanji.each_with_index do |kanji, index| %>
-        <%= link_to kanji_path(kanji), class: "card-link" do %>
-          <div class="card">
-            <div class="stars">
-              ★★★☆☆
-            </div>
-              <div class="level">N5
-              </div>
-                <div class="white-box-for">
-                  <div class="question-mark"><%= kanji.kanji %>
-                  </div>
-                </div>
-            <div class="label">Kanji No. <%= kanji.id %>
+        <div class="card" data-kanji="<%= kanji.kanji %>"
+             data-meaning="<%= kanji.meaning %>"
+             data-onyomi="<%= kanji.onyomi %>"
+             data-kunyomi="<%= kanji.kunyomi %>"
+             data-stroke-count="<%= kanji.stroke_count %>"
+             data-grade="<%= kanji.grade %>"
+             data-url="<%= kanji_path(kanji) %>">
+
+          <div class="stars">★★★☆☆</div>
+          <div class="level">N5<%= kanji.kanji %></div>
+          <div class="white-box-for">
+            <div class="question-mark">?</div>
           </div>
         </div>
-        <% end %>
       <% end %>
-      </div>
-    <button class="play-button-right">Play!</button>
+    </div>
+
+    <button type="button" class="play-button-right" id="play-btn" disabled>Play!</button>
+    <input type="hidden" id="selected-kanji" name="selected-kanji">
+    <button type="button" class="back-button" id="play-btn" >Back!</button>
   </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const leftSide = document.querySelector(".left-side");
+  const rightSide = document.querySelector(".right-side");
+  const cards = document.querySelectorAll(".card");
+  const playButton = document.getElementById("play-btn");
+  const selectedKanjiInput = document.getElementById("selected-kanji");
+  const kanjiDisplay = document.getElementById("kanji-display");
+  const jlptLevel = document.getElementById("jlpt-level");
+  const meaning = document.getElementById("meaning");
+  const kunyomi = document.getElementById("kunyomi");
+  const onyomi = document.getElementById("onyomi");
+  const strokeCount = document.getElementById("stroke-count");
+  const grade = document.getElementById("grade");
+
+  let isExpanded = false;
+
+  cards.forEach((card) => {
+    card.addEventListener("click", function () {
+      if (!isExpanded) {
+        leftSide.classList.add("expanded");
+        rightSide.classList.add("shrunk");
+        leftSide.style.display = "block";
+        isExpanded = true;
+      }
+
+      cards.forEach((btn) => btn.classList.remove("active"));
+      this.classList.add("active");
+
+      const kanjiData = this.dataset;
+
+      selectedKanjiInput.value = kanjiData.kanji;
+      kanjiDisplay.textContent = kanjiData.kanji;
+      jlptLevel.textContent = kanjiData.jlpt || 'N5';
+      meaning.textContent = kanjiData.meaning;
+      kunyomi.textContent = kanjiData.kunyomi;
+      onyomi.textContent = kanjiData.onyomi;
+      strokeCount.textContent = kanjiData.strokeCount;
+      grade.textContent = kanjiData.grade;
+
+      const questionMark = this.querySelector('.question-mark');
+      questionMark.textContent = kanjiData.kanji;
+
+      playButton.removeAttribute("disabled");
+      playButton.setAttribute("data-url", kanjiData.url);
+    });
+  });
+
+  playButton.addEventListener("click", function () {
+    const url = playButton.getAttribute("data-url");
+    if (url) {
+      window.location.href = url;
+    }
+  });
+});
+
+
+</script>

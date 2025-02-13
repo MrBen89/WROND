@@ -1,23 +1,39 @@
 .main-container {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: 5px;
+  width: 100vw;
+  height: 100vh;
+  transition: all 1s ease-in-out;
+  margin-left: 5px;
 }
 
 .left-side {
-  flex: 1;
+  flex: 0;
   padding-right: 20px;
+  display: none;
+  transition: flex 0.5s ease-in-out, width 0.5s ease-in-out;
+}
+
+.left-side.expanded {
+  flex: 0.4; /* 40% of the screen */
+  display: block;
 }
 
 .right-side {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 20px;
   height: 800px;
-  width: 300px;
+  transition: flex 1s ease-in-out, width 1s ease-in-out;
 }
+
+.right-side.shrunk {
+  flex: 0.6; /* 60% of the screen */
+}
+
 
 .card-container {
   display: flex;
@@ -35,17 +51,22 @@
   padding: 20px;
   box-shadow: 3px 3px 0px #000;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 10%;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
   min-width: 200px;
+  flex-basis: 10%;
+  margin: 3px;
+  gap: 5px;
+}
+
+.card.active {
+  background: #6abe30;
+  color: black;
 }
 
 .card:hover {
   background: #bbb;
-  transform: scale(1);
+  transform: scale(1.05);
 }
 
 .stars {
@@ -78,23 +99,54 @@
   padding: 10px 20px;
   cursor: pointer;
   margin-top: 20px;
-  margin-bottom: 20px;
 }
 
-.play-button-right:hover {
-  background: #bbb;
-  transform: scale(1.05);
-}
-
-.play-button-right.active {
-  background: #6abe30;
-  color: #fff;
+.play-button-right:disabled {
+  background: #aaa;
+  cursor: not-allowed;
 }
 
 .white-box-for {
   background: white;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 20px;
   width: 75%;
+  margin: 0 auto;
+  border-radius: 5px;
+}
+
+.info-card {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 150%;
+  max-width: 400px;
+  margin: 20px auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 500px;
+  font-size: 13x;
+
+  #kanji-display {
+    font-size: 40px;
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 6px;
+    justify-content: center;
+  }
+}
+
+
+.back-button {
+  background: red;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+  color: black;
+  justify-content: left;
 }

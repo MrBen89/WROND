@@ -55,7 +55,7 @@
 }
 
 .mode-description {
-  font-size: 12px;
+  font-size: 17px;
   color: #333;
 }
 
@@ -71,7 +71,7 @@
 
 .mode-box.active {
   background: #6abe30;
-  color: #fff;
+  color: black;
 }
 
 .play-button.active {
@@ -89,6 +89,11 @@ button {
   padding: 10px 20px;
   margin-top: 10px;
   cursor: pointer;
+}
+
+.play-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .game-container {
@@ -114,4 +119,14 @@ button {
   height: auto;
   image-rendering: pixelated;
   max-width: 250px;
+  animation: walkAnimation 10s linear infinite alternate;
+}
+
+@keyframes walkAnimation {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: calc(100% - 250px); /* Moves to the right edge */
+  }
 }
