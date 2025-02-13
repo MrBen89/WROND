@@ -167,12 +167,25 @@ export default class extends Controller {
     }
   }
 
+  check_for_level_up() {
+    let xp = document.getElementById("xp_field").value
+    let level = parseInt(document.getElementById("level_field").value)
+    if (xp / 100 >= (level + 1)) {
+      document.getElementById("level_field").value = Math.floor(xp / 100)
+    }
+  }
+
   create_puzzle_record() {
     document.getElementById("time_field").value = seconds_absolute;
     document.getElementById("puzzle_form").requestSubmit();
   }
+  update_user_record() {
+    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 100
+    this.check_for_level_up()
+  }
 
   stop_puzzle(handleClick) {
+    document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
     let block = document.querySelector(".cornerBlock");
     block.classList.add("cleared");
     let cells = document.getElementsByClassName("cell");
@@ -201,6 +214,7 @@ export default class extends Controller {
         guide.innerText = ""
       }
     },1);
-    this.create_puzzle_record()
+    this.update_user_record();
+    this.create_puzzle_record();
   };
 }
