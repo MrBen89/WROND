@@ -7,6 +7,7 @@ class KanjiController < ApplicationController
   def show
     @kanji = Kanji.find(params[:id])
     @user = UserProfile.find(current_user.id)
+    @puzzle = Puzzle.new
     authorize @user
   end
 end
