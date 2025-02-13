@@ -11,13 +11,13 @@
   <div class="left-side">
     <div class="info-card">
       <p>Kanji:</p>
-      <p><span id="kanji-display">KANJI</span></p>
-      <p><strong>Meaning:</strong> <span id="meaning">meaning</span></p>
-      <p><strong>Onyomi:</strong> <span id="onyomi"></span></p>
-      <p><strong>Kunyomi:</strong> <span id="kunyomi"></span></p>
-      <p><strong>Stroke Count:</strong> <span id="stroke-count"></span></p>
-      <p><strong>Grade: N</strong><span id="grade"></span></p>
-      <p><strong>JLPT Level:</strong> <span id="jlpt-level"></span></p>
+      <p><span id="kanji-display">?</span></p>
+      <p><strong>Meaning:</strong> <span id="meaning">?</span></p>
+      <p><strong>Onyomi:</strong> <span id="onyomi">?</span></p>
+      <p><strong>Kunyomi:</strong> <span id="kunyomi">?</span></p>
+      <p><strong>Stroke Count:</strong> <span id="stroke-count">?</span></p>
+      <p><strong>Grade: N</strong><span id="grade">?</span></p>
+      <p><strong>JLPT Level:</strong> <span id="jlpt-level">?</span></p>
     </div>
 
     <% @kanji.each do |kanji| %>
@@ -56,11 +56,12 @@
 
     <button type="button" class="play-button-right" id="play-btn" disabled>Play!</button>
     <input type="hidden" id="selected-kanji" name="selected-kanji">
-    <button type="button" class="back-button" id="play-btn" >Back!</button>
+    <button type="button" class="back-button" id="play-btn">Back!</button>
   </div>
 </div>
 
 <script>
+
 document.addEventListener("DOMContentLoaded", function () {
   const leftSide = document.querySelector(".left-side");
   const rightSide = document.querySelector(".right-side");
@@ -135,4 +136,5 @@ document.addEventListener("DOMContentLoaded", function () {
   const defaultFilter = document.querySelector(".level-4");
   defaultFilter.click();
 });
+
 </script>
