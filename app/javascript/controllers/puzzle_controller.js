@@ -190,5 +190,6 @@ export default class extends Controller {
         guide.innerText = ""
       }
     },1);
+    $('#conclussionModal').modal()
   };
 }

@@ -5,7 +5,10 @@
     <h2>Puzzle Hints</h2>
     <h1><%= @kanji.kanji %></h1>
     <div>
-
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#conclussionModal">
+  Launch demo modal
+</button>
+<%= render "kanji/conclussion" %>
     </div>
   </div>
 
