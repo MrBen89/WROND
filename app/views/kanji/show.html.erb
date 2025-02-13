@@ -1,9 +1,12 @@
 <h1 class="puzzle-header">Puzzle number <%= @kanji.id %></h1>
 
 <div class="puzzle-col d-flex">
-  <div class="puzzle-hints">
-    <h2>Puzzle Hints</h2>
-    <h1><%= @kanji.kanji %></h1>
+  <div class="kanji-data">
+    <h2><%= @kanji.kanji %></h2>
+    <h3>Meanings: <%= @kanji.meaning %></h3>
+    <h3>Onyomi: <%= @kanji.onyomi %></h3>
+    <h3>Kunyomi: <%= @kanji.kunyomi %></h3>
+
     <div>
 
     </div>
@@ -11,7 +14,14 @@
 
   <div class="puzzle-window">
     <div class="puzzle" id="puzzle" data-controller="puzzle" data-puzzle-target="rootDiv" data-puzzle-variable=<%=@kanji.puzzleInfo.to_json%>>
-      This is where the magic (puzzle) happens
     </div>
   </div>
 </div>
+
+<div class="hidden">
+  <%= simple_form_for @puzzle, html: { id: :puzzle_form } do |f| %>
+  <%= f.input :time ,input_html: {id: "time_field" }%>
+  <%= f.input :kanji_id, input_html: {value: @kanji.id } %>
+  <%= f.button :submit, id: "puzzle-submit" %>
+  <% end %>
+  </div>
