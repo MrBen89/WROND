@@ -89,7 +89,7 @@ export default class extends Controller {
     //current patern is the working array
     let current_pattern = []
     //puzzledata is the solution array
-    console.log(this.data.get("variable"))
+    console.log(document.getElementById('conclussionModal'));
     const puzzledata = JSON.parse(this.data.get("variable"));
     //create the hints arrays
     let xValues = xWriter(puzzledata);
@@ -184,6 +184,22 @@ export default class extends Controller {
     this.check_for_level_up()
   }
 
+  experience_roller() {
+    console.log("xp")
+    let target = 100;
+    let count = parseInt(document.getElementById("xp-value").innerText);
+    console.log(count)
+    let increment = 1;
+    if (count < target) {
+      count += increment;
+      document.getElementById("xp-value").innerText = `${count}`;
+      setTimeout(() => {
+        this.experience_roller()
+      }, 10);
+    }
+
+  }
+
   stop_puzzle(handleClick) {
     document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
     let block = document.querySelector(".cornerBlock");
@@ -216,5 +232,13 @@ export default class extends Controller {
     },1);
     this.update_user_record();
     this.create_puzzle_record();
+    setTimeout(() => {
+      document.getElementById('conclussionModal').style.display = "block";
+      document.getElementById('popup-button').addEventListener("click", () => {
+        document.getElementById('conclussionModal').style.display = "none";
+      });
+      this.experience_roller()
+    },1000)
+
   };
 }
