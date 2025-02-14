@@ -172,7 +172,9 @@ export default class extends Controller {
     let level = parseInt(document.getElementById("level_field").value)
     if (xp / 100 >= (level + 1)) {
       document.getElementById("level_field").value = Math.floor(xp / 100)
+      return true
     }
+    return false
   }
 
   create_puzzle_record() {
@@ -181,7 +183,6 @@ export default class extends Controller {
   }
   update_user_record() {
     document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 100
-    this.check_for_level_up()
   }
 
   experience_roller() {
@@ -195,7 +196,7 @@ export default class extends Controller {
       document.getElementById("xp-value").innerText = `${count}`;
       setTimeout(() => {
         this.experience_roller()
-      }, 10);
+      }, 5);
     }
 
   }
@@ -233,11 +234,22 @@ export default class extends Controller {
     this.update_user_record();
     this.create_puzzle_record();
     setTimeout(() => {
-      document.getElementById('conclussionModal').style.display = "block";
+      document.getElementById('conclussionModal').classList.remove("hidden");
       document.getElementById('popup-button').addEventListener("click", () => {
         document.getElementById('conclussionModal').style.display = "none";
       });
       this.experience_roller()
+      if (this.check_for_level_up) {
+        setTimeout(() => {
+          document.getElementById('level-up').classList.remove("hidden");
+          setTimeout(() => {
+            document.getElementById('level-up').classList.add("expanded");
+          },1)
+
+          //document.getElementById('level-up-image').classList.remove("hidden");
+        },1500)
+      }
+
     },1000)
 
   };
