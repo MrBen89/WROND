@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!, :set_default_meta_tags
+  before_action :set_user_profile, if: :user_signed_in?
   include Pundit::Authorization
 
   after_action :verify_authorized, except: :index, unless: :skip_pundit?
@@ -28,6 +29,9 @@ class ApplicationController < ActionController::Base
     devise_controller? || params[:controller] =~ /(^(rails_)?admin)|(^pages$)/
   end
 
+  def set_user_profile
+    @user_profile = current_user.user_profiles.first
+  end
 
 
 end
