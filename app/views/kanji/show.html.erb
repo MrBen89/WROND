@@ -10,6 +10,7 @@
   <div class="puzzle-window">
     <div style= "background-image: url('/path/app/assets/images/WROND.png'); background-size: cover; background-blend-mode: multiply; background-color: rgba(255, 255, 255, 0.5); padding: 20px;">
       <div class="puzzle" id="puzzle" data-controller="puzzle" data-puzzle-target="rootDiv" data-puzzle-variable=<%=@kanji.puzzleInfo.to_json%> data-level-color-level-value="<%= level_color(current_user.user_profile.level)%>">
+      </div>
     </div>
   </div>
 
