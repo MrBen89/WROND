@@ -1,0 +1,28 @@
+<h1>Edit <%= @user_profile.username %>'s WROND! Profile</h1>
+<div class="profile-container" data-outline-color="<%= outline_color_for_level(@user_profile.level) %>">
+  <%= form_with model: @user_profile, local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :username %>
+      <%= f.text_field :username, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :tagline %>
+      <%= f.text_field :tagline, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :bio %>
+      <%= f.text_area :bio, class: "form-control" %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :profile_pic %>
+      <%= f.text_field :profile_pic, class: "form-control" %>
+    </div>
+
+    <%= f.submit "Update Profile", class: "btn btn-success" %>
+  <% end %>
+
+  <%= link_to "Cancel", user_profile_path(@user_profile), class: "btn btn-secondary" %>
+</div>

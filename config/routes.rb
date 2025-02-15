@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   resources :kanji, only: [:index, :show]
   resources :puzzles, only: [:create]
-  resources :user_profiles, only: [:show, :update]
+  resources :user_profiles, only: [:show, :edit, :update]
   resources :upgrades, only: [:show]
 
 

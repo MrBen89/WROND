@@ -1,2 +1,19 @@
-<h1><%="#{@user.username}" %></h1>
-<p><%="#{@user.bio}" %></p>
+<%= stylesheet_link_tag 'user_profiles/show', media: 'all', 'data-turbolinks-track': 'reload' %>
+
+<h1 font="Chicago"><%= @user_profile.username %>'s Profile</h1>
+<div class="profile-container" data-outline-color="<%= outline_color_for_level(@user_profile.level) %>">
+  <div class="profile-pic">
+    <% if @user_profile.profile_pic.present? %>
+    <img src="<%= @user_profile.profile_pic %>" alt="<%= @user_profile.username %>'s Profile Pic">
+    <% else %>
+    <img src="WROND.png" alt="Default Profile Pic">
+    <% end %>
+  </div>
+
+  <p><strong>Tagline:</strong> <%= @user_profile.tagline || "No tagline set" %></p>
+  <p><strong>Bio:</strong> <%= @user_profile.bio || "No bio available" %></p>
+  <p><strong>Level:</strong> <%= @user_profile.level %></p>
+  <p><strong>Total XP:</strong> <%= @user_profile.total_xp %></p>
+
+  <%= link_to "Edit Profile", edit_user_profile_path(@user_profile), class: "btn btn-primary" %>
+</div>
