@@ -1,0 +1,24 @@
+<div class="popup hidden" id="conclussionModal" tabindex="-1" role="dialog" aria-labelledby="conclussionModalLabel" aria-hidden="true">
+  <div class="popup-dialog" role="document">
+    <div class="popup-content justify-content-center">
+      <div class="popup-header">
+        <h5 class="popup-title" id="conclussionpopupLabel"></h5>
+      </div>
+      <div class="popup-body d-flex justify-content-between px-3">
+        <p class="px-3 text-large">XP <span id="xp-value">0 </span></p>
+        <p><%= image_tag "clock.png" %>  <span id="time-span"></span></p>
+      </div>
+      <div class="level-up hidden" id="level-up">
+        <div class="popup-body d-flex justify-content-center" >
+          <p>Level Up! <span id="xp-value">1 &rarr; 2 </span></p>
+        </div>
+        <div class="popup-body d-flex justify-content-center" id="level-up-image">
+          <%= image_tag "tanuki.gif" %>
+        </div>
+      </div>
+      <div class="popup-footer">
+        <button type="button" class="btn btn-secondary popup-button" id="popup-button" data-bs-dismiss="popup">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
