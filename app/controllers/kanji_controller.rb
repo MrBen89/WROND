@@ -11,6 +11,7 @@ class KanjiController < ApplicationController
     @yomi = kanji?("読")
     @kanji = Kanji.find(params[:id])
     @user_profile = UserProfile.find(current_user.user_profile.id)
+    @puzzles = Puzzle.where("kanji_id = ?", @kanji.id).order("time").limit(10)
     @puzzle = Puzzle.new
     authorize @user_profile
   end

@@ -83,7 +83,7 @@ puts "Seeded #{Kanji.count} kanji from JSON!"
 kanji_ids = Kanji.pluck(:kanji, :id).to_h
 
 puzzle_records = puzzle_data.filter_map do |p|
-  { kanji_id: kanji_ids[p["name"]], user_id: default_user.id } if kanji_ids[p["name"]]
+  { kanji_id: kanji_ids[p["name"]], user_id: default_user.id, time: 30 } if kanji_ids[p["name"]]
 end
 
 Puzzle.insert_all(puzzle_records) if puzzle_records.any?

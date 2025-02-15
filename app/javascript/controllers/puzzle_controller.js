@@ -103,7 +103,6 @@ export default class extends Controller {
     //current patern is the working array
     let current_pattern = []
     //puzzledata is the solution array
-    console.log(document.getElementById('conclussionModal'));
     const puzzledata = JSON.parse(this.data.get("variable"));
     //create the hints arrays
     let xValues = xWriter(puzzledata);
@@ -182,11 +181,14 @@ export default class extends Controller {
   }
 
   check_for_level_up() {
+    console.log("hi")
     let xp = document.getElementById("xp_field").value
     let level = parseInt(document.getElementById("level_field").value)
+    document.getElementById("level-span").innerText = level;
+    document.getElementById("level-up-span").innerText = Math.floor(xp / 100);
     if (xp / 100 >= (level + 1)) {
-      document.getElementById("level_field").value = Math.floor(xp / 100)
-      return true
+      document.getElementById("level_field").value = Math.floor(xp / 100);
+    return true
     }
     return false
   }
@@ -200,10 +202,8 @@ export default class extends Controller {
   }
 
   experience_roller() {
-    console.log("xp")
     let target = 100;
     let count = parseInt(document.getElementById("xp-value").innerText);
-    console.log(count)
     let increment = 1;
     if (count < target) {
       count += increment;
@@ -251,8 +251,11 @@ export default class extends Controller {
       document.getElementById('conclussionModal').classList.remove("hidden");
       document.getElementById('popup-button').addEventListener("click", () => {
         document.getElementById('conclussionModal').style.display = "none";
+        document.getElementById('kanji-data').classList.add("expanded");
+        document.getElementById('highscores').classList.add("expanded");
       });
       this.experience_roller()
+      this.check_for_level_up()
       if (this.check_for_level_up) {
         setTimeout(() => {
           document.getElementById('level-up').classList.remove("hidden");
