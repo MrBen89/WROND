@@ -16,6 +16,7 @@
   <p><strong>Total XP:</strong> <%= @user_profile.total_xp %></p>
 
   <div class="upgrades">
+    <h1><%=  @user_profile.username %>'s unlocks</h2>
     <% user_profile_color_options.each do |color, level| %>
       <% if upgrade_unlocked?(@user_profile.level, level) %>
         <div class="upgrade selectable" data-color="<%= color %>">
