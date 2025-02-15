@@ -114,15 +114,20 @@ button {
   flex: 1;
 }
 
+.button-container {
+  justify-content: center;
+}
+
 .gif-container {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center; /* Center the GIF vertically */
-  position: relative;
+  position: absolute;
   width: 100%; /* Ensure it takes full width */
   height: 210px; /* Adjust height if needed */
   overflow: hidden; /* Prevents scrollbars */
+  padding: 100px;
 }
 
 .game-gif {
