@@ -3,6 +3,9 @@
   border-radius: 8px;
   padding: 20px;
   box-shadow: 3px 3px 0px #000;
+  width: 150px;
+  height: 150px;
+  justify-content: center;
 }
 
 .game-container {
@@ -37,7 +40,7 @@ font-family: 'Press Start 2P';
 
 .mode-box {
   background: #ddd;
-  padding: 20px;
+  padding: 30px;
   border-radius: 8px;
   text-align: center;
   box-shadow: 3px 3px 0px #000;
@@ -49,20 +52,25 @@ font-family: 'Press Start 2P';
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 200px;
+  height: 200px;
 }
 
 .kanji-text {
-  font-size: 32px;
-  display: block;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
 }
 
 .mode-label {
-  font-size: 12px;
-  margin-top: 5px;
+  font-size: 16px;
+  margin-top: 10px;
 }
 
 .mode-description {
-  font-size: 17px;
+  font-size: 20px;
   color: #333;
 }
 
@@ -112,10 +120,6 @@ button {
 
 .mode-selection {
   flex: 1;
-}
-
-.button-container {
-  justify-content: center;
 }
 
 .gif-container {

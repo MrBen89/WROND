@@ -18,7 +18,7 @@
   <hr class="divider">
 
   <div class="upgrades">
-    <h><%=  @user_profile.username %>'s unlocks</h2>
+    <h2><%=  @user_profile.username %>'s unlocks</h2>
     <% user_profile_color_options.each do |color, level| %>
       <% if upgrade_unlocked?(@user_profile.level, level) %>
         <div class="upgrade selectable" data-color="<%= color %>">
