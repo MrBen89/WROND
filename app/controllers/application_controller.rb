@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  helper UserProfilesHelper
   before_action :authenticate_user!, :set_default_meta_tags
   before_action :set_user_profile, if: :user_signed_in?
   include Pundit::Authorization
