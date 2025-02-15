@@ -15,6 +15,18 @@
   font-size: 24px;
 }
 .kanji-data {
+  width: 400px;
+  height:400px;
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  //visibility: hidden;
+}
+
+.highscores {
+  width: 400px;
+  height:400px;
+  background-color: red;
   display: flex;
   flex-direction: column;
   //visibility: hidden;
@@ -40,16 +52,12 @@
 }
 
 .puzzle-window {
+  display: flex;
   background-color: rgb(251, 255, 248);
-  flex: 1;
-  height: 900px;
-  width: 1000px;
-  position: absolute;
-  right: 20px;
+  height: 800px;
+  width: 800px;
   justify-content: center;
   align-items: center;
-  margin-left: 20px;
-  border-radius: 10px;
 }
 
 .puzzle-window h2 {
