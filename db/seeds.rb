@@ -64,11 +64,11 @@ kanji_puzzle_map = puzzle_data.to_h { |p| [p["name"], p["value"]] }
 kanji_records = kanji_data.map do |kanji, details|
   {
     kanji: kanji,
-    jlptLevel: details["jlpt"],
-    meaning: details["meanings"],
-    kunyomi: details["kun_readings"]&.join(", "),
-    onyomi: details["on_readings"]&.join(", "),
-    strokeCount: details["stroke_count"],
+    jlptLevel: details["jlpt_new"],
+    meaning: "{#{details['meanings'].map { |m| m.gsub('"', '') }.join(',')}}",
+    kunyomi: "{#{details['readings_kun']&.map { |k| k.gsub('"', '') }.join(',')}}",
+    onyomi: "{#{details['readings_on']&.map { |o| o.gsub('"', '') }.join(',')}}",
+    strokeCount: details["strokes"],
     grade: details["grade"],
     puzzleInfo: kanji_puzzle_map[kanji] || []
   }
