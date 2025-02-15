@@ -18,6 +18,11 @@
       <p><strong>Stroke Count:</strong> <span id="stroke-count">?</span></p>
       <p><strong>Grade: N</strong><span id="grade">?</span></p>
       <p><strong>JLPT Level:</strong> <span id="jlpt-level">?</span></p>
+
+      <div class="button-container">
+        <button type="button" class="play-button-right" id="play-btn" disabled>Play!</button>
+        <input type="hidden" id="selected-kanji" name="selected-kanji">
+      </div>
     </div>
 
     <% @kanji.each do |kanji| %>
@@ -28,7 +33,8 @@
            data-kunyomi="<%= kanji.kunyomi %>"
            data-stroke-count="<%= kanji.stroke_count %>"
            data-grade="<%= kanji.grade %>"
-           data-jlpt="<%= kanji.jlptLevel %>">
+           data-jlpt="<%= kanji.jlptLevel %>"
+           data-solved="<%= kanji.puzzles.where('user_id = ?', @user.id).count %>">
       </div>
     <% end %>
   </div>
@@ -43,7 +49,8 @@
              data-stroke-count="<%= kanji.stroke_count %>"
              data-grade="<%= kanji.grade %>"
              data-jlpt="<%= kanji.jlptLevel %>"
-             data-url="<%= kanji_path(kanji) %>">
+             data-url="<%= kanji_path(kanji) %>"
+             data-solved="<%= kanji.puzzles.where('user_id = ?', @user.id).count%>">
 
           <div class="stars">★★★☆☆</div>
           <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
@@ -53,15 +60,10 @@
         </div>
       <% end %>
     </div>
-
-    <button type="button" class="play-button-right" id="play-btn" disabled>Play!</button>
-    <input type="hidden" id="selected-kanji" name="selected-kanji">
-    <button type="button" class="back-button" id="play-btn">Back!</button>
   </div>
 </div>
 
 <script>
-
 document.addEventListener("DOMContentLoaded", function () {
   const leftSide = document.querySelector(".left-side");
   const rightSide = document.querySelector(".right-side");
@@ -80,6 +82,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let isExpanded = false;
 
   cards.forEach((card) => {
+    const kanjiData = card.dataset;
+    const isSolved = kanjiData.solved >= 1; // Ensure correct boolean comparison
+    const questionMark = card.querySelector(".question-mark");
+
+    questionMark.textContent = isSolved ? kanjiData.kanji : "?";
+
     card.addEventListener("click", function () {
       if (!isExpanded) {
         leftSide.classList.add("expanded");
@@ -91,22 +99,20 @@ document.addEventListener("DOMContentLoaded", function () {
       cards.forEach((btn) => btn.classList.remove("active"));
       this.classList.add("active");
 
-      const kanjiData = this.dataset;
+      // Re-check if the kanji is solved inside the event listener
+      const isSolved = Number(kanjiData.solved) > 0;
 
       selectedKanjiInput.value = kanjiData.kanji;
-      kanjiDisplay.textContent = kanjiData.kanji;
-      jlptLevel.textContent = kanjiData.jlpt || 'N5';
-      meaning.textContent = kanjiData.meaning;
-      kunyomi.textContent = kanjiData.kunyomi;
-      onyomi.textContent = kanjiData.onyomi;
-      strokeCount.textContent = kanjiData.strokeCount;
-      grade.textContent = kanjiData.grade;
+      kanjiDisplay.textContent = isSolved ? kanjiData.kanji : "?";
+      jlptLevel.textContent = kanjiData.jlpt || "N5";
+      meaning.textContent = isSolved ? kanjiData.meaning : "?";
+      kunyomi.textContent = isSolved ? kanjiData.kunyomi : "?";
+      onyomi.textContent = isSolved ? kanjiData.onyomi : "?";
+      strokeCount.textContent = isSolved ? kanjiData.strokeCount : "?";
+      grade.textContent = isSolved ? kanjiData.grade : "?";
 
-      const questionMark = this.querySelector('.question-mark');
-      questionMark.textContent = kanjiData.kanji;
-
-      playButton.removeAttribute("disabled");
       playButton.setAttribute("data-url", kanjiData.url);
+      playButton.disabled = false; // Ensure the button is enabled
     });
   });
 
@@ -133,8 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  const defaultFilter = document.querySelector(".level-4");
-  defaultFilter.click();
+  document.querySelector(".level-4").click();
 });
 
 </script>

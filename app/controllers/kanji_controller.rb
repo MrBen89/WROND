@@ -2,6 +2,7 @@ class KanjiController < ApplicationController
 
   def index
     @kanji = policy_scope(Kanji)
+    @user = current_user
   end
 
   def show
