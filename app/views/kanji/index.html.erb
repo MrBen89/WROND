@@ -34,7 +34,7 @@
            data-stroke-count="<%= kanji.stroke_count %>"
            data-grade="<%= kanji.grade %>"
            data-jlpt="<%= kanji.jlptLevel %>"
-           data-solved="<%= kanji.puzzles.where('user_id = ?', @user.id).count %>">
+           data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
       </div>
     <% end %>
   </div>
@@ -50,7 +50,7 @@
              data-grade="<%= kanji.grade %>"
              data-jlpt="<%= kanji.jlptLevel %>"
              data-url="<%= kanji_path(kanji) %>"
-             data-solved="<%= kanji.puzzles.where('user_id = ?', @user.id).count%>">
+             data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
 
           <div class="stars">★★★☆☆</div>
           <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
