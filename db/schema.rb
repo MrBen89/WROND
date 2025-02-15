@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_11_111015) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_15_045000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,7 +19,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_11_111015) do
     t.text "puzzleInfo", default: [], array: true
     t.string "jlptLevel"
     t.string "grade"
-    t.integer "strokeCount"
     t.text "meaning", default: [], array: true
     t.string "kunyomi"
     t.string "onyomi"

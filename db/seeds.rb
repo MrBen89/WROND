@@ -39,11 +39,20 @@ users.each do |user_data|
     password: 'password'
   )
 
+  kanji_quotes = [
+    "学びて時に之を習う、亦説ばしからずや",
+    "七転び八起き",
+    "石の上にも三年",
+    "花より団子",
+    "明日やろうは馬鹿野郎",
+    "能ある鷹は爪を隠す"
+  ]
+
   UserProfile.create!(
     user: user,
     username: user_data[:username],
     bio: Faker::Quote.famous_last_words,
-    tagline: Faker::Lorem.sentence(word_count: 3),
+    tagline: kanji_quotes.sample,
     level: rand(1..100),
     total_xp: rand(0..5000),
     profile_pic: Faker::Avatar.image(slug: user_data[:username], size: "100x100", format: "png")
@@ -68,7 +77,7 @@ kanji_records = kanji_data.map do |kanji, details|
     meaning: "{#{details['meanings'].map { |m| m.gsub('"', '') }.join(',')}}",
     kunyomi: "{#{details['readings_kun']&.map { |k| k.gsub('"', '') }.join(',')}}",
     onyomi: "{#{details['readings_on']&.map { |o| o.gsub('"', '') }.join(',')}}",
-    strokeCount: details["strokes"],
+    stroke_count: details["strokes"] || 0,
     grade: details["grade"],
     puzzleInfo: kanji_puzzle_map[kanji] || []
   }
