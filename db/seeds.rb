@@ -77,7 +77,7 @@ kanji_records = kanji_data.map do |kanji, details|
     meaning: "{#{details['meanings'].map { |m| m.gsub('"', '') }.join(',')}}",
     kunyomi: "{#{details['readings_kun']&.map { |k| k.gsub('"', '') }.join(',')}}",
     onyomi: "{#{details['readings_on']&.map { |o| o.gsub('"', '') }.join(',')}}",
-    strokeCount: details["strokes"],
+    stroke_count: details["strokes"] || 0,
     grade: details["grade"],
     puzzleInfo: kanji_puzzle_map[kanji] || []
   }
