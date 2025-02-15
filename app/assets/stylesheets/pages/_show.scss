@@ -1,7 +1,7 @@
 
 .puzzle-header {
   display: flex;
-  justify-content: center;
+  //justify-content: center;
   align-items: center;
   padding-top: 10px;
   margin-bottom: 20px;
@@ -14,22 +14,40 @@
   font-family: Chicago, "Press Start 2P", monospace;
   font-size: 24px;
 }
-.kanji-data {
-  width: 400px;
+.kanji-data, .highscores {
+  width: 350px;
   height:400px;
   background-color: aqua;
   display: flex;
   flex-direction: column;
-  //visibility: hidden;
+  background: #ddd;
+  border-radius: 8px;
+  font-size: 14px;;
+  padding: 10px;
+  transition: background 0.3s ease-in-out;
+  margin: 3px;
+  gap: 5px;
+  box-shadow: 3px 3px 0px #000;
+  transform: scaleX(0);
+  transition: all .5s ease-in-out;
+}
+
+.kanji-data {
+  transform-origin: left;
 }
 
 .highscores {
-  width: 400px;
-  height:400px;
-  background-color: red;
-  display: flex;
-  flex-direction: column;
-  //visibility: hidden;
+  transform-origin: right;
+}
+
+.list {
+  display: inline-block;
+  list-style-type: none;
+  justify-content: space-between;
+}
+
+.right-align {
+  justify-content: end;
 }
 
 .puzzle-hints {
@@ -50,12 +68,15 @@
 .puzzle-hints h1 {
   font-size: 70px;
 }
+.spacer {
+  height: 125px;
+  width: 350px;
+}
 
 .puzzle-window {
   display: flex;
-  background-color: rgb(251, 255, 248);
-  height: 800px;
-  width: 800px;
+  height: 550px;
+  width: 550px;
   justify-content: center;
   align-items: center;
 }
@@ -64,6 +85,10 @@
   font-family: Chicago, "Press Start 2P", monospace;
   font-size: 40px;
   margin: 0;
+  padding: 0;
+}
+
+.background-div {
   padding: 0;
 }
 
@@ -170,4 +195,38 @@
 
 .hidden {
   display: none;
+}
+
+.expanded {
+  transform: scaleY(1);
+  transform: scaleX(1);
+}
+
+.gif-container-bottom {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center the GIF vertically */
+  position: fixed;
+  bottom: -87px;
+  width: 100%; /* Ensure it takes full width */
+  height: 250px; /* Adjust height if needed */
+  overflow: hidden; /* Prevents scrollbars */
+}
+
+.game-gif-bottom {
+  width: 250px;
+  height: auto;
+  image-rendering: pixelated;
+  position: absolute;
+  animation: walkAnimation 10s linear infinite alternate; /* Smooth left-right movement */
+}
+
+@keyframes walkAnimation {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: calc(100% - 250px); /* Moves to the right edge */
+  }
 }
