@@ -3,7 +3,7 @@ class UserProfilesController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user_profile, only: [:edit, :update]
   def show
-    @user = UserProfile.find_by(user_id: current_user.id)
+    @user_profile = UserProfile.find_by(user_id: current_user.id)
     authorize @user_profile
   end
 
@@ -21,7 +21,7 @@ class UserProfilesController < ApplicationController
   private
 
   def set_user_profile
-    @user_profile = UserProfile.find_by(user_id: current_user.id)
+    @user_profile = UserProfile.find(current_user.user_profile.id)
   end
 
   def authorize_user_profile
@@ -32,14 +32,11 @@ class UserProfilesController < ApplicationController
     params.require(:user_profile).permit(:username, :bio, :profile_pic)
   end
 
-  def update
-    @user_profile = UserProfile.find(current_user.user_profile.id)
-    authorize @user_profile
-    @user_profile.update(user_profile_params)
-
-  end
-
-  private
+  # def update
+  #   @user_profile = UserProfile.find(current_user.user_profile.id)
+  #   authorize @user_profile
+  #   @user_profile.update(user_profile_params)
+  # end
 
   def user_profile_params
     params.require(:user_profile).permit(:level, :total_xp)
