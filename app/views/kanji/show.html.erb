@@ -1,24 +1,24 @@
 <h1 class="puzzle-header">Puzzle number <%= @kanji.id %></h1>
 
-<div class="puzzle-col d-flex">
-  <div class="kanji-data">
-    <h2><%= @kanji.kanji %></h2>
-    <h3>Meanings: <%= @kanji.meaning %></h3>
-    <h3>Onyomi: <%= @kanji.onyomi %></h3>
-    <h3>Kunyomi: <%= @kanji.kunyomi %></h3>
-
-    <div>
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#conclussionModal">
-  Launch demo modal
-</button>
-<%= render "kanji/conclussion" %>
-    </div>
+<div class="container d-flex">
+  <div class="highscores">
+    1. Me - 2mins
+    2. You - 3mins
   </div>
+
 
   <div class="puzzle-window">
     <div class="puzzle" id="puzzle" data-controller="puzzle" data-puzzle-target="rootDiv" data-puzzle-variable=<%=@kanji.puzzleInfo.to_json%>>
     </div>
   </div>
+
+  <div class="kanji-data">
+    <h2><%= @kanji.kanji %></h2>
+    <h3>Meanings: <%= @kanji.meaning %></h3>
+    <h3>Onyomi: <%= @kanji.onyomi %></h3>
+    <h3>Kunyomi: <%= @kanji.kunyomi %></h3>
+  </div>
+
 </div>
 
 <div class="hidden">
@@ -29,4 +29,8 @@
   <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
   <%= f.button :submit, id: "puzzle-submit" %>
   <% end %>
+</div>
+
+<div>
+  <%= render "kanji/conclussion" %>
 </div>
