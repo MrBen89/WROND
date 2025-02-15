@@ -15,11 +15,11 @@
 }
 
 .status-text {
-  color: #6abe30;
-  font-size: 35px;
-  text-transform: uppercase;
-  text-align: center;
-  font-family: 'Press Start 2P';
+color: #6abe30;
+font-size: 35px;
+text-transform: uppercase;
+text-align: center;
+font-family: 'Press Start 2P';
 }
 
 .mode-selection {
@@ -130,7 +130,7 @@ button {
   height: auto;
   image-rendering: pixelated;
   position: absolute;
-  animation: walkAnimation 10s linear infinite alternate; /* Smooth left-right movement */
+  // animation: walkAnimation 10s linear infinite alternate; /* Smooth left-right movement */
 }
 
 // @keyframes walkAnimation {

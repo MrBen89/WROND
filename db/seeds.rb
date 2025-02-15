@@ -16,10 +16,10 @@ require 'uri'
 require 'httparty'
 
 
+Puzzle.destroy_all
 UserProfile.destroy_all
 User.destroy_all
 Kanji.destroy_all
-Puzzle.destroy_all
 
 default_user = User.create!(
   email: 'default_user@gmail.com',

@@ -2,7 +2,7 @@
   <div class="level-filter level-1">N1</div>
   <div class="level-filter level-2">N2</div>
   <div class="level-filter level-3">N3</div>
-  <div class="level-filter level-4">N4</div>
+  <div class="level-filter level-4 active">N4</div>
   <div class="level-filter level-5">N5</div>
   <div class="level-filter level-all">All!</div>
 </div>
@@ -11,13 +11,13 @@
   <div class="left-side">
     <div class="info-card">
       <p>Kanji:</p>
-      <p><span id="kanji-display">KANJI</span></p>
-      <p><strong>Meaning:</strong> <span id="meaning">meaning</span></p>
-      <p><strong>Onyomi:</strong> <span id="onyomi"></span></p>
-      <p><strong>Kunyomi:</strong> <span id="kunyomi"></span></p>
-      <p><strong>Stroke Count:</strong> <span id="stroke-count"></span></p>
-      <p><strong>Grade:</strong> <span id="grade"></span></p>
-      <p><strong>JLPT Level:</strong> <span id="jlpt-level"></span></p>
+      <p><span id="kanji-display">?</span></p>
+      <p><strong>Meaning:</strong> <span id="meaning">?</span></p>
+      <p><strong>Onyomi:</strong> <span id="onyomi">?</span></p>
+      <p><strong>Kunyomi:</strong> <span id="kunyomi">?</span></p>
+      <p><strong>Stroke Count:</strong> <span id="stroke-count">?</span></p>
+      <p><strong>Grade: N</strong><span id="grade">?</span></p>
+      <p><strong>JLPT Level:</strong> <span id="jlpt-level">?</span></p>
     </div>
 
     <% @kanji.each do |kanji| %>
@@ -27,7 +27,8 @@
            data-onyomi="<%= kanji.onyomi %>"
            data-kunyomi="<%= kanji.kunyomi %>"
            data-stroke-count="<%= kanji.stroke_count %>"
-           data-grade="<%= kanji.grade %>">
+           data-grade="<%= kanji.grade %>"
+           data-jlpt="<%= kanji.jlptLevel %>">
       </div>
     <% end %>
   </div>
@@ -41,10 +42,11 @@
              data-kunyomi="<%= kanji.kunyomi %>"
              data-stroke-count="<%= kanji.stroke_count %>"
              data-grade="<%= kanji.grade %>"
+             data-jlpt="<%= kanji.jlptLevel %>"
              data-url="<%= kanji_path(kanji) %>">
 
           <div class="stars">★★★☆☆</div>
-          <div class="level">N5<%= kanji.kanji %></div>
+          <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
           <div class="white-box-for">
             <div class="question-mark">?</div>
           </div>
@@ -54,11 +56,12 @@
 
     <button type="button" class="play-button-right" id="play-btn" disabled>Play!</button>
     <input type="hidden" id="selected-kanji" name="selected-kanji">
-    <button type="button" class="back-button" id="play-btn" >Back!</button>
+    <button type="button" class="back-button" id="play-btn">Back!</button>
   </div>
 </div>
 
 <script>
+
 document.addEventListener("DOMContentLoaded", function () {
   const leftSide = document.querySelector(".left-side");
   const rightSide = document.querySelector(".right-side");
@@ -72,6 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const onyomi = document.getElementById("onyomi");
   const strokeCount = document.getElementById("stroke-count");
   const grade = document.getElementById("grade");
+  const levelFilters = document.querySelectorAll(".level-filter");
 
   let isExpanded = false;
 
@@ -112,7 +116,25 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = url;
     }
   });
-});
 
+  levelFilters.forEach((filter) => {
+    filter.addEventListener("click", function () {
+      const selectedLevel = this.classList[1];
+
+      cards.forEach((card) => {
+        const cardLevel = card.dataset.jlpt;
+
+        if (selectedLevel === "level-all" || `level-${cardLevel}` === selectedLevel) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+  });
+
+  const defaultFilter = document.querySelector(".level-4");
+  defaultFilter.click();
+});
 
 </script>
