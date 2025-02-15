@@ -8,7 +8,10 @@
     <h3>Kunyomi: <%= @kanji.kunyomi %></h3>
 
     <div>
-
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#conclussionModal">
+  Launch demo modal
+</button>
+<%= render "kanji/conclussion" %>
     </div>
   </div>
 
@@ -20,9 +23,11 @@
 </div>
 
 <div class="hidden">
-  <%= simple_form_for @puzzle, html: { id: :puzzle_form } do |f| %>
+  <%= simple_form_for @puzzle, remote: true, html: { id: :puzzle_form } do |f| %>
   <%= f.input :time ,input_html: {id: "time_field" }%>
   <%= f.input :kanji_id, input_html: {value: @kanji.id } %>
+  <%= f.input :total_xp ,input_html: {id: "xp_field", value: @user_profile.total_xp }%>
+  <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
   <%= f.button :submit, id: "puzzle-submit" %>
   <% end %>
-  </div>
+</div>

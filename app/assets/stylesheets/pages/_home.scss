@@ -130,7 +130,7 @@ button {
   height: auto;
   image-rendering: pixelated;
   position: absolute;
-  animation: walkAnimation 10s linear infinite alternate; /* Smooth left-right movement */
+  // animation: walkAnimation 10s linear infinite alternate; /* Smooth left-right movement */
 }
 
 // @keyframes walkAnimation {

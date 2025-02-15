@@ -1,0 +1,39 @@
+.popup {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4)
+}
+
+.popup-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 35%;
+  height: auto; /* Could be more or less, depending on screen size */
+}
+
+.popup-footer {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: end;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.level-up {
+  transition: all .5s ease-in-out;
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+.expanded {
+  transform: scaleY(1);
+}

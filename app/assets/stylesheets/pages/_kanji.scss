@@ -60,7 +60,31 @@
 }
 
 .card.active {
-  background: #6abe30;
+  color: black;
+}
+
+.card.active[data-jlpt="1"] {
+  background-color: red;
+  color: black;
+}
+
+.card.active[data-jlpt="2"] {
+  background-color: orange;
+  color: black;
+}
+
+.card.active[data-jlpt="3"] {
+  background-color: yellow;
+  color: black;
+}
+
+.card.active[data-jlpt="4"] {
+  background-color: #6abe30;
+  color: black;
+}
+
+.card.active[data-jlpt="5"] {
+  background-color: #0897f6;
   color: black;
 }
 
@@ -69,13 +93,12 @@
   transform: scale(1.05);
 }
 
+
 .stars {
   font-size: 24px;
 }
 
 .level {
-  background: #6abe30;
-  color: #fff;
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 14px;
@@ -149,4 +172,28 @@
   margin-top: 20px;
   color: black;
   justify-content: left;
+}
+
+.level-1 {
+  background-color: red;
+  color: black;
+}
+
+.level-2 {
+  background-color: orange;
+  color: black;
+}
+
+.level-3 {
+  background-color: yellow;
+  color: black;
+}
+
+.level-4 {
+  background-color: #6abe30;
+  color: black;
+}
+.level-5 {
+  background-color: #0897f6;
+  color: black;
 }

@@ -103,7 +103,7 @@ export default class extends Controller {
     //current patern is the working array
     let current_pattern = []
     //puzzledata is the solution array
-    console.log(this.data.get("variable"))
+    console.log(document.getElementById('conclussionModal'));
     const puzzledata = JSON.parse(this.data.get("variable"));
     //create the hints arrays
     let xValues = xWriter(puzzledata);
@@ -181,12 +181,42 @@ export default class extends Controller {
     }
   }
 
+  check_for_level_up() {
+    let xp = document.getElementById("xp_field").value
+    let level = parseInt(document.getElementById("level_field").value)
+    if (xp / 100 >= (level + 1)) {
+      document.getElementById("level_field").value = Math.floor(xp / 100)
+      return true
+    }
+    return false
+  }
+
   create_puzzle_record() {
     document.getElementById("time_field").value = seconds_absolute;
     document.getElementById("puzzle_form").requestSubmit();
   }
+  update_user_record() {
+    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 100
+  }
+
+  experience_roller() {
+    console.log("xp")
+    let target = 100;
+    let count = parseInt(document.getElementById("xp-value").innerText);
+    console.log(count)
+    let increment = 1;
+    if (count < target) {
+      count += increment;
+      document.getElementById("xp-value").innerText = `${count}`;
+      setTimeout(() => {
+        this.experience_roller()
+      }, 5);
+    }
+
+  }
 
   stop_puzzle(handleClick) {
+    document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
     let block = document.querySelector(".cornerBlock");
     block.classList.add("cleared");
     let cells = document.getElementsByClassName("cell");
@@ -215,6 +245,26 @@ export default class extends Controller {
         guide.innerText = ""
       }
     },1);
-    this.create_puzzle_record()
+    this.update_user_record();
+    this.create_puzzle_record();
+    setTimeout(() => {
+      document.getElementById('conclussionModal').classList.remove("hidden");
+      document.getElementById('popup-button').addEventListener("click", () => {
+        document.getElementById('conclussionModal').style.display = "none";
+      });
+      this.experience_roller()
+      if (this.check_for_level_up) {
+        setTimeout(() => {
+          document.getElementById('level-up').classList.remove("hidden");
+          setTimeout(() => {
+            document.getElementById('level-up').classList.add("expanded");
+          },1)
+
+          //document.getElementById('level-up-image').classList.remove("hidden");
+        },1500)
+      }
+
+    },1000)
+
   };
 }
