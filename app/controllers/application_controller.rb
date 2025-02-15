@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_user_profile
-    @user_profile = current_user.user_profiles.first
+    @user_profile = current_user.user_profile
   end
 
 
