@@ -15,5 +15,19 @@
   <p><strong>Level:</strong> <%= @user_profile.level %></p>
   <p><strong>Total XP:</strong> <%= @user_profile.total_xp %></p>
 
+  <div class="upgrades">
+    <% user_profile_color_options.each do |color, level| %>
+      <% if upgrade_unlocked?(@user_profile.level, level) %>
+        <div class="upgrade selectable" data-color="<%= color %>">
+          <%= color.capitalize %>
+        </div>
+      <% else %>
+        <div class="upgrade locked">
+          <%= color.capitalize %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
   <%= link_to "Edit Profile", edit_user_profile_path(@user_profile), class: "btn btn-primary" %>
 </div>

@@ -30,8 +30,36 @@
   height: 31px;
   width: 31px;
   border-radius: 0;
-  outline: rgb(10, 218, 10) solid;
   padding-top: 1px;
+  outline: 2px solid;
+
+  &[data-outline-color="purple"] {
+    outline-color: purple;
+  }
+
+  &[data-outline-color="blue"] {
+    outline-color: rgb(46, 171, 255);
+  }
+
+  &[data-outline-color="green"] {
+    outline-color: rgb(0, 201, 0);
+  }
+
+  &[data-outline-color="yellow"] {
+    outline-color: yellow;
+  }
+
+  &[data-outline-color="orange"] {
+    outline-color: orange;
+  }
+
+  &[data-outline-color="red"] {
+    outline-color: red;
+  }
+
+  &[data-outline-color="none"] {
+    outline-color: transparent;
+  }
 }
 
 .navbar-lewagon .navbar-brand {

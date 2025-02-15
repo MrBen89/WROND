@@ -14,11 +14,11 @@
   }
 
   &[data-outline-color="blue"] {
-    outline-color: blue;
+    outline-color: rgb(46, 171, 255);
   }
 
   &[data-outline-color="green"] {
-    outline-color: green;
+    outline-color: rgb(0, 201, 0);
   }
 
   &[data-outline-color="yellow"] {
@@ -43,6 +43,7 @@
     color: #333;
     font-family: Chicago, "Press Start 2P", monospace;
     align-items: center;
+    text-align: center;
   }
 
   .profile-pic {
@@ -133,4 +134,36 @@
       border-radius: 4px;
     }
   }
+
+  .upgrades {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+
+    .upgrade {
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #929292bd;
+      }
+
+      &.locked {
+        background-color: #e0e0e0;
+        cursor: not-allowed;
+      }
+
+      &.selectable {
+        background-color: #fff;
+      }
+
+      &.selected {
+        background-color: #d4edda;
+    }
+  }
+}
 }
