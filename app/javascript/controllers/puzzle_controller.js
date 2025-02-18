@@ -112,6 +112,11 @@ export default class extends Controller {
 
     const rootDiv = this.rootDivTarget
 
+    rootDiv.addEventListener("mouseup", () => {
+      mouse_status = "up"
+      mode = "draw"
+    })
+
     //create a puzzle guides row
     let row = document.createElement("div");
     row.classList.add("header");
