@@ -97,6 +97,8 @@ export default class extends Controller {
   }
 
   start_puzzle() {
+    let mouse_status = "up"
+    let mode = "draw"
 
     document.querySelector(".startButton").remove()
     timer()
@@ -152,26 +154,82 @@ export default class extends Controller {
           box.dataset.x = n;
           box.dataset.y = i;
 
-          const handleClick = () => {
-            current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
-              event.currentTarget.classList.remove("flagged");
-              event.currentTarget.classList.toggle("selected")
-
+          const handleDrag = () => {
+            if (mouse_status == "left") {
+              console.log("drag left")
+              if (mode == "draw"){
+                console.log(mode)
+                current_pattern[i][n] = "1"
+                event.currentTarget.classList.remove("flagged");
+                event.currentTarget.classList.add("selected")
+              } else if (mode == "erase") {
+                console.log(mode)
+                current_pattern[i][n] = "0";
+                event.currentTarget.classList.remove("flagged");
+                event.currentTarget.classList.remove("selected")
+              }
 
               //check for win
               if (checkArrays(current_pattern, puzzledata)){
                   this.stop_puzzle(handleClick)
               }
+
+            } else if (mouse_status == "right") {
+              if (mode == "draw"){
+                console.log("drag draw right")
+                current_pattern[i][n] = "0";
+                event.preventDefault();
+                event.currentTarget.classList.remove("selected");
+                event.currentTarget.classList.add("flagged");
+              } else if (mode == "erase"){
+                console.log("drag erase right")
+                event.preventDefault();
+                event.currentTarget.classList.remove("flagged");
+              }
+            }
+          }
+
+          const handleClick = () => {
+            event.button == 0 ? mouse_status = "left" : mouse_status = "right"
+            if (mouse_status == "left"){
+              console.log("left")
+              if (event.currentTarget.classList.contains("selected")){
+                console.log("click erase")
+                mode = "erase"
+              } else if (!event.currentTarget.classList.contains("selected")){
+                mode = "draw"
+              }
+              current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
+              event.currentTarget.classList.remove("flagged");
+              event.currentTarget.classList.toggle("selected")
+            }
+              //check for win
+              if (checkArrays(current_pattern, puzzledata)){
+                this.stop_puzzle(handleClick)
+            }
           }
 
           const handleRightClick = () => {
-            current_pattern[i][n] = "0";
-            event.preventDefault();
-            event.currentTarget.classList.remove("selected");
-            event.currentTarget.classList.toggle("flagged");
+            //console.log(mouse_status)
+            //console.log(event.currentTarget.classList)
+            if (mouse_status == "right"){
+              if (event.currentTarget.classList.contains("flagged")){
+                console.log("erase from right click")
+                mode = "erase"
+              } else if (!event.currentTarget.classList.contains("flagged")){
+                console.log("toggle from right click")
+                mode = "draw"
+              }
+              current_pattern[i][n] = "0";
+              event.preventDefault();
+              event.currentTarget.classList.remove("selected");
+              event.currentTarget.classList.toggle("flagged");
+            }
+
           }
 
           //add click listener to each cell
+          box.addEventListener("mouseenter", handleDrag)
           box.addEventListener("mousedown", handleClick)
           box.addEventListener("contextmenu", handleRightClick)
         //add everything to the mount
