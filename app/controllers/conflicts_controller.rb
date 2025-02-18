@@ -6,7 +6,10 @@ class ConflictsController < ApplicationController
 
   def show
     @user_profile = UserProfile.find(current_user.user_profile.id)
+    @conflict = Conflict.find(params[:id])
+    p @conflict
     authorize @user_profile
+    authorize @conflict
   end
 
   def create

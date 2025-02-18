@@ -1,1 +1,23 @@
-Show me the money!
+<%= @conflict.user1.user_profile.username %> VS. <%= @conflict.user1.user_profile.username %>
+
+<div class="container d-flex p-3 m-6">
+  <div class="p1-puzzle-window">
+    <div class="p1-puzzle"
+    id="p1-puzzle"
+    data-controller="p1_puzzle"
+    data-p1_puzzle-target="p1RootDiv"
+    data-p1_puzzle-variable=<%=@conflict.kanji.puzzleInfo.to_json%>
+    data-status-variable=<%=@conflict.status%>>
+    </div>
+  </div>
+
+  <div class="p2-puzzle-window">
+    <div class="p2-puzzle"
+    id="p2-puzzle"
+    data-controller="p2_puzzle"
+    data-p2_puzzle-target="p2RootDiv"
+    data-p2_puzzle-variable=<%=@conflict.kanji.puzzleInfo.to_json%>
+    data-p2_puzzle-p2data=<%=@conflict.user2_state.to_json%>>
+    </div>
+  </div>
+</div>

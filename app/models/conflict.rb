@@ -1,5 +1,5 @@
 class Conflict < ApplicationRecord
-  #after_create_commit :broadcast_conflict
+  after_create_commit :broadcast_conflict
   #after_update_commit :broadcast_conflict
 
 
