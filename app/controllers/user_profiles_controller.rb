@@ -3,6 +3,7 @@ class UserProfilesController < ApplicationController
   before_action :set_user_profile, only: [:show, :edit, :update]
   before_action :authorize_user_profile, only: [:edit, :update]
 
+
   def show
     @user_profile = UserProfile.find_by(user_id: current_user.id)
     authorize @user_profile
