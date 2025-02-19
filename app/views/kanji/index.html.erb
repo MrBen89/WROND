@@ -1,48 +1,36 @@
-<div class="level-buttons">
-  <div class="level-filter level-1">N1</div>
-  <div class="level-filter level-2">N2</div>
-  <div class="level-filter level-3">N3</div>
-  <div class="level-filter level-4 active">N4</div>
-  <div class="level-filter level-5">N5</div>
-  <div class="level-filter level-all">All!</div>
+<div class="level-buttons" data-controller="card">
+  <div class="level-filter level-1" data-action="click->card#filterLevel">N1</div>
+  <div class="level-filter level-2" data-action="click->card#filterLevel">N2</div>
+  <div class="level-filter level-3" data-action="click->card#filterLevel">N3</div>
+  <div class="level-filter level-4 active" data-action="click->card#filterLevel">N4</div>
+  <div class="level-filter level-5" data-action="click->card#filterLevel">N5</div>
+  <div class="level-filter level-all" data-action="click->card#filterLevel">All!</div>
 </div>
 
-<div class="main-container">
-  <div class="left-side">
+<div class="main-container" data-controller="card">
+  <div class="left-side" data-card-target="leftSide">
     <div class="info-card">
       <p>Kanji:</p>
-      <p><span id="kanji-display">?</span></p>
-      <p><strong>Meaning:</strong> <span id="meaning">?</span></p>
-      <p><strong>Onyomi:</strong> <span id="onyomi">?</span></p>
-      <p><strong>Kunyomi:</strong> <span id="kunyomi">?</span></p>
-      <p><strong>Stroke Count:</strong> <span id="stroke-count">?</span></p>
-      <p><strong>Grade: N</strong><span id="grade">?</span></p>
-      <p><strong>JLPT Level:</strong> <span id="jlpt-level">?</span></p>
+      <p><span id="kanji-display" data-card-target="kanjiDisplay">?</span></p>
+      <p><strong>Meaning:</strong> <span id="meaning" data-card-target="meaning">?</span></p>
+      <p><strong>Onyomi:</strong> <span id="onyomi" data-card-target="onyomi">?</span></p>
+      <p><strong>Kunyomi:</strong> <span id="kunyomi" data-card-target="kunyomi">?</span></p>
+      <p><strong>Stroke Count:</strong> <span id="stroke-count" data-card-target="strokeCount">?</span></p>
+      <p><strong>Grade: N</strong><span id="grade" data-card-target="grade">?</span></p>
+      <p><strong>JLPT Level:</strong> <span id="jlpt-level" data-card-target="jlptLevel">?</span></p>
 
       <div class="button-container">
-        <button type="button" class="play-button-right" id="play-btn" disabled>Play!</button>
-        <input type="hidden" id="selected-kanji" name="selected-kanji">
+        <button type="button" class="play-button-right" id="play-btn" data-card-target="playButton" data-action="click->card#play" disabled>Play!</button>
+        <input type="hidden" id="selected-kanji" name="selected-kanji" data-card-target="selectedKanjiInput">
       </div>
     </div>
-
-    <% @kanji.each do |kanji| %>
-      <div class="hidden-kanji-data"
-           data-kanji="<%= kanji.kanji %>"
-           data-meaning="<%= kanji.meaning %>"
-           data-onyomi="<%= kanji.onyomi %>"
-           data-kunyomi="<%= kanji.kunyomi %>"
-           data-stroke-count="<%= kanji.stroke_count %>"
-           data-grade="<%= kanji.grade %>"
-           data-jlpt="<%= kanji.jlptLevel %>"
-           data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
-      </div>
-    <% end %>
   </div>
 
-  <div class="right-side">
+  <div class="right-side" data-card-target="rightSide">
     <div class="card-container">
       <% @kanji.each_with_index do |kanji, index| %>
-        <div class="card" data-kanji="<%= kanji.kanji %>"
+        <div class="card" data-card-target="card"
+             data-kanji="<%= kanji.kanji %>"
              data-meaning="<%= kanji.meaning %>"
              data-onyomi="<%= kanji.onyomi %>"
              data-kunyomi="<%= kanji.kunyomi %>"
@@ -50,8 +38,8 @@
              data-grade="<%= kanji.grade %>"
              data-jlpt="<%= kanji.jlptLevel %>"
              data-url="<%= kanji_path(kanji) %>"
-             data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
-
+             data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>"
+             data-action="click->card#selectCard">
           <div class="stars">★★★☆☆</div>
           <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
           <div class="white-box-for">
@@ -62,84 +50,3 @@
     </div>
   </div>
 </div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const leftSide = document.querySelector(".left-side");
-  const rightSide = document.querySelector(".right-side");
-  const cards = document.querySelectorAll(".card");
-  const playButton = document.getElementById("play-btn");
-  const selectedKanjiInput = document.getElementById("selected-kanji");
-  const kanjiDisplay = document.getElementById("kanji-display");
-  const jlptLevel = document.getElementById("jlpt-level");
-  const meaning = document.getElementById("meaning");
-  const kunyomi = document.getElementById("kunyomi");
-  const onyomi = document.getElementById("onyomi");
-  const strokeCount = document.getElementById("stroke-count");
-  const grade = document.getElementById("grade");
-  const levelFilters = document.querySelectorAll(".level-filter");
-
-  let isExpanded = false;
-
-  cards.forEach((card) => {
-    const kanjiData = card.dataset;
-    const isSolved = kanjiData.solved >= 1; // Ensure correct boolean comparison
-    const questionMark = card.querySelector(".question-mark");
-
-    questionMark.textContent = isSolved ? kanjiData.kanji : "?";
-
-    card.addEventListener("click", function () {
-      if (!isExpanded) {
-        leftSide.classList.add("expanded");
-        rightSide.classList.add("shrunk");
-        leftSide.style.display = "block";
-        isExpanded = true;
-      }
-
-      cards.forEach((btn) => btn.classList.remove("active"));
-      this.classList.add("active");
-
-      // Re-check if the kanji is solved inside the event listener
-      const isSolved = Number(kanjiData.solved) > 0;
-
-      selectedKanjiInput.value = kanjiData.kanji;
-      kanjiDisplay.textContent = isSolved ? kanjiData.kanji : "?";
-      jlptLevel.textContent = kanjiData.jlpt || "N5";
-      meaning.textContent = isSolved ? kanjiData.meaning : "?";
-      kunyomi.textContent = isSolved ? kanjiData.kunyomi : "?";
-      onyomi.textContent = isSolved ? kanjiData.onyomi : "?";
-      strokeCount.textContent = isSolved ? kanjiData.strokeCount : "?";
-      grade.textContent = isSolved ? kanjiData.grade : "?";
-
-      playButton.setAttribute("data-url", kanjiData.url);
-      playButton.disabled = false; // Ensure the button is enabled
-    });
-  });
-
-  playButton.addEventListener("click", function () {
-    const url = playButton.getAttribute("data-url");
-    if (url) {
-      window.location.href = url;
-    }
-  });
-
-  levelFilters.forEach((filter) => {
-    filter.addEventListener("click", function () {
-      const selectedLevel = this.classList[1];
-
-      cards.forEach((card) => {
-        const cardLevel = card.dataset.jlpt;
-
-        if (selectedLevel === "level-all" || `level-${cardLevel}` === selectedLevel) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
-      });
-    });
-  });
-
-  document.querySelector(".level-4").click();
-});
-
-</script>

@@ -1,49 +1,64 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["kanji"];
+  static targets = ["modeBox", "playButton", "selectedMode", "modeDescription", "floatingKanji"];
 
   connect() {
-    this.spawnKanji();
+    console.log("Kanji Controller Connected!");
+
+    this.setupModeSelection();
+    this.setupFloatingKanji();
   }
 
-  spawnKanji() {
-    const container = document.body; // Append kanji to the body
-    const kanjiList = ["水", "火", "木", "金", "土", "日", "月", "山", "川"]; // Example kanji
-    const numKanji = 15; // Number of floating kanji
-
-    for (let i = 0; i < numKanji; i++) {
-      const kanji = document.createElement("div");
-      kanji.innerText = kanjiList[Math.floor(Math.random() * kanjiList.length)];
-      kanji.classList.add("floating-kanji");
-      kanji.style.left = `${Math.random() * 100}vw`;
-      kanji.style.top = `${Math.random() * 100}vh`;
-      kanji.setAttribute("data-action", "mousedown->kanji#drag");
-
-      container.appendChild(kanji);
-    }
-  }
-
-  drag(event) {
-    event.preventDefault();
-    const kanji = event.target;
-    let shiftX = event.clientX - kanji.getBoundingClientRect().left;
-    let shiftY = event.clientY - kanji.getBoundingClientRect().top;
-
-    function moveAt(pageX, pageY) {
-      kanji.style.left = pageX - shiftX + "px";
-      kanji.style.top = pageY - shiftY + "px";
-    }
-
-    function onMouseMove(event) {
-      moveAt(event.pageX, event.pageY);
-    }
-
-    document.addEventListener("mousemove", onMouseMove);
-
-    kanji.onmouseup = function () {
-      document.removeEventListener("mousemove", onMouseMove);
-      kanji.onmouseup = null;
+  setupModeSelection() {
+    const descriptions = {
+      kanji: "Kanji mode allows you to practice individual kanji.<br>The classic mode!",
+      story: "HEEHEE<br>HEEHEE"
     };
+
+    // Log to check if targets are correctly selected
+    console.log(this.modeBoxTargets);
+
+    // Add event listeners for mode buttons
+    this.modeBoxTargets.forEach(button => {
+      button.addEventListener("click", () => {
+        // Toggle active class
+        if (button.classList.contains("active")) {
+          button.classList.remove("active");
+          this.selectedModeTarget.value = "";
+          this.playButtonTarget.setAttribute("disabled", "true");
+          this.modeDescriptionTarget.innerHTML = "Choose a mode!";
+        } else {
+          this.modeBoxTargets.forEach(btn => btn.classList.remove("active"));
+          button.classList.add("active");
+
+          const mode = button.getAttribute("data-mode");
+          this.selectedModeTarget.value = mode;
+          this.playButtonTarget.removeAttribute("disabled");
+
+          // Update description and button state
+          this.modeDescriptionTarget.innerHTML = descriptions[mode];
+        }
+      });
+    });
   }
+
+  setupFloatingKanji() {
+    this.floatingKanjiTargets.forEach(kanji => {
+      let kanjiWidth = 50; // Adjust this based on your font size or layout
+      let kanjiHeight = 50;
+      let randomX = Math.random() * (window.innerWidth - kanjiWidth);
+      let randomY = Math.random() * (window.innerHeight - kanjiHeight);
+      let randomDelay = Math.random() * 3;
+
+      kanji.style.position = "absolute";
+      kanji.style.left = `${randomX}px`;
+      kanji.style.top = `${randomY}px`;
+
+      // Apply CSS animation for floating effect
+      kanji.style.animation = `float 4s infinite ease-in-out alternate`;
+      kanji.style.animationDelay = `${randomDelay}s`;
+    });
+  }
+
 }
