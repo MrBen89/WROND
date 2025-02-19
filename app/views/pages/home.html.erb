@@ -1,3 +1,7 @@
+<body data-controller="kanji">
+  <%= yield %>
+</body>
+
 <div class="game-container">
   <div class="mode-selection">
 
@@ -33,8 +37,9 @@
 </div>
 
 <div class="gif-container">
-  <%= image_tag "tanuki.gif", class: "game-gif" %>
+  <%= image_tag "learnkanji.GIF", class: "game-gif" %>
 </div>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {

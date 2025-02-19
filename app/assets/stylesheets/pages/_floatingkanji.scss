@@ -1,0 +1,18 @@
+.floating-kanji {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: grab;
+  user-select: none;
+  animation: float 5s infinite ease-in-out alternate;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-20px);
+  }
+}

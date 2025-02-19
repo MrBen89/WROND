@@ -129,14 +129,14 @@ button {
   align-items: center; /* Center the GIF vertically */
   position: absolute;
   width: 100%; /* Ensure it takes full width */
-  height: 210px; /* Adjust height if needed */
+  height: 100%; /* Adjust height if needed */
   overflow: hidden; /* Prevents scrollbars */
-  padding: 100px;
+  padding: 150px;
 }
 
 .game-gif {
   width: 250px;
-  height: auto;
+  padding: 50px;
   image-rendering: pixelated;
   position: absolute;
   // animation: walkAnimation 10s linear infinite alternate; /* Smooth left-right movement */
