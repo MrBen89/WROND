@@ -14,10 +14,16 @@
 
 
   <div class="puzzle-window">
-    <div class="background-div" style= "background-image: url('/path/app/assets/images/WROND.png'); background-size: cover; background-blend-mode: multiply; background-color: rgba(255, 255, 255, 0.5); padding: 20px;">
-      <div class="puzzle" id="puzzle" data-controller="puzzle" data-puzzle-target="rootDiv" data-puzzle-variable=<%=@kanji.puzzleInfo.to_json%> data-level-color-level-value="<%= level_color(current_user.user_profile.level)%>">
+      <div class="puzzle"
+      id="puzzle"
+      data-controller="puzzle"
+      data-puzzle-target="rootDiv"
+      data-puzzle-variable=<%=@kanji.puzzleInfo.to_json%>
+      data-puzzle-cell_style=<%= @user_profile.cell_style %>
+      data-puzzle-background_style=<%= @user_profile.cell_style %>
+      data-puzzle-active_style=<%= @user_profile.active_style %>
+      >
       </div>
-    </div>
   </div>
 
   <div>

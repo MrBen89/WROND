@@ -10,9 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_15_045000) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_20_131218) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "conflicts", force: :cascade do |t|
+    t.bigint "kanji_id", null: false
+    t.bigint "user1_id", null: false
+    t.bigint "user2_id"
+    t.text "user1_state", default: [], array: true
+    t.text "user2_state", default: [], array: true
+    t.string "status"
+    t.integer "winner"
+    t.integer "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "u1_state"
+    t.json "u2_state"
+    t.index ["kanji_id"], name: "index_conflicts_on_kanji_id"
+    t.index ["user1_id"], name: "index_conflicts_on_user1_id"
+    t.index ["user2_id"], name: "index_conflicts_on_user2_id"
+  end
 
   create_table "kanjis", force: :cascade do |t|
     t.string "kanji"
@@ -34,6 +52,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_15_045000) do
     t.datetime "updated_at", null: false
     t.index ["kanji_id"], name: "index_puzzles_on_kanji_id"
     t.index ["user_id"], name: "index_puzzles_on_user_id"
+  end
+
+  create_table "solid_cable_messages", force: :cascade do |t|
+    t.text "channel"
+    t.text "payload"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["channel"], name: "index_solid_cable_messages_on_channel"
+    t.index ["created_at"], name: "index_solid_cable_messages_on_created_at"
   end
 
   create_table "unlocks", force: :cascade do |t|
@@ -63,6 +90,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_15_045000) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "cell_style"
+    t.string "active_style"
+    t.string "background_style"
     t.index ["user_id"], name: "index_user_profiles_on_user_id"
   end
 
@@ -78,6 +108,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_15_045000) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "conflicts", "kanjis"
+  add_foreign_key "conflicts", "users", column: "user1_id"
+  add_foreign_key "conflicts", "users", column: "user2_id"
   add_foreign_key "puzzles", "kanjis"
   add_foreign_key "puzzles", "users"
   add_foreign_key "unlocks", "upgrades"

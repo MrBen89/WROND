@@ -90,10 +90,6 @@ export default class extends Controller {
     button.classList.add("startButton")
     button.addEventListener("click", this.start_puzzle);
     rootDiv.appendChild(button);
-    const level = this.levelValue || 0; // Default to 0 if not provided
-    this.element.style.backgroundColor = levelColors[level] || "gray"; // Default color
-    const levelColor = this.element.dataset.levelColorLevelValue;
-    this.rootDivTarget.style.backgroundColor = levelColor;
   }
 
   start_puzzle() {
@@ -111,6 +107,8 @@ export default class extends Controller {
     let yValues = yWriter(puzzledata);
 
     const rootDiv = this.rootDivTarget
+
+    rootDiv.classList.add(`${this.data.get("background_style")}`)
 
     rootDiv.addEventListener("mouseup", () => {
       mouse_status = "up"
@@ -155,7 +153,7 @@ export default class extends Controller {
           box.classList.add(`col${n}`);
           box.classList.add(`row${i}`);
           box.classList.add(`cell`);
-          box.dataset.add
+          box.classList.add(`${this.data.get("cell_style")}`)
           box.dataset.x = n;
           box.dataset.y = i;
 
