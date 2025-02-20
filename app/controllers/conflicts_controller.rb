@@ -68,9 +68,9 @@ class ConflictsController < ApplicationController
     if @conflict.save
       # broadcast_update_conflict
         # format.turbo_stream do
-        #   render turbo_stream: turbo_stream.update(:conflicts_box, partial: "conflicts/p1puzzle", locals: { conflict: @conflict })
+        render turbo_stream: turbo_stream.update(:conflicts_box, partial: "conflicts/p1puzzle", locals: { conflict: @conflict })
         # end
-        redirect_to conflict_path(@conflict)
+        # redirect_to conflict_path(@conflict)
     end
   end
 
