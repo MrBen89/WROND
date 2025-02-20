@@ -1,1 +1,16 @@
-INDEX!
+<div class="kanji-container">
+  <div class="inner-container">
+    <div class="text-box">
+      <p class="sentence">＿＿＿＿は難しい</p>
+      <p class="sentence">＿＿＿＿検定能力</p>
+      <p class="sentence">この＿＿＿はとても＿＿しい</p>
+    </div>
+    <div class="kanji-boxes">
+      <% @kanji.each do |char| %>
+        <span class="kanji-character"><%= char %></span>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%# dropdowns for the underscoore %>
