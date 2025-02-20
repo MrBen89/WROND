@@ -58,10 +58,29 @@ class ConflictsController < ApplicationController
     @conflict.save
   end
 
+  def update
+    @conflict = Conflict.find(params[:id])
+    @user_profile = UserProfile.find(current_user.user_profile.id)
+    authorize @user_profile
+    @conflict.update(edit_conflict_params)
+    if @conflict.save
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.update(:conflicts, partial: "conflicts/p1puzzle", locals: { conflict: @conflict })
+        end
+        format.html { redirect_to conflicts_path }
+      end
+    end
+  end
+
   private
 
   def conflict_params
     params.permit(:commit, :authenticity_token)
+  end
+
+  def edit_conflict_params
+    params.require(:conflict).permit(:id, :status, :u1_state, :u2_state, :time, :winner)
   end
 
 end

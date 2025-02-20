@@ -1,0 +1,20 @@
+<div class="p1-puzzle-window">
+  <div class="p1-puzzle"
+  id="p1-puzzle"
+  data-controller="p1_puzzle"
+  data-p1_puzzle-target="p1RootDiv"
+  data-p1_puzzle-variable=<%=conflict.kanji.puzzleInfo.to_json%>
+  data-p1_puzzle-p1data=<%=conflict.u1_state%>
+  data-p1_puzzle-status=<%=conflict.status%>>
+  </div>
+</div>
+<div class="p2-puzzle-window">
+  <div class="p2-puzzle"
+  id="p2-puzzle"
+  data-controller="p2_puzzle"
+  data-p2_puzzle-target="p2RootDiv"
+  data-p2_puzzle-variable=<%=conflict.kanji.puzzleInfo.to_json%>
+  data-p2_puzzle-p2data=<%=conflict.u2_state%>
+  data-p2_puzzle-status=<%=conflict.status%>>
+  </div>
+</div>

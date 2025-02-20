@@ -49,21 +49,28 @@ export default class extends Controller {
 
     this.start_puzzle = this.start_puzzle.bind(this);
     //this.stop_puzzle = this.stop_puzzle.bind(this);
-    let button = document.createElement("button");
+    console.log(this.data.get("status"))
+    if (this.data.get("status") == "in_progress"){
+      this.start_puzzle()
+    } else {
+      let button = document.createElement("button");
     button.innerHTML = "START!"
     button.classList.add("p2startButton")
     button.addEventListener("click", this.start_puzzle);
     rootDiv.appendChild(button);
+    }
+
   }
 
   start_puzzle() {
     const rootDiv = this.p2RootDivTarget
-    document.querySelector(".p2startButton").remove()
+    if (document.querySelector(".p2startButton")) {document.querySelector(".p2startButton").remove()}
     //current patern is the working array
     let current_pattern = []
     //puzzledata is the solution array
     const puzzledata = JSON.parse(this.data.get("variable"));
     let p2data = JSON.parse(this.data.get("p2data"));
+    console.log(p2data)
     if (p2data.length == 0){
       p2data = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -82,6 +89,7 @@ export default class extends Controller {
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],]
     }
+
     //create the hints arrays
     let xValues = xWriter(puzzledata);
     let yValues = yWriter(puzzledata);
@@ -131,7 +139,6 @@ export default class extends Controller {
           } else if (p2data[i][n] == 2){
             box.classList.add("flagged")
           }
-          box.dataset.add
           box.dataset.x = n;
           box.dataset.y = i;
         row.appendChild(box);

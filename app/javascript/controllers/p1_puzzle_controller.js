@@ -77,24 +77,46 @@ export default class extends Controller {
 
     this.start_puzzle = this.start_puzzle.bind(this);
     //this.stop_puzzle = this.stop_puzzle.bind(this);
-    let button = document.createElement("button");
-    button.innerHTML = "START!"
-    button.classList.add("p1startButton")
-    button.addEventListener("click", this.start_puzzle);
-    button.addEventListener("click", () => {document.querySelector(".p2startButton").click()});
-    rootDiv.appendChild(button);
+    if (this.data.get("status") == "in_progress"){
+      this.start_puzzle()
+    } else {
+      let button = document.createElement("button");
+      button.innerHTML = "START!"
+      button.classList.add("p1startButton")
+      button.addEventListener("click", this.start_puzzle);
+      button.addEventListener("click", () => {document.querySelector(".p2startButton").click()});
+      rootDiv.appendChild(button);
+    }
   }
 
   start_puzzle() {
     const rootDiv = this.p1RootDivTarget
     console.log(rootDiv)
-    document.querySelector(".p1startButton").remove()
+    if (document.querySelector(".p1startButton")) {document.querySelector(".p1startButton").remove()}
     //timer()
     //current patern is the working array
-    let current_pattern = []
+    //let current_pattern = []
     //puzzledata is the solution array
     const puzzledata = JSON.parse(this.data.get("variable"));
-    console.log(puzzledata)
+    let current_pattern = JSON.parse(this.data.get("p1data"));
+    if (current_pattern == null){
+      current_pattern = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],]
+    }
     //create the hints arrays
     let xValues = xWriter(puzzledata);
     let yValues = yWriter(puzzledata);
@@ -125,7 +147,7 @@ export default class extends Controller {
       row.classList.add("row");
       rootDiv.appendChild(row);
       //add rows to current_pattern
-      current_pattern.push([]);
+      //current_pattern.push([]);
       //create guide cell
       let box = document.createElement("div")
       box.classList.add("yGuide")
@@ -134,12 +156,16 @@ export default class extends Controller {
       //create columns
       for (let n = 0; n < 16; n++){
           //add columns to current_patern
-          current_pattern[i].push("0")
+          //current_pattern[i].push("0")
           let box = document.createElement("div");
           box.classList.add(`col${n}`);
           box.classList.add(`row${i}`);
           box.classList.add(`cell`);
-          box.dataset.add
+          if (current_pattern[i][n] == 1){
+            box.classList.add("selected")
+          } else if (current_pattern[i][n] == 2){
+            box.classList.add("flagged")
+          }
           box.dataset.x = n;
           box.dataset.y = i;
 
@@ -147,6 +173,11 @@ export default class extends Controller {
             current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
               event.currentTarget.classList.remove("flagged");
               event.currentTarget.classList.toggle("selected")
+              console.log(JSON.parse(JSON.stringify(Object.assign( {...current_pattern}))));
+              document.getElementById("u2state_field").value = JSON.stringify(current_pattern);
+              document.getElementById("u1state_field").value = JSON.stringify(current_pattern);
+              console.log(document.getElementById("u1state_field"))
+              document.getElementById("conflict_form").requestSubmit()
 
 
               //check for win

@@ -1,23 +1,21 @@
 <%= @conflict.user1.user_profile.username %> VS. <%= @conflict.user1.user_profile.username %>
 
-<div class="container d-flex p-3 m-6">
-  <div class="p1-puzzle-window">
-    <div class="p1-puzzle"
-    id="p1-puzzle"
-    data-controller="p1_puzzle"
-    data-p1_puzzle-target="p1RootDiv"
-    data-p1_puzzle-variable=<%=@conflict.kanji.puzzleInfo.to_json%>
-    data-status-variable=<%=@conflict.status%>>
-    </div>
-  </div>
+<%= turbo_stream_from "conflicts", method="morph" %>
+<div class="container d-flex p-3 m-6" id="conflicts">
 
-  <div class="p2-puzzle-window">
-    <div class="p2-puzzle"
-    id="p2-puzzle"
-    data-controller="p2_puzzle"
-    data-p2_puzzle-target="p2RootDiv"
-    data-p2_puzzle-variable=<%=@conflict.kanji.puzzleInfo.to_json%>
-    data-p2_puzzle-p2data=<%=@conflict.user2_state.to_json%>>
-    </div>
-  </div>
+  <%= render "p1puzzle", conflict: @conflict %>
+  <%# <%= render "p2puzzle", conflict: @conflict %> %>
+
+
+</div>
+
+<div class="hidden">
+   <%= simple_form_for @conflict, remote: true, html: { id: :conflict_form } do |f| %>
+  <%= f.input :time ,input_html: {id: "time_field" }%>
+  <%= f.input :u1_state, input_html: {id: "u1state_field" } %>
+  <%= f.input :u2_state, input_html: {id: "u2state_field" } %>
+  <%= f.input :status , input_html: {id: "status_field", value: "in_progress" }%>
+  <%= f.input :winner, input_html: {id: "winner_field" } %>
+  <%= f.button :submit, id: "conflict-submit" %>
+  <% end %>
 </div>
