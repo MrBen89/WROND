@@ -1,4 +1,5 @@
 class ConflictsController < ApplicationController
+
   def index
     @conflicts = policy_scope(Conflict)
     @conflict = Conflict.new
@@ -6,6 +7,7 @@ class ConflictsController < ApplicationController
 
   def show
     @user_profile = UserProfile.find(current_user.user_profile.id)
+    @user = current_user
     @conflict = Conflict.find(params[:id])
     p @conflict
     authorize @user_profile
@@ -13,7 +15,6 @@ class ConflictsController < ApplicationController
   end
 
   def create
-    p "creating"
     @conflicts = Conflict.where(status: "searching")
     if conflict_params[:commit] == "All!" && @conflicts.length > 0
       @conflict = @conflicts.sample
@@ -24,6 +25,7 @@ class ConflictsController < ApplicationController
     elsif conflict_params[:commit] == "All!" && @conflicts.length == 0
       @conflict = Conflict.new(user1: current_user, status: "searching" )
       @conflict.kanji = Kanji.all.sample
+      @conflict.u1_state = [].to_json
       if @conflict.save
         respond_to do |format|
           format.turbo_stream do
@@ -64,16 +66,22 @@ class ConflictsController < ApplicationController
     authorize @user_profile
     @conflict.update(edit_conflict_params)
     if @conflict.save
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.update(:conflicts, partial: "conflicts/p1puzzle", locals: { conflict: @conflict })
-        end
-        format.html { redirect_to conflicts_path }
-      end
+      # broadcast_update_conflict
+        # format.turbo_stream do
+        #   render turbo_stream: turbo_stream.update(:conflicts_box, partial: "conflicts/p1puzzle", locals: { conflict: @conflict })
+        # end
+        redirect_to conflict_path(@conflict)
     end
   end
 
   private
+
+  # def broadcast_update_conflict
+  #   broadcast_update_to "conflicts",
+  #   partial: "conflicts/p1puzzle",
+  #   locals: { conflict: self }
+  # end
+
 
   def conflict_params
     params.permit(:commit, :authenticity_token)

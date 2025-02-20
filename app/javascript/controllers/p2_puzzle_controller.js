@@ -49,7 +49,6 @@ export default class extends Controller {
 
     this.start_puzzle = this.start_puzzle.bind(this);
     //this.stop_puzzle = this.stop_puzzle.bind(this);
-    console.log(this.data.get("status"))
     if (this.data.get("status") == "in_progress"){
       this.start_puzzle()
     } else {
@@ -69,8 +68,22 @@ export default class extends Controller {
     let current_pattern = []
     //puzzledata is the solution array
     const puzzledata = JSON.parse(this.data.get("variable"));
-    let p2data = JSON.parse(this.data.get("p2data"));
+
+    const user_id = document.getElementById("user_id").innerText
+    let player = 0
+    if (user_id == this.data.get("user1")){
+      player = 1
+    } else {
+      player = 2
+    }
+    let p2data = []
+    if (player == 1){
+      p2data = JSON.parse(this.data.get("p2data"));
+    } else {
+      p2data = JSON.parse(this.data.get("p1data"));
+    }
     console.log(p2data)
+
     if (p2data.length == 0){
       p2data = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -79,7 +92,7 @@ export default class extends Controller {
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-      [0,0,0,0,0,0,0,0,1,2,0,0,0,0,0,0],
+      [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],

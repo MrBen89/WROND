@@ -1,6 +1,6 @@
 class Conflict < ApplicationRecord
   after_create_commit :broadcast_conflict
-  after_update_commit :broadcast_p1_update_conflict
+  after_update_commit :broadcast_update_conflict
 
   belongs_to :kanji
   belongs_to :user1, class_name: "User", foreign_key: "user1_id", required: true
@@ -14,10 +14,15 @@ class Conflict < ApplicationRecord
     locals: { conflict: self }
   end
 
-  def broadcast_p1_update_conflict
-    broadcast_update_to "conflicts",
+  def broadcast_update_conflict
+    broadcast_replace_to self,
+    :conflicts,
+    target: "conflicts_box",
     partial: "conflicts/p1puzzle",
     locals: { conflict: self }
   end
 
 end
+# def update_message
+#   broadcast_replace_to(user, :message, target: "message", template: "messages/show", locals: { message: self })
+# end

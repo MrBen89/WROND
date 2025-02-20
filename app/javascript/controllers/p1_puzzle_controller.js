@@ -71,7 +71,7 @@ let timer = (() => {setInterval(() => {
 export default class extends Controller {
   static targets = ["p1RootDiv"]
   connect() {
-    console.log(this.data.get("status"))
+
     //rootDiv is where to mount the puzzle
     const rootDiv = this.p1RootDivTarget;
 
@@ -91,15 +91,29 @@ export default class extends Controller {
 
   start_puzzle() {
     const rootDiv = this.p1RootDivTarget
-    console.log(rootDiv)
     if (document.querySelector(".p1startButton")) {document.querySelector(".p1startButton").remove()}
     //timer()
-    //current patern is the working array
+    //current pattern is the working array
     //let current_pattern = []
     //puzzledata is the solution array
     const puzzledata = JSON.parse(this.data.get("variable"));
-    let current_pattern = JSON.parse(this.data.get("p1data"));
-    if (current_pattern == null){
+    const user_id = document.getElementById("user_id").innerText
+    let player = 0
+
+    if (user_id == this.data.get("user1")){
+      player = 1
+    } else {
+      player = 2
+    }
+    let current_pattern = []
+
+    if (player == 1 && this.data.get("p1data") != null) {
+      current_pattern = JSON.parse(this.data.get("p1data"))
+    } else if (player == 2 && this.data.get("p2data") != null) {
+      current_pattern = JSON.parse(this.data.get("p2data"))
+    }
+
+    if (current_pattern.length == 0){
       current_pattern = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -173,10 +187,11 @@ export default class extends Controller {
             current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
               event.currentTarget.classList.remove("flagged");
               event.currentTarget.classList.toggle("selected")
-              console.log(JSON.parse(JSON.stringify(Object.assign( {...current_pattern}))));
-              document.getElementById("u2state_field").value = JSON.stringify(current_pattern);
-              document.getElementById("u1state_field").value = JSON.stringify(current_pattern);
-              console.log(document.getElementById("u1state_field"))
+              if (player == 1){
+                document.getElementById("u1state_field").value = JSON.stringify(current_pattern);
+              } else {
+                document.getElementById("u2state_field").value = JSON.stringify(current_pattern);
+              }
               document.getElementById("conflict_form").requestSubmit()
 
 

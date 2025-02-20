@@ -1,12 +1,10 @@
-<%= @conflict.user1.user_profile.username %> VS. <%= @conflict.user1.user_profile.username %>
+<%= @conflict.user1.user_profile.username %> VS. <%= @conflict.user2.user_profile.username %>
 
-<%= turbo_stream_from "conflicts", method="morph" %>
-<div class="container d-flex p-3 m-6" id="conflicts">
-
-  <%= render "p1puzzle", conflict: @conflict %>
-  <%# <%= render "p2puzzle", conflict: @conflict %> %>
-
-
+<%= turbo_stream_from @conflict %>
+<div class="container p-3 m-6" id="conflicts_box">
+  <%= turbo_frame_tag :conflict_partial do %>
+  <%= render "p1puzzle", conflict: @conflict, user: @user %>
+  <% end%>
 </div>
 
 <div class="hidden">
@@ -18,4 +16,6 @@
   <%= f.input :winner, input_html: {id: "winner_field" } %>
   <%= f.button :submit, id: "conflict-submit" %>
   <% end %>
+
+  <div class="hidden" id="user_id"><%= @user.id %></div>
 </div>
