@@ -19,6 +19,10 @@ class User < ApplicationRecord
     user_prof.total_xp = 0
     user_prof.tagline = "I Love Pies"
     user_prof.bio = "Tell us about yourself!"
+    user_prof.cell_style = "Transparent"
+    user_prof.active_style = "Dark Grey Squares"
+    user_prof.flagged_style = "Light Grey Squares"
+    user_prof.background_style = "None"
     user_prof.save
   end
 

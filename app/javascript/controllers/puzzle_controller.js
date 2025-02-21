@@ -1,14 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
 
-const levelColors = {
-  1: "purple",
-  2: "blue",
-  3: "green",
-  4: "yellow",
-  5: "orange",
-  6: "red",
-};
-
 //compares if the target and current array arre the same
 let checkArrays = (arr1, arr2) => {
   for (let i=0; i<16; i++){
@@ -108,7 +99,12 @@ export default class extends Controller {
 
     const rootDiv = this.rootDivTarget
 
-    rootDiv.classList.add(`${this.data.get("background_style")}`)
+    const bg_style = this.data.get("background_style").replace(" ", "_")
+    const cell_style = this.data.get("cell_style").replace(" ", "_")
+    const active_style = this.data.get("active_style").replace(" ", "_")
+    const flagged_style = this.data.get("flagged_style").replace(" ", "_")
+
+    rootDiv.classList.add(bg_style)
 
     rootDiv.addEventListener("mouseup", () => {
       mouse_status = "up"
@@ -153,7 +149,9 @@ export default class extends Controller {
           box.classList.add(`col${n}`);
           box.classList.add(`row${i}`);
           box.classList.add(`cell`);
-          box.classList.add(`${this.data.get("cell_style")}`)
+          box.classList.add(active_style)
+          box.classList.add(flagged_style)
+          box.classList.add(cell_style)
           box.dataset.x = n;
           box.dataset.y = i;
 

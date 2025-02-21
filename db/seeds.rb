@@ -39,27 +39,9 @@ users.each do |user_data|
     password: 'password'
   )
 
-  kanji_quotes = [
-    "学びて時に之を習う、亦説ばしからずや",
-    "七転び八起き",
-    "石の上にも三年",
-    "花より団子",
-    "明日やろうは馬鹿野郎",
-    "能ある鷹は爪を隠す"
-  ]
-
-  UserProfile.create!(
-    user: user,
-    username: user_data[:username],
-    bio: Faker::Quote.famous_last_words,
-    tagline: kanji_quotes.sample,
-    level: rand(1..100),
-    total_xp: rand(0..5000),
-    profile_pic: Faker::Avatar.image(slug: user_data[:username], size: "100x100", format: "png")
-  )
 end
 
-puts " Seeded #{User.count} users and #{UserProfile.count} profiles!"
+puts " Seeded #{User.count} users!"
 
 kanji_file_path = File.join(Rails.root, 'db', 'kanji_data.json')
 puzzle_file_path = File.join(Rails.root, 'db', 'puzzles.json')
