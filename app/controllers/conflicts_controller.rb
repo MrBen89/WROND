@@ -9,7 +9,6 @@ class ConflictsController < ApplicationController
     @user_profile = UserProfile.find(current_user.user_profile.id)
     @user = current_user
     @conflict = Conflict.find(params[:id])
-    p @conflict
     authorize @user_profile
     authorize @conflict
   end
@@ -66,22 +65,15 @@ class ConflictsController < ApplicationController
     authorize @user_profile
     @conflict.update(edit_conflict_params)
     if @conflict.save
-      # broadcast_update_conflict
         # format.turbo_stream do
-        render turbo_stream: turbo_stream.update(:conflicts_box, partial: "conflicts/p1puzzle", locals: { conflict: @conflict })
+        render turbo_stream: [turbo_stream.update(:conflicts_box, partial: "conflicts/p1puzzle", locals: { conflict: @conflict }),
+          turbo_stream.update(:conflicts, partial: "conflicts/p2puzzle", locals: { conflict: @conflict })]
         # end
         # redirect_to conflict_path(@conflict)
     end
   end
 
   private
-
-  # def broadcast_update_conflict
-  #   broadcast_update_to "conflicts",
-  #   partial: "conflicts/p1puzzle",
-  #   locals: { conflict: self }
-  # end
-
 
   def conflict_params
     params.permit(:commit, :authenticity_token)

@@ -3,7 +3,12 @@
 <%= turbo_stream_from @conflict %>
 <div class="container p-3 m-6" id="conflicts_box">
   <%= turbo_frame_tag :conflict_partial do %>
-  <%= render "p1puzzle", conflict: @conflict, user: @user %>
+    <%= render "p1puzzle", conflict: @conflict, user: @user %>
+  <% end %>
+</div>
+<div class="container p-3 m-6" id=<%="room#{@conflict.id}player#{@user.id}"%>>
+  <%= turbo_frame_tag :conflict_p2_partial do %>
+    <%= render "p2puzzle", conflict: @conflict, user: @user %>
   <% end %>
 </div>
 
