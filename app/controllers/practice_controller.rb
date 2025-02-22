@@ -2,7 +2,6 @@ class PracticeController < ApplicationController
 
   def index
     @user_profile = UserProfile.find(current_user.user_profile.id)
-    @kanji = policy_scope(Kanji)
-    @kanji = ["漢","字","日","本","語","大","根","怪"]
+    @unlocked_kanji = policy_scope(Unlock).where(user: current_user).map(&:kanji)
   end
 end

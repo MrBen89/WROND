@@ -16,8 +16,10 @@
       </p>
     </div>
     <div class="kanji-boxes">
-      <% @kanji.each do |char| %>
-        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= char %>"><%= char %></span>
+      <% @unlocked_kanji.each do |kanji| %>
+        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji.kanji %>">
+        <%= kanji.kanji %>
+        </span>
       <% end %>
     </div>
   </div>
