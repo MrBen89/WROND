@@ -157,14 +157,11 @@ export default class extends Controller {
 
           const handleDrag = () => {
             if (mouse_status == "left") {
-              console.log("drag left")
               if (mode == "draw"){
-                console.log(mode)
                 current_pattern[i][n] = "1"
                 event.currentTarget.classList.remove("flagged");
                 event.currentTarget.classList.add("selected")
               } else if (mode == "erase") {
-                console.log(mode)
                 current_pattern[i][n] = "0";
                 event.currentTarget.classList.remove("flagged");
                 event.currentTarget.classList.remove("selected")
@@ -177,13 +174,11 @@ export default class extends Controller {
 
             } else if (mouse_status == "right") {
               if (mode == "draw"){
-                console.log("drag draw right")
                 current_pattern[i][n] = "0";
                 event.preventDefault();
                 event.currentTarget.classList.remove("selected");
                 event.currentTarget.classList.add("flagged");
               } else if (mode == "erase"){
-                console.log("drag erase right")
                 event.preventDefault();
                 event.currentTarget.classList.remove("flagged");
               }
@@ -195,7 +190,6 @@ export default class extends Controller {
             if (mouse_status == "left"){
               console.log("left")
               if (event.currentTarget.classList.contains("selected")){
-                console.log("click erase")
                 mode = "erase"
               } else if (!event.currentTarget.classList.contains("selected")){
                 mode = "draw"
@@ -215,10 +209,8 @@ export default class extends Controller {
             //console.log(event.currentTarget.classList)
             if (mouse_status == "right"){
               if (event.currentTarget.classList.contains("flagged")){
-                console.log("erase from right click")
                 mode = "erase"
               } else if (!event.currentTarget.classList.contains("flagged")){
-                console.log("toggle from right click")
                 mode = "draw"
               }
               current_pattern[i][n] = "0";
@@ -240,14 +232,15 @@ export default class extends Controller {
   }
 
   check_for_level_up() {
-    console.log("hi")
     let xp = document.getElementById("xp_field").value
     let level = parseInt(document.getElementById("level_field").value)
+    console.log(document.getElementById("level_field").value)
     document.getElementById("level-span").innerText = level;
     document.getElementById("level-up-span").innerText = Math.floor(xp / 100);
     if (xp / 100 >= (level + 1)) {
       document.getElementById("level_field").value = Math.floor(xp / 100);
-    return true
+      console.log("levelup")
+      return true
     }
     return false
   }
@@ -304,8 +297,6 @@ export default class extends Controller {
         guide.innerText = ""
       }
     },1);
-    this.update_user_record();
-    this.create_puzzle_record();
     setTimeout(() => {
       document.getElementById('conclussionModal').classList.remove("hidden");
       document.getElementById('popup-button').addEventListener("click", () => {
@@ -314,8 +305,8 @@ export default class extends Controller {
         document.getElementById('highscores').classList.add("expanded");
       });
       this.experience_roller()
-      this.check_for_level_up()
-      if (this.check_for_level_up) {
+      if (this.check_for_level_up()) {
+
         setTimeout(() => {
           document.getElementById('level-up').classList.remove("hidden");
           setTimeout(() => {
@@ -325,7 +316,8 @@ export default class extends Controller {
           //document.getElementById('level-up-image').classList.remove("hidden");
         },1500)
       }
-
+      this.update_user_record();
+      this.create_puzzle_record();
     },1000)
 
   };
