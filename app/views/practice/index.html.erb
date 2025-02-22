@@ -1,23 +1,17 @@
 <div class="kanji-container" data-controller="practice">
   <div class="inner-container">
     <div class="text-box">
-      <p class="sentence">
-        <span class="drop-zone" data-kanji-target="dropZone"></span>
-        <span class="drop-zone" data-kanji-target="dropZone"></span> は難しい
-      </p>
-      <p class="sentence">
-        <span class="drop-zone" data-kanji-target="dropZone"></span>
-        <span class="drop-zone" data-kanji-target="dropZone"></span> 検定能力
-      </p>
-      <p class="sentence">
-        この <span class="drop-zone" data-kanji-target="dropZone"></span>
-        <span class="drop-zone" data-kanji-target="dropZone"></span> はとても
-        <span class="drop-zone" data-kanji-target="dropZone"></span> しい
-      </p>
+
+      <% @processed_sentences.each do |sentence| %>
+        <p class="sentence"><%= raw sentence[:modified] %></p>
+      <% end %>
+
     </div>
     <div class="kanji-boxes">
-      <% @kanji.each do |char| %>
-        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= char %>"><%= char %></span>
+      <% @unlocked_kanji.each do |kanji| %>
+        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
+        <%= kanji %>
+        </span>
       <% end %>
     </div>
   </div>

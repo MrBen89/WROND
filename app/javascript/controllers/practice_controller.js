@@ -43,6 +43,7 @@ export default class extends Controller {
     // const kanji = event.dataTransfer.getData("text");
     if (!event.target.textContent) {
       event.target.textContent = text;
+      event.target.style.backgroundColor = "rgb(2, 132, 19)";
     }
   }
 
