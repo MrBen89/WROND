@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_02_20_131218) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_22_012501) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_20_131218) do
     t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "upgrade_type"
   end
 
   create_table "user_profiles", force: :cascade do |t|
@@ -63,10 +64,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_20_131218) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "cell_style"
-    t.string "active_style"
-    t.string "background_style"
-    t.string "flagged_style"
+    t.bigint "cell_style_id"
+    t.bigint "background_style_id"
+    t.bigint "flagged_style_id"
+    t.bigint "active_style_id"
+    t.index ["active_style_id"], name: "index_user_profiles_on_active_style_id"
+    t.index ["background_style_id"], name: "index_user_profiles_on_background_style_id"
+    t.index ["cell_style_id"], name: "index_user_profiles_on_cell_style_id"
+    t.index ["flagged_style_id"], name: "index_user_profiles_on_flagged_style_id"
     t.index ["user_id"], name: "index_user_profiles_on_user_id"
   end
 
@@ -86,5 +91,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_20_131218) do
   add_foreign_key "puzzles", "users"
   add_foreign_key "unlocks", "upgrades"
   add_foreign_key "unlocks", "users"
+  add_foreign_key "user_profiles", "upgrades", column: "active_style_id"
+  add_foreign_key "user_profiles", "upgrades", column: "background_style_id"
+  add_foreign_key "user_profiles", "upgrades", column: "cell_style_id"
+  add_foreign_key "user_profiles", "upgrades", column: "flagged_style_id"
   add_foreign_key "user_profiles", "users"
 end

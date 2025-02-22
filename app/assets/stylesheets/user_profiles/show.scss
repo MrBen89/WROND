@@ -135,7 +135,6 @@
       border-radius: 4px;
     }
   }
-
   .upgrades {
     display: flex;
     justify-content: space-around;
@@ -166,5 +165,59 @@
         background-color: #d4edda;
     }
   }
+  }
+
 }
+
+.upgrades-container {
+  width: 80%;
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  text-align: center;
+
+  .upgrades-box {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+
+  .upgradeCard {
+    box-shadow: 3px 3px 0px #000;
+    text-align: center;
+    background: #ddd;
+    width: 250px;
+    height: 350px;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #929292bd;
+    }
+
+    &.locked {
+      background-color: #e0e0e0;
+      cursor: not-allowed;
+    }
+
+    &.selectable {
+      background-color: #fff;
+    }
+
+    &.selected {
+      background-color: #75bc86;
+    }
+
+    &.unlock {
+      color: #4a90e2;
+    }
+  }
 }
