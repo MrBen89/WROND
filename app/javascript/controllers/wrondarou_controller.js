@@ -1,10 +1,13 @@
-import { KanjiController } from "@hotwired/stimulus";
+import { Controller } from "@hotwired/stimulus";
 
-export default class extends KanjiController {
+export default class extends Controller {
   static targets = ["hint"];
 
+  connect() {
+console.log("It works!");
+  }
+
   toggle() {
-    this.hintTarget.style.display =
-      this.hintTarget.style.display === "none" ? "block" : "none";
+    this.hintTarget.classList.toggle("d-none");
   }
 }
