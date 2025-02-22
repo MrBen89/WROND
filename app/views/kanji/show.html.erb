@@ -47,6 +47,13 @@
   <%= render "kanji/conclussion" %>
 </div>
 
-<div class="gif-container-bottom">
-  <%= image_tag "tanuki.gif", class: "game-gif-bottom" %>
+
+  <div class="wrondarou-hint" data-hint-target="wrondarou" style="display: none;">
+    <%= @content %>
+  </div>
 </div>
+
+<div data-controller="wrondarou">
+  <div class="gif-container-bottom" data-action="click->hint#toggle">
+    <%= image_tag "tanuki.gif", class: "game-gif-bottom" %>
+  </div>
