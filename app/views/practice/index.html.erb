@@ -1,24 +1,23 @@
-<div class="kanji-container">
+<div class="kanji-container" data-controller="practice">
   <div class="inner-container">
     <div class="text-box">
       <p class="sentence">
-        <%= select_tag "kanji_1", options_for_select(@kanji), class: "kanji-dropdown" %>
-        <%= select_tag "kanji_2", options_for_select(@kanji), class: "kanji-dropdown" %> は難しい
+        <span class="drop-zone" data-kanji-target="dropZone"></span>
+        <span class="drop-zone" data-kanji-target="dropZone"></span> は難しい
       </p>
       <p class="sentence">
-        <%= select_tag "kanji_3", options_for_select(@kanji), class: "kanji-dropdown" %>
-        <%= select_tag "kanji_4", options_for_select(@kanji), class: "kanji-dropdown" %> 検定能力
+        <span class="drop-zone" data-kanji-target="dropZone"></span>
+        <span class="drop-zone" data-kanji-target="dropZone"></span> 検定能力
       </p>
       <p class="sentence">
-        この <%= select_tag "kanji_5", options_for_select(@kanji), class: "kanji-dropdown" %>
-        <%= select_tag "kanji_6", options_for_select(@kanji), class: "kanji-dropdown" %>
-        はとても
-        <%= select_tag "kanji_7", options_for_select(@kanji), class: "kanji-dropdown" %> しい
+        この <span class="drop-zone" data-kanji-target="dropZone"></span>
+        <span class="drop-zone" data-kanji-target="dropZone"></span> はとても
+        <span class="drop-zone" data-kanji-target="dropZone"></span> しい
       </p>
     </div>
     <div class="kanji-boxes">
       <% @kanji.each do |char| %>
-        <span class="kanji-character"><%= char %></span>
+        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= char %>"><%= char %></span>
       <% end %>
     </div>
   </div>
