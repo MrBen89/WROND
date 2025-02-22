@@ -32,7 +32,7 @@ export default class extends Controller {
       // Update the mode description
       const descriptions = {
         kanji: "Kanji mode allows you to practice individual kanji.<br>The classic mode!",
-        story: "HEEHEE<br>HEEHEE"
+        story: "Try and practice the kanji you've learnt by making<br>SENTENCES!"
       };
       this.modeDescriptionTarget.innerHTML = descriptions[mode];
     }
