@@ -1,0 +1,52 @@
+<h1>Your Flashcards</h1>
+
+<div class="flashcards-container">
+  <% @unlocked_kanji.each do |kanji| %>
+    <div class="flashcard">
+      <div class="kanji-front">
+        <%= kanji.kanji %>
+      </div>
+      <div class="kanji-back">
+        <p><strong>Meaning:</strong> <%= kanji.meaning.join(", ") %></p>
+        <p><strong>Onyomi:</strong> <%= kanji.onyomi %></p>
+        <p><strong>Kunyomi:</strong> <%= kanji.kunyomi %></p>
+        <p><strong>JLPT Level:</strong> <%= kanji.jlptLevel %></p>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<style>
+.flashcards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.flashcard {
+  width: 150px;
+  height: 200px;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  text-align: center;
+  padding: 20px;
+}
+
+.kanji-front {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.kanji-back {
+  display: none;
+}
+
+.flashcard:hover .kanji-front {
+  display: none;
+}
+
+.flashcard:hover .kanji-back {
+  display: block;
+}
+</style>

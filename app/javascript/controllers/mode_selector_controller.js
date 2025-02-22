@@ -12,18 +12,21 @@ export default class extends Controller {
   setMode(event) {
     console.log(event);
     const mode = event.target.dataset.mode;
+    console.log(mode);
     const isActive = event.target.classList.contains("active");
+    let target = document.querySelector(`[data-mode="${mode}"]`);
+    console.log(target);
 
     // If the mode is already active, remove it
     if (isActive) {
-      event.target.classList.remove("active");
+      target.classList.remove("active");
       this.selectedModeTarget.value = "";
       this.playButtonTarget.disabled = true;
       this.modeDescriptionTarget.innerHTML = "Choose a mode!";
     } else {
       // Deactivate all other buttons and activate the clicked one
       this.buttonTargets.forEach((button) => button.classList.remove("active"));
-      event.target.classList.add("active");
+      target.classList.add("active");
       this.selectedModeTarget.value = mode;
 
       // Enable the play button
@@ -32,7 +35,7 @@ export default class extends Controller {
       // Update the mode description
       const descriptions = {
         kanji: "Kanji mode allows you to practice individual kanji.<br>The classic mode!",
-        story: "HEEHEE<br>HEEHEE"
+        story: "Try and practice the kanji you've learnt by making<br>SENTENCES!"
       };
       this.modeDescriptionTarget.innerHTML = descriptions[mode];
     }
