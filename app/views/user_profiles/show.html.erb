@@ -1,15 +1,13 @@
 <%= stylesheet_link_tag 'user_profiles/show', media: 'all', 'data-turbolinks-track': 'reload' %>
-
-<h1 font="Chicago"><%= @user_profile.username %>'s Profile</h1>
 <div class="profile-container" data-outline-color="<%= outline_color_for_level(@user_profile.level) %>">
   <div class="profile-pic">
     <% if @user_profile.profile_pic.present? %>
     <img src="<%= @user_profile.profile_pic %>" alt="<%= @user_profile.username %>'s Profile Pic">
     <% else %>
-    <img src="WROND.png" alt="Default Profile Pic">
+      <%= image_tag("WROND.png") %>
     <% end %>
   </div>
-
+  <h1 font="Chicago"><%= @user_profile.username %></h1>
   <p><strong>Tagline:</strong> <%= @user_profile.tagline || "No tagline set" %></p>
   <p><strong>Bio:</strong> <%= @user_profile.bio || "No bio available" %></p>
   <p><strong>Level:</strong> <%= @user_profile.level %></p>
@@ -31,8 +29,105 @@
       <% end %>
     <% end %>
   </div>
-
   <div class="edit-button">
     <%= link_to "Edit Profile", edit_user_profile_path(@user_profile), class: "btn btn-primary" %>
   </div>
 </div>
+
+
+  <div class="upgrades-container d-flex flex-column" >
+    <%= @user_profile.cell_style %>
+    <%= @user_profile.active_style %>
+    <h2>Background Colors</h2>
+     <hr class="divider">
+     <div class="upgrades-box d-flex">
+      <% @upgrades.where(upgrade_type: "cell").each do |upgrade| %>
+        <% if @user_profile.level.to_i >= upgrade.level.to_i %>
+        <%= button_to user_profile_path(@user_profile), :method=> :patch, params: { upgrade: upgrade }, remote: true do %>
+          <div class="upgradeCard selectable <%= "selected" if @user_profile.cell_style == upgrade%>">
+            <h2><%= upgrade.name %></h2>
+            <hr class="divider">
+            <p> <%= upgrade.description %></p>
+          </div>
+        <% end %>
+        <% else %>
+          <div class="upgradeCard locked">
+            <h2><%= upgrade.name %></h2>
+            <hr class="divider">
+            <p> <%= upgrade.description %></p>
+            <hr class="divider">
+            <p class="unlock"> Unlocked at Level <%= upgrade.level %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <h2>Selected Square Colors</h2>
+     <hr class="divider">
+     <div class="upgrades-box d-flex">
+      <% @upgrades.where(upgrade_type: "active").each do |upgrade| %>
+        <% if @user_profile.level.to_i >= upgrade.level.to_i %>
+        <%= button_to user_profile_path(@user_profile), :method=> :patch, params: { upgrade: upgrade }, remote: true do %>
+          <div class="upgradeCard selectable  <%= "selected" if @user_profile.active_style == upgrade%>">
+            <h2><%= upgrade.name %></h2>
+            <hr class="divider">
+            <p> <%= upgrade.description %></p>
+          </div>
+          <% end %>
+        <% else %>
+          <div class="upgradeCard locked">
+            <h2><%= upgrade.name %></h2>
+            <hr class="divider">
+            <p> <%= upgrade.description %></p>
+            <hr class="divider">
+            <p class="unlock"> Unlocked at Level <%= upgrade.level %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <h2>Flagged Square Colors</h2>
+     <hr class="divider">
+     <div class="upgrades-box d-flex">
+      <% @upgrades.where(upgrade_type: "flagged").each do |upgrade| %>
+        <% if @user_profile.level.to_i >= upgrade.level.to_i %>
+        <%= button_to user_profile_path(@user_profile), :method=> :patch, params: { upgrade: upgrade }, remote: true do %>
+          <div class="upgradeCard selectable  <%= "selected" if @user_profile.flagged_style == upgrade%>">
+            <h2><%= upgrade.name %></h2>
+            <hr class="divider">
+            <p> <%= upgrade.description %></p>
+          </div>
+          <% end %>
+        <% else %>
+          <div class="upgradeCard locked">
+            <h2><%= upgrade.name %></h2>
+            <hr class="divider">
+            <p> <%= upgrade.description %></p>
+            <hr class="divider">
+            <p class="unlock"> Unlocked at Level <%= upgrade.level %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <h2>Backgrounds</h2>
+     <hr class="divider">
+     <div class="upgrades-box d-flex">
+      <% @upgrades.where(upgrade_type: "background").each do |upgrade| %>
+        <% if @user_profile.level.to_i >= upgrade.level.to_i %>
+        <%= button_to user_profile_path(@user_profile), :method=> :patch, params: { upgrade: upgrade }, remote: true do %>
+          <div class="upgradeCard selectable  <%= "selected" if @user_profile.background_style == upgrade%>">
+            <h2><%= upgrade.name %></h2>
+            <hr class="divider">
+            <p> <%= upgrade.description %></p>
+          </div>
+          <% end %>
+        <% else %>
+          <div class="upgradeCard locked">
+            <h2><%= upgrade.name %></h2>
+            <hr class="divider">
+            <p> <%= upgrade.description %></p>
+            <hr class="divider">
+            <p class="unlock"> Unlocked at Level <%= upgrade.level %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
