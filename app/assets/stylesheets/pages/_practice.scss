@@ -1,83 +1,85 @@
+// stylesheets/kanji.scss
 .kanji-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 90%;
-  height: 650px;
+  max-width: 800px;
+  height: auto;
   background-color: lightgray;
   padding: 10px;
   border: 2px solid gray;
   margin: auto;
-  transition: all 0.5s ease-in-out;
-}
-
-.inner-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  width: 85%;
-  height: 500px;
-  background-color: rgb(70, 70, 64);
-  padding: 20px;
-  margin: 10px auto;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.text-box {
-  background-color: white;
-  padding: 15px;
-  border-radius: 8px;
-  width: 100%;
-}
-
-.sentence {
-  background-color: rgb(88, 89, 88);
-  color: white;
-  padding: 8px;
-  margin-bottom: 8px;
-  border-radius: 5px;
-  font-size: 18px;
-}
-
-.kanji-boxes {
-  display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
-  padding: 10px;
-  width: 100%;
-}
 
-.kanji-character {
-  width: 100px;
-  height: 100px;
-  background-color: rgb(2, 132, 19);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-  font-weight: bold;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out;
-}
+  .inner-container {
+    width: 100%;
+    background-color: rgb(70, 70, 64);
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-.kanji-character:hover {
-  transform: scale(1.1);
-  background-color: rgb(4, 160, 24);
-}
+  .text-box {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.2rem;
 
-.kanji-dropdown {
-  font-size: 18px;
-  padding: 5px;
-  margin: 5px;
-  border-radius: 5px;
-  border: 1px solid gray;
-  background-color: white;
-  cursor: pointer;
+    .sentence {
+      background-color: rgb(88, 89, 88);
+      padding: 8px;
+      margin-bottom: 8px;
+      border-radius: 5px;
+      color: white;
+      user-select: none;
+    }
+
+    .drop-zone {
+      display: inline-block;
+      min-width: 40px;
+      min-height: 40px;
+      background-color: white;
+      border: 2px dashed gray;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+
+      &:hover {
+        background-color: lightblue;
+      }
+    }
+  }
+
+  .kanji-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+
+    .kanji-character {
+      width: 50px;
+      height: 50px;
+      background-color: rgb(2, 132, 19);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      border-radius: 5px;
+      cursor: grab;
+      transition: transform 0.2s;
+      user-select: none;
+
+      &:active {
+        cursor: grabbing;
+        transform: scale(1.1);
+      }
+    }
+  }
 }
