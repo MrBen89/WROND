@@ -6,6 +6,7 @@ class UserProfilesController < ApplicationController
 
   def show
     @user_profile = UserProfile.find_by(user_id: current_user.id)
+    @upgrades = Upgrade.all
     authorize @user_profile
   end
 
