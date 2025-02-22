@@ -14,14 +14,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_20_112005) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "kanji_words", force: :cascade do |t|
-    t.bigint "kanji_id", null: false
-    t.string "word"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["kanji_id"], name: "index_kanji_words_on_kanji_id"
-  end
-
   create_table "kanjis", force: :cascade do |t|
     t.string "kanji"
     t.text "puzzleInfo", default: [], array: true
@@ -85,7 +77,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_02_20_112005) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "kanji_words", "kanjis"
   add_foreign_key "puzzles", "kanjis"
   add_foreign_key "puzzles", "users"
   add_foreign_key "unlocks", "users"
