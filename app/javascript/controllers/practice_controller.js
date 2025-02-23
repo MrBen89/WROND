@@ -38,13 +38,13 @@ export default class extends Controller {
   }
 
   drop(event) {
-    console.log(event);
     event.preventDefault();
     // const kanji = event.dataTransfer.getData("text");
     if (!event.target.textContent) {
       event.target.textContent = text;
       event.target.style.backgroundColor = "rgb(2, 132, 19)";
     }
+    console.log(document.querySelector(".sentence").innerText);
   }
 
   clear(event) {
