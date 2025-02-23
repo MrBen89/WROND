@@ -1,33 +1,42 @@
-<div class="game-container">
+<div class="game-container" data-controller="mode-selector">
   <div class="mode-selection">
-
     <form action="/kanji/index" method="get">
       <div class="mode-options">
-        <button type="button" class="mode-box" data-mode="kanji">
-          <div class="white-box">
-            <span class="kanji-text">漢字</span>
+        <button
+          type="button"
+          class="mode-box"
+          data-action="click->mode-selector#setMode"
+          data-mode="kanji"
+          data-target="mode-selector.button"
+        >
+          <div class="white-box" data-mode="kanji">
+            <span class="kanji-text" data-mode="kanji">漢字</span>
           </div>
           <p class="mode-label">KANJI MODE</p>
         </button>
 
-        <button type="button" class="mode-box" data-mode="story">
-          <div class="white-box">
-            <span class="kanji-text">物語</span>
+        <button
+          type="button"
+          class="mode-box"
+          data-action="click->mode-selector#setMode"
+          data-mode="story"
+          data-target="mode-selector.button"
+        >
+          <div class="white-box" data-mode="story">
+            <span class="kanji-text" data-mode="story">物語</span>
           </div>
           <p class="mode-label">STORY MODE</p>
         </button>
       </div>
     </form>
 
-    <p class="mode-description" id="mode-description">
+    <p class="mode-description" id="mode-description" data-target="mode-selector.modeDescription">
       Choose a mode!
-      <br>
-      <br>
     </p>
 
-    <form action="/kanji/index" method="get">
-      <input type="hidden" name="mode" id="selected-mode" value="">
-      <button type="submit" class="play-button" id="play-btn" disabled>Play!</button>
+    <form action="/" method="get">
+      <input type="hidden" name="mode" id="selected-mode" data-target="mode-selector.selectedMode" value="">
+      <button type="submit" class="play-button" id="play-btn" data-target="mode-selector.playButton" disabled>Play!</button>
     </form>
   </div>
 </div>
@@ -35,40 +44,3 @@
 <div class="gif-container">
   <%= image_tag "tanuki.gif", class: "game-gif" %>
 </div>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const buttons = document.querySelectorAll(".mode-box");
-    const playButton = document.getElementById("play-btn");
-    const selectedModeInput = document.getElementById("selected-mode");
-    const modeDescription = document.getElementById("mode-description"); // Get the description element
-
-    // Mode descriptions
-    const descriptions = {
-      kanji: "Kanji mode allows you to practice individual kanji.<br>The classic mode!",
-      story: "HEEHEE<br>HEEHEE"
-    };
-
-    buttons.forEach((button) => {
-      button.addEventListener("click", function () {
-        if (this.classList.contains("active")) {
-          this.classList.remove("active");
-          selectedModeInput.value = "";
-          playButton.setAttribute("disabled", "true");
-          modeDescription.innerHTML = "Choose a mode!";
-        } else {
-          buttons.forEach(btn => btn.classList.remove("active"));
-
-          this.classList.add("active");
-
-          const mode = this.getAttribute("data-mode");
-          selectedModeInput.value = mode;
-          playButton.removeAttribute("disabled");
-
-          // Change the description based on the selected mode
-          modeDescription.innerHTML = descriptions[mode];
-        }
-      });
-    });
-  });
-</script>

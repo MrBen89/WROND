@@ -1,0 +1,82 @@
+// stylesheets/kanji.scss
+.kanji-container {
+  width: 90%;
+  max-width: 800px;
+  height: auto;
+  background-color: lightgray;
+  padding: 10px;
+  border: 2px solid gray;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+
+  .inner-container {
+    width: 100%;
+    background-color: rgb(70, 70, 64);
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .text-box {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.2rem;
+
+    .sentence {
+      background-color: rgb(88, 89, 88);
+      padding: 8px;
+      margin-bottom: 8px;
+      border-radius: 5px;
+      color: white;
+      user-select: none;
+    }
+
+    .drop-zone {
+      display: inline-block;
+      min-width: 40px;
+      min-height: 40px;
+      background-color: white;
+      border: 2px dashed gray;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+
+    }
+  }
+
+  .kanji-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+
+    .kanji-character {
+      width: 50px;
+      height: 50px;
+      background-color: rgb(2, 132, 19);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      border-radius: 5px;
+      cursor: grab;
+      transition: transform 0.2s;
+      user-select: none;
+
+      &:active {
+        cursor: grabbing;
+        transform: scale(1.1);
+      }
+    }
+  }
+}

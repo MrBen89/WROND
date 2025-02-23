@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'flashcards/index'
   devise_for :users
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -8,12 +9,13 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get 'kanji/index', to: 'kanji#index'
-
+  get 'flashcards', to: 'flashcards#index'
 
   resources :kanji, only: [:index, :show]
   resources :puzzles, only: [:create]
   resources :user_profiles, only: [:show, :edit, :update]
   resources :upgrades, only: [:show]
+  resources :practice, only: [:index]
   resources :conflicts, only: [:index, :show, :create, :update]
 
 

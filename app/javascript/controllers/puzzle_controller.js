@@ -1,14 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
 
-const levelColors = {
-  1: "purple",
-  2: "blue",
-  3: "green",
-  4: "yellow",
-  5: "orange",
-  6: "red",
-};
-
 //compares if the target and current array arre the same
 let checkArrays = (arr1, arr2) => {
   for (let i=0; i<16; i++){
@@ -90,13 +81,11 @@ export default class extends Controller {
     button.classList.add("startButton")
     button.addEventListener("click", this.start_puzzle);
     rootDiv.appendChild(button);
-    const level = this.levelValue || 0; // Default to 0 if not provided
-    this.element.style.backgroundColor = levelColors[level] || "gray"; // Default color
-    const levelColor = this.element.dataset.levelColorLevelValue;
-    this.rootDivTarget.style.backgroundColor = levelColor;
   }
 
   start_puzzle() {
+    let mouse_status = "up"
+    let mode = "draw"
 
     document.querySelector(".startButton").remove()
     timer()
@@ -109,6 +98,18 @@ export default class extends Controller {
     let yValues = yWriter(puzzledata);
 
     const rootDiv = this.rootDivTarget
+
+    const bg_style = this.data.get("background_style").replace(" ", "_")
+    const cell_style = this.data.get("cell_style").replace(" ", "_")
+    const active_style = this.data.get("active_style").replace(" ", "_")
+    const flagged_style = this.data.get("flagged_style").replace(" ", "_")
+
+    rootDiv.classList.add(bg_style)
+
+    rootDiv.addEventListener("mouseup", () => {
+      mouse_status = "up"
+      mode = "draw"
+    })
 
     //create a puzzle guides row
     let row = document.createElement("div");
@@ -148,30 +149,80 @@ export default class extends Controller {
           box.classList.add(`col${n}`);
           box.classList.add(`row${i}`);
           box.classList.add(`cell`);
-          box.dataset.add
+          box.classList.add(active_style)
+          box.classList.add(flagged_style)
+          box.classList.add(cell_style)
           box.dataset.x = n;
           box.dataset.y = i;
 
-          const handleClick = () => {
-            current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
-              event.currentTarget.classList.remove("flagged");
-              event.currentTarget.classList.toggle("selected")
-
+          const handleDrag = () => {
+            if (mouse_status == "left") {
+              if (mode == "draw"){
+                current_pattern[i][n] = "1"
+                event.currentTarget.classList.remove("flagged");
+                event.currentTarget.classList.add("selected")
+              } else if (mode == "erase") {
+                current_pattern[i][n] = "0";
+                event.currentTarget.classList.remove("flagged");
+                event.currentTarget.classList.remove("selected")
+              }
 
               //check for win
               if (checkArrays(current_pattern, puzzledata)){
                   this.stop_puzzle(handleClick)
               }
+
+            } else if (mouse_status == "right") {
+              if (mode == "draw"){
+                current_pattern[i][n] = "0";
+                event.preventDefault();
+                event.currentTarget.classList.remove("selected");
+                event.currentTarget.classList.add("flagged");
+              } else if (mode == "erase"){
+                event.preventDefault();
+                event.currentTarget.classList.remove("flagged");
+              }
+            }
+          }
+
+          const handleClick = () => {
+            event.button == 0 ? mouse_status = "left" : mouse_status = "right"
+            if (mouse_status == "left"){
+              console.log("left")
+              if (event.currentTarget.classList.contains("selected")){
+                mode = "erase"
+              } else if (!event.currentTarget.classList.contains("selected")){
+                mode = "draw"
+              }
+              current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
+              event.currentTarget.classList.remove("flagged");
+              event.currentTarget.classList.toggle("selected")
+            }
+              //check for win
+              if (checkArrays(current_pattern, puzzledata)){
+                this.stop_puzzle(handleClick)
+            }
           }
 
           const handleRightClick = () => {
-            current_pattern[i][n] = "0";
-            event.preventDefault();
-            event.currentTarget.classList.remove("selected");
-            event.currentTarget.classList.toggle("flagged");
+            //console.log(mouse_status)
+            //console.log(event.currentTarget.classList)
+            if (mouse_status == "right"){
+              if (event.currentTarget.classList.contains("flagged")){
+                mode = "erase"
+              } else if (!event.currentTarget.classList.contains("flagged")){
+                mode = "draw"
+              }
+              current_pattern[i][n] = "0";
+              event.preventDefault();
+              event.currentTarget.classList.remove("selected");
+              event.currentTarget.classList.toggle("flagged");
+            }
+
           }
 
           //add click listener to each cell
+          box.addEventListener("mouseenter", handleDrag)
           box.addEventListener("mousedown", handleClick)
           box.addEventListener("contextmenu", handleRightClick)
         //add everything to the mount
@@ -181,14 +232,15 @@ export default class extends Controller {
   }
 
   check_for_level_up() {
-    console.log("hi")
     let xp = document.getElementById("xp_field").value
     let level = parseInt(document.getElementById("level_field").value)
+    console.log(document.getElementById("level_field").value)
     document.getElementById("level-span").innerText = level;
     document.getElementById("level-up-span").innerText = Math.floor(xp / 100);
     if (xp / 100 >= (level + 1)) {
       document.getElementById("level_field").value = Math.floor(xp / 100);
-    return true
+      console.log("levelup")
+      return true
     }
     return false
   }
@@ -245,8 +297,6 @@ export default class extends Controller {
         guide.innerText = ""
       }
     },1);
-    this.update_user_record();
-    this.create_puzzle_record();
     setTimeout(() => {
       document.getElementById('conclussionModal').classList.remove("hidden");
       document.getElementById('popup-button').addEventListener("click", () => {
@@ -255,8 +305,8 @@ export default class extends Controller {
         document.getElementById('highscores').classList.add("expanded");
       });
       this.experience_roller()
-      this.check_for_level_up()
-      if (this.check_for_level_up) {
+      if (this.check_for_level_up()) {
+
         setTimeout(() => {
           document.getElementById('level-up').classList.remove("hidden");
           setTimeout(() => {
@@ -266,7 +316,8 @@ export default class extends Controller {
           //document.getElementById('level-up-image').classList.remove("hidden");
         },1500)
       }
-
+      this.update_user_record();
+      this.create_puzzle_record();
     },1000)
 
   };

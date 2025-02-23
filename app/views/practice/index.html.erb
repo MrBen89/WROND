@@ -1,0 +1,18 @@
+<div class="kanji-container" data-controller="practice">
+  <div class="inner-container">
+    <div class="text-box">
+
+      <% @processed_sentences.each do |sentence| %>
+        <p class="sentence"><%= raw sentence[:modified] %></p>
+      <% end %>
+
+    </div>
+    <div class="kanji-boxes">
+      <% @unlocked_kanji.each do |kanji| %>
+        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
+        <%= kanji %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>
