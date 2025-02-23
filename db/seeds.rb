@@ -20,6 +20,148 @@ Puzzle.destroy_all
 UserProfile.destroy_all
 User.destroy_all
 Kanji.destroy_all
+Upgrade.destroy_all
+
+Upgrade.create!(
+  name:"Grey Squares",
+  level: 0,
+  description: "The default. Some might say classic.",
+  upgrade_type: "cell"
+)
+Upgrade.create!(
+  name:"Red Squares",
+  level: 1,
+  description: "Squares as red as the setting sun",
+  upgrade_type: "cell"
+)
+Upgrade.create!(
+  name:"Orange Squares",
+  level: 2,
+  description: "Squares as orange as the sweetest fruit",
+  upgrade_type: "cell"
+)
+Upgrade.create!(
+  name:"Yellow Squares",
+  level: 3,
+  description: "Squares as yellow as foul smelling sulphur",
+  upgrade_type: "cell"
+)
+Upgrade.create!(
+  name:"Green Squares",
+  level: 4,
+  description: "Squares as green as the softest grass",
+  upgrade_type: "cell"
+)
+Upgrade.create!(
+  name:"Blue Squares",
+  level: 5,
+  description: "Squares as blue as the deepest ocean",
+  upgrade_type: "cell"
+)
+Upgrade.create!(
+  name:"WROND! Squares",
+  level: 10,
+  description: "Squares that are just WROND!",
+  upgrade_type: "cell"
+)
+
+Upgrade.create!(
+  name:"Grey Squares",
+  level: 0,
+  description: "The default. Some might say classic.",
+  upgrade_type: "active"
+)
+Upgrade.create!(
+  name:"Red Squares",
+  level: 2,
+  description: "Squares as red as the setting sun",
+  upgrade_type: "active"
+)
+Upgrade.create!(
+  name:"Orange Squares",
+  level: 3,
+  description: "Squares as orange as the sweetest fruit",
+  upgrade_type: "active"
+)
+Upgrade.create!(
+  name:"Yellow Squares",
+  level: 4,
+  description: "Squares as yellow as foul smelling sulphur",
+  upgrade_type: "active"
+)
+Upgrade.create!(
+  name:"Green Squares",
+  level: 5,
+  description: "Squares as green as the softest grass",
+  upgrade_type: "active"
+)
+Upgrade.create!(
+  name:"Blue Squares",
+  level: 6,
+  description: "Squares as blue as the deepest ocean",
+  upgrade_type: "active"
+)
+Upgrade.create!(
+  name:"WROND! Squares",
+  level: 20,
+  description: "Squares that are just WROND!",
+  upgrade_type: "active"
+)
+Upgrade.create!(
+  name:"Grey Squares",
+  level: 0,
+  description: "The default. Some might say classic.",
+  upgrade_type: "flagged"
+)
+Upgrade.create!(
+  name:"Red Squares",
+  level: 5,
+  description: "Squares as red as the setting sun",
+  upgrade_type: "flagged"
+)
+Upgrade.create!(
+  name:"Orange Squares",
+  level: 10,
+  description: "Squares as orange as the sweetest fruit",
+  upgrade_type: "flagged"
+)
+Upgrade.create!(
+  name:"Yellow Squares",
+  level: 15,
+  description: "Squares as yellow as foul smelling sulphur",
+  upgrade_type: "flagged"
+)
+Upgrade.create!(
+  name:"Green Squares",
+  level: 20,
+  description: "Squares as green as the softest grass",
+  upgrade_type: "flagged"
+)
+Upgrade.create!(
+  name:"Blue Squares",
+  level: 25,
+  description: "Squares as blue as the deepest ocean",
+  upgrade_type: "flagged"
+)
+Upgrade.create!(
+  name:"WROND! Squares",
+  level: 30,
+  description: "Squares that are just WROND!",
+  upgrade_type: "flagged"
+)
+Upgrade.create!(
+  name:"None",
+  level: 0,
+  description: "Nothing. Just the emptyness of the void",
+  upgrade_type: "background"
+)
+Upgrade.create!(
+  name: "Wrondarou",
+  level: 10,
+  description: "Everyone's favourite Samurai!",
+  upgrade_type: "background"
+)
+
 
 default_user = User.create!(
   email: 'default_user@gmail.com',
@@ -39,27 +181,9 @@ users.each do |user_data|
     password: 'password'
   )
 
-  kanji_quotes = [
-    "学びて時に之を習う、亦説ばしからずや",
-    "七転び八起き",
-    "石の上にも三年",
-    "花より団子",
-    "明日やろうは馬鹿野郎",
-    "能ある鷹は爪を隠す"
-  ]
-
-  UserProfile.create!(
-    user: user,
-    username: user_data[:username],
-    bio: Faker::Quote.famous_last_words,
-    tagline: kanji_quotes.sample,
-    level: rand(1..100),
-    total_xp: rand(0..5000),
-    profile_pic: Faker::Avatar.image(slug: user_data[:username], size: "100x100", format: "png")
-  )
 end
 
-puts " Seeded #{User.count} users and #{UserProfile.count} profiles!"
+puts " Seeded #{User.count} users!"
 
 kanji_file_path = File.join(Rails.root, 'db', 'kanji_data.json')
 puzzle_file_path = File.join(Rails.root, 'db', 'puzzles.json')
@@ -97,4 +221,7 @@ kanji_ids = Kanji.pluck(:kanji, :id).to_h
 
 # Puzzle.insert_all(puzzle_records) if puzzle_records.any?
 
-puts "✅ Seeded #{Puzzle.count} puzzles!"
+# puts "✅ Seeded #{Puzzle.count} puzzles!"
+
+#Upgrades seeds - Will split into seperate file later
+#

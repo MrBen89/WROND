@@ -6,6 +6,7 @@ class UserProfilesController < ApplicationController
 
   def show
     @user_profile = UserProfile.find_by(user_id: current_user.id)
+    @upgrades = Upgrade.all
     authorize @user_profile
   end
 
@@ -13,7 +14,20 @@ class UserProfilesController < ApplicationController
   end
 
   def update
-    if @user_profile.update(user_profile_params)
+    p Upgrade.find(params[:upgrade])
+    if Upgrade.find(params[:upgrade]).upgrade_type == "cell"
+      @user_profile.update(cell_style: Upgrade.find(params[:upgrade].to_i))
+      redirect_to @user_profile, notice: "Style changed."
+    elsif Upgrade.find(params[:upgrade]).upgrade_type =="active"
+      @user_profile.update(active_style: Upgrade.find(params[:upgrade].to_i))
+      redirect_to @user_profile, notice: "Style changed."
+    elsif Upgrade.find(params[:upgrade]).upgrade_type == "flagged"
+      @user_profile.update(flagged_style: Upgrade.find(params[:upgrade].to_i))
+      redirect_to @user_profile, notice: "Style changed."
+    elsif Upgrade.find(params[:upgrade]).upgrade_type == "background"
+      @user_profile.update(background_style: Upgrade.find(params[:upgrade].to_i))
+      redirect_to @user_profile, notice: "Style changed."
+    elsif @user_profile.update(user_profile_params)
       redirect_to @user_profile, notice: "User profile was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -31,6 +45,6 @@ class UserProfilesController < ApplicationController
   end
 
   def user_profile_params
-    params.require(:user_profile).permit(:username, :tagline, :bio, :profile_pic, :level, :total_xp)
+    params.require(:user_profile).permit(:username, :tagline, :bio, :profile_pic, :level, :total_xp, :upgrade, :type)
   end
 end
