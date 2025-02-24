@@ -82,7 +82,6 @@ export default class extends Controller {
     } else {
       p2data = JSON.parse(this.data.get("p1data"));
     }
-    console.log(p2data)
 
     if (p2data.length == 0){
       p2data = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -102,7 +101,6 @@ export default class extends Controller {
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],]
     }
-
     //create the hints arrays
     let xValues = xWriter(puzzledata);
     let yValues = yWriter(puzzledata);

@@ -3,24 +3,28 @@
 <%= turbo_stream_from @conflict %>
 <div class="container p-3 m-6" id="conflicts_box">
   <%= turbo_frame_tag :conflict_partial do %>
-    <%= render "p1puzzle", conflict: @conflict, user: @user %>
+    <%= render "p1puzzle", conflict: @conflict, user: @user, user_profile: @conflict.user1.user_profile  %>
   <% end %>
 </div>
 <div class="container p-3 m-6" id=<%="room#{@conflict.id}player#{@user.id}"%>>
   <%= turbo_frame_tag :conflict_p2_partial do %>
-    <%= render "p2puzzle", conflict: @conflict, user: @user %>
+    <%= render "p2puzzle", conflict: @conflict, user: @user, user_profile: @conflict.user2.user_profile  %>
   <% end %>
 </div>
 
 <div class="hidden">
    <%= simple_form_for @conflict, remote: true, html: { id: :conflict_form } do |f| %>
   <%= f.input :time ,input_html: {id: "time_field" }%>
-  <%= f.input :u1_state, input_html: {id: "u1state_field" } %>
-  <%= f.input :u2_state, input_html: {id: "u2state_field" } %>
+  <%= f.input :state, input_html: {id: "state_field", value: [] } %>
   <%= f.input :status , input_html: {id: "status_field", value: "in_progress" }%>
   <%= f.input :winner, input_html: {id: "winner_field" } %>
+  <%= f.input :player ,input_html: {id: "player_field", value: @user.id }%>
+  <%= f.input :total_xp ,input_html: {id: "xp_field", value: @user_profile.total_xp }%>
+  <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
   <%= f.button :submit, id: "conflict-submit" %>
   <% end %>
 
   <div class="hidden" id="user_id"><%= @user.id %></div>
 </div>
+
+<%= render "conclussion" %>

@@ -63,7 +63,16 @@ class ConflictsController < ApplicationController
     @conflict = Conflict.find(params[:id])
     @user_profile = UserProfile.find(current_user.user_profile.id)
     authorize @user_profile
-    @conflict.update(edit_conflict_params)
+    p User.find(edit_conflict_params[:player])
+    p @conflict.user2
+    if User.find(edit_conflict_params[:player]) == @conflict.user1
+      @conflict.u1_state = edit_conflict_params[:state]
+    elsif User.find(edit_conflict_params[:player]) == @conflict.user2
+      @conflict.u2_state = edit_conflict_params[:state]
+    end
+    @conflict.status = edit_conflict_params[:status] if edit_conflict_params.has_key?(:status)
+    @conflict.winner = edit_conflict_params[:winner] if edit_conflict_params.has_key?(:winner)
+    @conflict.time = edit_conflict_params[:time] if edit_conflict_params.has_key?(:time)
     if @conflict.save
         # format.turbo_stream do
         render turbo_stream: [turbo_stream.update(:conflicts_box, partial: "conflicts/p1puzzle", locals: { conflict: @conflict }),
@@ -80,7 +89,7 @@ class ConflictsController < ApplicationController
   end
 
   def edit_conflict_params
-    params.require(:conflict).permit(:id, :status, :u1_state, :u2_state, :time, :winner)
+    params.require(:conflict).permit(:id, :status, :state, :time, :winner, :player, :total_xp, :level)
   end
 
 end

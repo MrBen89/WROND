@@ -71,14 +71,15 @@ let timer = (() => {setInterval(() => {
 export default class extends Controller {
   static targets = ["p1RootDiv"]
   connect() {
-
     //rootDiv is where to mount the puzzle
     const rootDiv = this.p1RootDivTarget;
 
     this.start_puzzle = this.start_puzzle.bind(this);
-    //this.stop_puzzle = this.stop_puzzle.bind(this);
+    this.stop_puzzle = this.stop_puzzle.bind(this);
     if (this.data.get("status") == "in_progress"){
       this.start_puzzle()
+    } else if (this.data.get("status") == "completed"){
+      this.stop_puzzle()
     } else {
       let button = document.createElement("button");
       button.innerHTML = "START!"
@@ -91,8 +92,11 @@ export default class extends Controller {
 
   start_puzzle() {
     const rootDiv = this.p1RootDivTarget
+    let mouse_status = "up"
+    let mode = "draw"
+
     if (document.querySelector(".p1startButton")) {document.querySelector(".p1startButton").remove()}
-    //timer()
+    timer()
     //current pattern is the working array
     //let current_pattern = []
     //puzzledata is the solution array
@@ -107,13 +111,14 @@ export default class extends Controller {
     }
     let current_pattern = []
 
-    if (player == 1 && this.data.get("p1data") != null) {
+    if (player == 1 && this.data.get("p1data") != null && this.data.get("p1data").length > 0) {
       current_pattern = JSON.parse(this.data.get("p1data"))
-    } else if (player == 2 && this.data.get("p2data") != null) {
+    } else if (player == 2 && this.data.get("p2data") != null && this.data.get("p2data").length > 0) {
       current_pattern = JSON.parse(this.data.get("p2data"))
     }
 
     if (current_pattern.length == 0){
+      console.log("reset array");
       current_pattern = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -134,6 +139,20 @@ export default class extends Controller {
     //create the hints arrays
     let xValues = xWriter(puzzledata);
     let yValues = yWriter(puzzledata);
+
+    const bg_style = this.data.get("background_style").replace(" ", "_")
+    const cell_style = this.data.get("cell_style").replace(" ", "_")
+    const active_style = this.data.get("active_style").replace(" ", "_")
+    const flagged_style = this.data.get("flagged_style").replace(" ", "_")
+
+    rootDiv.classList.add(bg_style)
+
+    rootDiv.addEventListener("mouseup", () => {
+      mouse_status = "up"
+      mode = "draw"
+      document.getElementById("state_field").value = JSON.stringify(current_pattern);
+      document.getElementById("conflict_form").requestSubmit()
+    })
 
 
 
@@ -175,6 +194,9 @@ export default class extends Controller {
           box.classList.add(`col${n}`);
           box.classList.add(`row${i}`);
           box.classList.add(`cell`);
+          box.classList.add(active_style)
+          box.classList.add(flagged_style)
+          box.classList.add(cell_style)
           if (current_pattern[i][n] == 1){
             box.classList.add("selected")
           } else if (current_pattern[i][n] == 2){
@@ -183,32 +205,72 @@ export default class extends Controller {
           box.dataset.x = n;
           box.dataset.y = i;
 
-          const handleClick = () => {
-            current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
-              event.currentTarget.classList.remove("flagged");
-              event.currentTarget.classList.toggle("selected")
-              if (player == 1){
-                document.getElementById("u1state_field").value = JSON.stringify(current_pattern);
-              } else {
-                document.getElementById("u2state_field").value = JSON.stringify(current_pattern);
+          const handleDrag = () => {
+            if (mouse_status == "left") {
+              if (mode == "draw"){
+                current_pattern[i][n] = "1"
+                event.currentTarget.classList.remove("flagged");
+                event.currentTarget.classList.add("selected")
+              } else if (mode == "erase") {
+                current_pattern[i][n] = "0";
+                event.currentTarget.classList.remove("flagged");
+                event.currentTarget.classList.remove("selected")
               }
-              document.getElementById("conflict_form").requestSubmit()
-
 
               //check for win
               if (checkArrays(current_pattern, puzzledata)){
                   this.stop_puzzle(handleClick)
               }
+
+            } else if (mouse_status == "right") {
+              if (mode == "draw"){
+                current_pattern[i][n] = "0";
+                event.preventDefault();
+                event.currentTarget.classList.remove("selected");
+                event.currentTarget.classList.add("flagged");
+              } else if (mode == "erase"){
+                event.preventDefault();
+                event.currentTarget.classList.remove("flagged");
+              }
+            }
+          }
+
+
+          const handleClick = () => {
+            event.button == 0 ? mouse_status = "left" : mouse_status = "right"
+            if (mouse_status == "left"){
+              if (event.currentTarget.classList.contains("selected")){
+                mode = "erase"
+              } else if (!event.currentTarget.classList.contains("selected")){
+                mode = "draw"
+              }
+              current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
+              event.currentTarget.classList.remove("flagged");
+              event.currentTarget.classList.toggle("selected")
+            }
+              //check for win
+              if (checkArrays(current_pattern, puzzledata)){
+                this.stop_puzzle(handleClick)
+            }
           }
 
           const handleRightClick = () => {
-            current_pattern[i][n] = "0";
-            event.preventDefault();
-            event.currentTarget.classList.remove("selected");
-            event.currentTarget.classList.toggle("flagged");
+            if (mouse_status == "right"){
+              if (event.currentTarget.classList.contains("flagged")){
+                mode = "erase"
+              } else if (!event.currentTarget.classList.contains("flagged")){
+                mode = "draw"
+              }
+              current_pattern[i][n] = "0";
+              event.preventDefault();
+              event.currentTarget.classList.remove("selected");
+              event.currentTarget.classList.toggle("flagged");
+            }
+
           }
 
           //add click listener to each cell
+          box.addEventListener("mouseenter", handleDrag)
           box.addEventListener("mousedown", handleClick)
           box.addEventListener("contextmenu", handleRightClick)
         //add everything to the mount
@@ -217,94 +279,95 @@ export default class extends Controller {
     }
   }
 
-  // check_for_level_up() {
-  //   console.log("hi")
-  //   let xp = document.getElementById("xp_field").value
-  //   let level = parseInt(document.getElementById("level_field").value)
-  //   document.getElementById("level-span").innerText = level;
-  //   document.getElementById("level-up-span").innerText = Math.floor(xp / 100);
-  //   if (xp / 100 >= (level + 1)) {
-  //     document.getElementById("level_field").value = Math.floor(xp / 100);
-  //   return true
-  //   }
-  //   return false
-  // }
+  check_for_level_up() {
+    console.log("hi")
+    let xp = document.getElementById("xp_field").value
+    let level = parseInt(document.getElementById("level_field").value)
+    document.getElementById("level-span").innerText = level;
+    document.getElementById("level-up-span").innerText = Math.floor(xp / 100);
+    if (xp / 100 >= (level + 1)) {
+      document.getElementById("level_field").value = Math.floor(xp / 100);
+    return true
+    }
+    return false
+  }
 
-  // create_puzzle_record() {
-  //   document.getElementById("time_field").value = seconds_absolute;
-  //   document.getElementById("puzzle_form").requestSubmit();
-  // }
-  // update_user_record() {
-  //   document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 100
-  // }
+  update_conflict() {
+    document.getElementById("time_field").value = seconds_absolute;
+    document.getElementById("status_field").value = "complete";
+    document.getElementById("winner_field").value = user_id;
+    document.getElementById("conflict_form").requestSubmit();
+  }
+  update_user_record() {
+    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 100
+  }
 
-  // experience_roller() {
-  //   let target = 100;
-  //   let count = parseInt(document.getElementById("xp-value").innerText);
-  //   let increment = 1;
-  //   if (count < target) {
-  //     count += increment;
-  //     document.getElementById("xp-value").innerText = `${count}`;
-  //     setTimeout(() => {
-  //       this.experience_roller()
-  //     }, 5);
-  //   }
+  experience_roller() {
+    let target = 100;
+    let count = parseInt(document.getElementById("xp-value").innerText);
+    let increment = 1;
+    if (count < target) {
+      count += increment;
+      document.getElementById("xp-value").innerText = `${count}`;
+      setTimeout(() => {
+        this.experience_roller()
+      }, 5);
+    }
 
-  // }
+  }
 
-  // stop_puzzle(handleClick) {
-  //   document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
-  //   let block = document.querySelector(".cornerBlock");
-  //   block.classList.add("cleared");
-  //   let cells = document.getElementsByClassName("cell");
-  //   for (const cell of cells) {
-  //     cell.replaceWith(cell.cloneNode(true))
-  //   }
-  //   let guides = document.getElementsByClassName("xGuide");
-  //   for (const guide of guides) {
-  //     guide.classList.add("cleared")
-  //   }
-  //   guides = document.getElementsByClassName("yGuide");
-  //   for (const guide of guides) {
-  //     guide.classList.add("cleared")
-  //   }
-  //   setTimeout(() => {
-  //     let cells = document.getElementsByClassName("cell");
-  //     for (const cell of cells) {
-  //       cell.classList.remove("flagged")
-  //       cell.classList.add("finished")
-  //     }
-  //     for (const guide of guides) {
-  //       guide.innerText = ""
-  //     }
-  //     guides = document.getElementsByClassName("xGuide");
-  //     for (const guide of guides) {
-  //       guide.innerText = ""
-  //     }
-  //   },1);
-  //   this.update_user_record();
-  //   this.create_puzzle_record();
-  //   setTimeout(() => {
-  //     document.getElementById('conclussionModal').classList.remove("hidden");
-  //     document.getElementById('popup-button').addEventListener("click", () => {
-  //       document.getElementById('conclussionModal').style.display = "none";
-  //       document.getElementById('kanji-data').classList.add("expanded");
-  //       document.getElementById('highscores').classList.add("expanded");
-  //     });
-  //     this.experience_roller()
-  //     this.check_for_level_up()
-  //     if (this.check_for_level_up) {
-  //       setTimeout(() => {
-  //         document.getElementById('level-up').classList.remove("hidden");
-  //         setTimeout(() => {
-  //           document.getElementById('level-up').classList.add("expanded");
-  //         },1)
+  stop_puzzle(handleClick) {
+    document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+    let block = document.querySelector(".cornerBlock");
+    block.classList.add("cleared");
+    let cells = document.getElementsByClassName("cell");
+    for (const cell of cells) {
+      cell.replaceWith(cell.cloneNode(true))
+    }
+    let guides = document.getElementsByClassName("xGuide");
+    for (const guide of guides) {
+      guide.classList.add("cleared")
+    }
+    guides = document.getElementsByClassName("yGuide");
+    for (const guide of guides) {
+      guide.classList.add("cleared")
+    }
+    setTimeout(() => {
+      let cells = document.getElementsByClassName("cell");
+      for (const cell of cells) {
+        cell.classList.remove("flagged")
+        cell.classList.add("finished")
+      }
+      for (const guide of guides) {
+        guide.innerText = ""
+      }
+      guides = document.getElementsByClassName("xGuide");
+      for (const guide of guides) {
+        guide.innerText = ""
+      }
+    },1);
+    setTimeout(() => {
+      document.getElementById('conclussionModal').classList.remove("hidden");
+      document.getElementById('popup-button').addEventListener("click", () => {
+        document.getElementById('conclussionModal').style.display = "none";
+        // document.getElementById('kanji-data').classList.add("expanded");
+        // document.getElementById('highscores').classList.add("expanded");
+      });
+      if (this.check_for_level_up) {
+        setTimeout(() => {
+          document.getElementById('level-up').classList.remove("hidden");
+          setTimeout(() => {
+            document.getElementById('level-up').classList.add("expanded");
+          },1)
 
-  //         //document.getElementById('level-up-image').classList.remove("hidden");
-  //       },1500)
-  //     }
+          //document.getElementById('level-up-image').classList.remove("hidden");
+        },1500)
+      }
+      this.experience_roller();
+      this.check_for_level_up();
+      this.update_user_record();
+      this.update_conflict();
+    },1000)
 
-  //   },1000)
-
-  // };
+  };
 }
