@@ -78,7 +78,7 @@ export default class extends Controller {
     this.stop_puzzle = this.stop_puzzle.bind(this);
     if (this.data.get("status") == "in_progress"){
       this.start_puzzle()
-    } else if (this.data.get("status") == "completed"){
+    } else if (this.data.get("status") == "complete"){
       this.stop_puzzle()
     } else {
       let button = document.createElement("button");
@@ -224,11 +224,12 @@ export default class extends Controller {
 
             } else if (mouse_status == "right") {
               if (mode == "draw"){
-                current_pattern[i][n] = "0";
+                current_pattern[i][n] = "2";
                 event.preventDefault();
                 event.currentTarget.classList.remove("selected");
                 event.currentTarget.classList.add("flagged");
               } else if (mode == "erase"){
+                current_pattern[i][n] = "0";
                 event.preventDefault();
                 event.currentTarget.classList.remove("flagged");
               }
@@ -244,9 +245,15 @@ export default class extends Controller {
               } else if (!event.currentTarget.classList.contains("selected")){
                 mode = "draw"
               }
-              current_pattern[i][n] == "0" ?  current_pattern[i][n] = "1" :  current_pattern[i][n] = "0";
-              event.currentTarget.classList.remove("flagged");
-              event.currentTarget.classList.toggle("selected")
+              if (mode == "erase") {
+                current_pattern[i][n] = "0";
+                event.currentTarget.classList.remove("flagged");
+              event.currentTarget.classList.remove("selected")
+              } else if (mode == "draw"){
+                current_pattern[i][n] = "1";
+                event.currentTarget.classList.remove("flagged");
+              event.currentTarget.classList.add("selected")
+              }
             }
               //check for win
               if (checkArrays(current_pattern, puzzledata)){
@@ -261,10 +268,18 @@ export default class extends Controller {
               } else if (!event.currentTarget.classList.contains("flagged")){
                 mode = "draw"
               }
-              current_pattern[i][n] = "0";
+              if (mode == "erase"){
+                current_pattern[i][n] = "0";
+                event.preventDefault();
+                event.currentTarget.classList.remove("selected");
+                event.currentTarget.classList.remove("flagged");
+              } else if (mode == "draw"){
+                current_pattern[i][n] = "2";
               event.preventDefault();
               event.currentTarget.classList.remove("selected");
-              event.currentTarget.classList.toggle("flagged");
+              event.currentTarget.classList.add("flagged");
+              }
+
             }
 
           }
@@ -280,7 +295,6 @@ export default class extends Controller {
   }
 
   check_for_level_up() {
-    console.log("hi")
     let xp = document.getElementById("xp_field").value
     let level = parseInt(document.getElementById("level_field").value)
     document.getElementById("level-span").innerText = level;

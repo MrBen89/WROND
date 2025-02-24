@@ -48,9 +48,11 @@ export default class extends Controller {
     const rootDiv = this.p2RootDivTarget;
 
     this.start_puzzle = this.start_puzzle.bind(this);
-    //this.stop_puzzle = this.stop_puzzle.bind(this);
+    this.stop_puzzle = this.stop_puzzle.bind(this);
     if (this.data.get("status") == "in_progress"){
       this.start_puzzle()
+    } else if (this.data.get("status") == "complete") {
+      this.stop_puzzle()
     } else {
       let button = document.createElement("button");
     button.innerHTML = "START!"
@@ -192,59 +194,37 @@ export default class extends Controller {
 
   // }
 
-  // stop_puzzle(handleClick) {
-  //   document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
-  //   let block = document.querySelector(".cornerBlock");
-  //   block.classList.add("cleared");
-  //   let cells = document.getElementsByClassName("cell");
-  //   for (const cell of cells) {
-  //     cell.replaceWith(cell.cloneNode(true))
-  //   }
-  //   let guides = document.getElementsByClassName("xGuide");
-  //   for (const guide of guides) {
-  //     guide.classList.add("cleared")
-  //   }
-  //   guides = document.getElementsByClassName("yGuide");
-  //   for (const guide of guides) {
-  //     guide.classList.add("cleared")
-  //   }
-  //   setTimeout(() => {
-  //     let cells = document.getElementsByClassName("cell");
-  //     for (const cell of cells) {
-  //       cell.classList.remove("flagged")
-  //       cell.classList.add("finished")
-  //     }
-  //     for (const guide of guides) {
-  //       guide.innerText = ""
-  //     }
-  //     guides = document.getElementsByClassName("xGuide");
-  //     for (const guide of guides) {
-  //       guide.innerText = ""
-  //     }
-  //   },1);
-  //   this.update_user_record();
-  //   this.create_puzzle_record();
-  //   setTimeout(() => {
-  //     document.getElementById('conclussionModal').classList.remove("hidden");
-  //     document.getElementById('popup-button').addEventListener("click", () => {
-  //       document.getElementById('conclussionModal').style.display = "none";
-  //       document.getElementById('kanji-data').classList.add("expanded");
-  //       document.getElementById('highscores').classList.add("expanded");
-  //     });
-  //     this.experience_roller()
-  //     this.check_for_level_up()
-  //     if (this.check_for_level_up) {
-  //       setTimeout(() => {
-  //         document.getElementById('level-up').classList.remove("hidden");
-  //         setTimeout(() => {
-  //           document.getElementById('level-up').classList.add("expanded");
-  //         },1)
+  stop_puzzle(handleClick) {
+    document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+    let block = document.querySelector(".cornerBlock");
+    block.classList.add("cleared");
+    let cells = document.getElementsByClassName("cell");
+    for (const cell of cells) {
+      cell.replaceWith(cell.cloneNode(true))
+    }
+    let guides = document.getElementsByClassName("xGuide");
+    for (const guide of guides) {
+      guide.classList.add("cleared")
+    }
+    guides = document.getElementsByClassName("yGuide");
+    for (const guide of guides) {
+      guide.classList.add("cleared")
+    }
+    setTimeout(() => {
+      let cells = document.getElementsByClassName("cell");
+      for (const cell of cells) {
+        cell.classList.remove("flagged")
+        cell.classList.add("finished")
+      }
+      for (const guide of guides) {
+        guide.innerText = ""
+      }
+      guides = document.getElementsByClassName("xGuide");
+      for (const guide of guides) {
+        guide.innerText = ""
+      }
+    },1);
 
-  //         //document.getElementById('level-up-image').classList.remove("hidden");
-  //       },1500)
-  //     }
 
-  //   },1000)
-
-  // };
+  };
 }

@@ -1,15 +1,17 @@
 <%= @conflict.user1.user_profile.username %> VS. <%= @conflict.user2.user_profile.username %>
 
-<%= turbo_stream_from @conflict %>
-<div class="container p-3 m-6" id="conflicts_box">
-  <%= turbo_frame_tag :conflict_partial do %>
-    <%= render "p1puzzle", conflict: @conflict, user: @user, user_profile: @conflict.user1.user_profile  %>
-  <% end %>
-</div>
-<div class="container p-3 m-6" id=<%="room#{@conflict.id}player#{@user.id}"%>>
-  <%= turbo_frame_tag :conflict_p2_partial do %>
-    <%= render "p2puzzle", conflict: @conflict, user: @user, user_profile: @conflict.user2.user_profile  %>
-  <% end %>
+<div class="container d-flex">
+  <%= turbo_stream_from @conflict %>
+  <div class="p-3 m-6" id="conflicts_box">
+    <%= turbo_frame_tag :conflict_partial do %>
+      <%= render "p1puzzle", conflict: @conflict, user: @user, user_profile: @conflict.user1.user_profile  %>
+    <% end %>
+  </div>
+  <div class="p-3 m-6" id=<%="room#{@conflict.id}player#{@user.id}"%>>
+    <%= turbo_frame_tag :conflict_p2_partial do %>
+      <%= render "p2puzzle", conflict: @conflict, user: @user, user_profile: @conflict.user2.user_profile  %>
+    <% end %>
+  </div>
 </div>
 
 <div class="hidden">
