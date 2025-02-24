@@ -12,7 +12,12 @@ class PagesController < ApplicationController
       redirect_to conflicts_path
     end
     if params[:mode] == "daily"
-      redirect_to kanji_path()
+      p "daily kanji"
+      p Rails.cache.fetch(:todays_kanji)
+      kanji = Rails.cache.fetch(:todays_kanji, expires_in: 24.hours) do
+        (Kanji.all.sample).id
+      end
+      redirect_to kanji_path(kanji)
     end
   end
 
