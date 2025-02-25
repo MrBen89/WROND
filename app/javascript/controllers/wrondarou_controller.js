@@ -4,7 +4,9 @@ export default class extends Controller {
   static targets = ["hint"];
 
   connect() {
-console.log("It works!");
+  setTimeout(() => {
+    this.hintTarget.classList.remove("hidden");
+  }, 5000);
   }
 
   toggle() {

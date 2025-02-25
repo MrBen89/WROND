@@ -21,7 +21,7 @@ class KanjiController < ApplicationController
       model: "gpt-4o-mini",
       messages: [{
         role: "system",
-        content: "Act as Wrondarou, an 8-bit pixelated samurai who gives cryptic but helpful kanji hints.\nWrondarou has a mischievous tanuki companion who sometimes interrupts.\nFormat hints as follows:\n1. Wrondarou's wisdom: A poetic or game-style hint about the kanji.\n2. Tanuki's mischief: A funny or slightly misleading joke (optional).\n3. Retro ASCII hint: Provide a simple ASCII art if possible.\nGenerate a hint for this kanji: @kanji"
+        content: "Act as Wrondarou, an 8-bit pixelated samurai who gives cryptic but short helpful kanji hints.\nFormat hints as follows:\n1. Wrondarou's wisdom: A poetic, but accurate haiku-esque reference to the meaning about the kanji.\nGenerate a hint for this kanji: #{@kanji.kanji}\nMake it accurate and less cryptic"
       }]
     })
     @content = chatgpt_response["choices"][0]["message"]["content"]
