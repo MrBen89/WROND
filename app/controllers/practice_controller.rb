@@ -46,7 +46,9 @@ class PracticeController < ApplicationController
       "私は二級を合格して、一級を受けたいと思います。",
       "十個の単語を覚えなければならない",
       "鉛筆が折れた",
-      "私の誕生日は二十一日"
+      "私の誕生日は二十一日",
+      "私は日本語を勉強しています",
+      "一個のりんご"
     ]
 
     selected_sentences = all_sentences.sample(5)
@@ -60,16 +62,16 @@ class PracticeController < ApplicationController
     kanji_in_sentence = sentence.chars.select { |char| @unlocked_kanji.include?(char) }
     return { original: sentence, modified: sentence, missing_kanji: [] } if kanji_in_sentence.empty?
 
-    kanji_to_replace = kanji_in_sentence
-
     modified_sentence = sentence.chars.map do |char|
-      if kanji_to_replace.include?(char)
-        '<span class="drop-zone" data-kanji-target="dropZone"></span>'
+      if kanji_in_sentence.include?(char)
+        # Add `data-expected-kanji` to store the correct kanji
+        "<span class='drop-zone' data-kanji-target='dropZone' data-expected-kanji='#{char}'></span>"
       else
         char
       end
     end.join
 
-    { original: sentence, modified: modified_sentence, missing_kanji: kanji_to_replace }
+    { original: sentence, modified: modified_sentence, missing_kanji: kanji_in_sentence }
   end
+
 end
