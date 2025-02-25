@@ -1,24 +1,17 @@
-<div class="kanji-container">
+<div class="kanji-container" data-controller="practice">
   <div class="inner-container">
     <div class="text-box">
-      <p class="sentence">
-        <%= select_tag "kanji_1", options_for_select(@kanji), class: "kanji-dropdown" %>
-        <%= select_tag "kanji_2", options_for_select(@kanji), class: "kanji-dropdown" %> は難しい
-      </p>
-      <p class="sentence">
-        <%= select_tag "kanji_3", options_for_select(@kanji), class: "kanji-dropdown" %>
-        <%= select_tag "kanji_4", options_for_select(@kanji), class: "kanji-dropdown" %> 検定能力
-      </p>
-      <p class="sentence">
-        この <%= select_tag "kanji_5", options_for_select(@kanji), class: "kanji-dropdown" %>
-        <%= select_tag "kanji_6", options_for_select(@kanji), class: "kanji-dropdown" %>
-        はとても
-        <%= select_tag "kanji_7", options_for_select(@kanji), class: "kanji-dropdown" %> しい
-      </p>
+
+      <% @processed_sentences.each do |sentence| %>
+        <p class="sentence"><%= raw sentence[:modified] %></p>
+      <% end %>
+
     </div>
     <div class="kanji-boxes">
-      <% @kanji.each do |char| %>
-        <span class="kanji-character"><%= char %></span>
+      <% @unlocked_kanji.each do |kanji| %>
+        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
+        <%= kanji %>
+        </span>
       <% end %>
     </div>
   </div>
