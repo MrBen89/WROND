@@ -1,5 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
+let player = 0
+
 //compares if the target and current array arre the same
 let checkArrays = (arr1, arr2) => {
   for (let i=0; i<16; i++){
@@ -71,11 +73,22 @@ let timer = (() => {setInterval(() => {
 export default class extends Controller {
   static targets = ["p1RootDiv"]
   connect() {
+
+    if (user_id.innerHTML == this.data.get("user1")){
+      player = 1
+    } else {
+      console.log(user_id.innerHTML)
+      console.log(this.data.get("user1"))
+      console.log(this.data.get("user2"))
+      player = 2
+    }
+
     //rootDiv is where to mount the puzzle
     const rootDiv = this.p1RootDivTarget;
 
     this.start_puzzle = this.start_puzzle.bind(this);
     this.stop_puzzle = this.stop_puzzle.bind(this);
+    this.check_for_start = this.check_for_start.bind(this);
     if (this.data.get("status") == "in_progress"){
       this.start_puzzle()
     } else if (this.data.get("status") == "complete"){
@@ -84,9 +97,30 @@ export default class extends Controller {
       let button = document.createElement("button");
       button.innerHTML = "START!"
       button.classList.add("p1startButton")
-      button.addEventListener("click", this.start_puzzle);
-      button.addEventListener("click", () => {document.querySelector(".p2startButton").click()});
+      button.addEventListener("click", this.check_for_start);
       rootDiv.appendChild(button);
+    }
+  }
+
+  check_for_start(){
+    console.log(player)
+    if ((this.data.get("status") == "p2ready" && player == 1) || (this.data.get("status") == "p1ready" && player == 2)){
+      console.log(0)
+      this.start_puzzle()
+    } else if (player == 1){
+      if (this.data.get("status") == "p1ready") {
+        document.getElementById("waiting").classList.remove("hidden")
+      } else {
+      document.getElementById("status_field").value = "p1ready";
+      document.getElementById("conflict_form").requestSubmit();
+      }
+    } else if (player == 2){
+      if (this.data.get("status") == "p2ready") {
+        document.getElementById("waiting").classList.remove("hidden")
+      } else {
+      document.getElementById("status_field").value = "p2ready";
+      document.getElementById("conflict_form").requestSubmit();
+      }
     }
   }
 
@@ -102,13 +136,7 @@ export default class extends Controller {
     //puzzledata is the solution array
     const puzzledata = JSON.parse(this.data.get("variable"));
     const user_id = document.getElementById("user_id").innerText
-    let player = 0
 
-    if (user_id == this.data.get("user1")){
-      player = 1
-    } else {
-      player = 2
-    }
     let current_pattern = []
 
     if (player == 1 && this.data.get("p1data") != null && this.data.get("p1data").length > 0) {
@@ -292,7 +320,7 @@ export default class extends Controller {
         row.appendChild(box);
       }
     }
-  }
+  };
 
   check_for_level_up() {
     let xp = document.getElementById("xp_field").value
@@ -328,7 +356,7 @@ export default class extends Controller {
       }, 5);
     }
 
-  }
+  };
 
   stop_puzzle(handleClick) {
     document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
@@ -384,4 +412,4 @@ export default class extends Controller {
     },1000)
 
   };
-}
+};

@@ -13,6 +13,10 @@
     <% end %>
   </div>
 </div>
+<div class="popup hidden" id="waiting">
+  <%= image_tag "waiting.gif", class: "popup-waiting" %>
+</div>
+
 
 <div class="hidden">
    <%= simple_form_for @conflict, remote: true, html: { id: :conflict_form } do |f| %>

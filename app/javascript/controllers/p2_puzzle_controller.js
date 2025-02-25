@@ -53,12 +53,6 @@ export default class extends Controller {
       this.start_puzzle()
     } else if (this.data.get("status") == "complete") {
       this.stop_puzzle()
-    } else {
-      let button = document.createElement("button");
-    button.innerHTML = "START!"
-    button.classList.add("p2startButton")
-    button.addEventListener("click", this.start_puzzle);
-    rootDiv.appendChild(button);
     }
 
   }
