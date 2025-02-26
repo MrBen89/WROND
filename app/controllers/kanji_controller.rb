@@ -7,9 +7,7 @@ class KanjiController < ApplicationController
   end
 
   def show
-    @on = kanji?("音")
-    @kun = kanji?("訓")
-    @yomi = kanji?("読")
+    @next_kanji = Kanji.find(params[:id].to_i + 1)
     @kanji = Kanji.find(params[:id])
     @user_profile = UserProfile.find(current_user.user_profile.id)
     @puzzles = Puzzle.where("kanji_id = ?", @kanji.id).order("time").limit(10)

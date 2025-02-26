@@ -185,14 +185,14 @@
   background: #ccc;
   border: none;
   padding: 10px 20px;
-  margin-top: 10px;
+  margin: 100px 200px;
   cursor: pointer;
 }
 
 .puzzle {
   width: 100%;
   height: 80%;
-  justify-content: center;
+  margin: auto;
 }
 
 .hidden {
@@ -221,14 +221,21 @@
   height: auto;
   image-rendering: pixelated;
   position: absolute;
-  animation: walkAnimation 10s linear infinite alternate; /* Smooth left-right movement */
+  animation: walkAnimation 10s linear infinite alternate;
+}
+
+.button_box {
+  width: 100%;
+  text-align: center;
 }
 
 @keyframes walkAnimation {
   0% {
     left: 0;
+    transform: scaleX(-1);
   }
   100% {
-    left: calc(100% - 250px); /* Moves to the right edge */
+    left: calc(100% - 250px);
+    transform: scaleX(1); /* Moves to the right edge */
   }
 }

@@ -64,6 +64,10 @@
     <p><%= @content %></p>
   </div>
 </div>
+<div class="button_box">
+  <%= link_to "Back", kanji_index_path %>
+  <%= link_to "Another Puzzle?", kanji_path(@next_kanji), class: "hidden", id: "next_link" %>
+</div>
 
   <div class="gif-container-bottom" data-action="click->hint#toggle">
     <%= image_tag "tanuki.gif", class: "game-gif-bottom" %>

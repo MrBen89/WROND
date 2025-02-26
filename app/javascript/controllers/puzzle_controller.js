@@ -303,6 +303,7 @@ export default class extends Controller {
         document.getElementById('conclussionModal').style.display = "none";
         document.getElementById('kanji-data').classList.add("expanded");
         document.getElementById('highscores').classList.add("expanded");
+        document.getElementById("next_link").classList.remove("hidden");
       });
       this.experience_roller()
       if (this.check_for_level_up()) {
