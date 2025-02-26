@@ -51,10 +51,22 @@
   </button>
 </div>
 
-<div class="tutorial-content" id="tutorial-content" style="display: none;">
+<div class="tutorial-container">
+  <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
+    Tutorial
+  </button>
+</div>
+
+<!-- Overlay to darken background -->
+<div class="overlay" id="overlay" data-action="click->mode-selector#toggleTutorial"></div>
+
+<!-- Tutorial Content -->
+<div class="tutorial-content" id="tutorial-content">
   <div class="gif-container">
-    <!-- Placeholder GIFs, replace with actual ones when ready -->
-    <h2>TUTURIAL GIF 1</h2>
-    <h2>TUTURIAL GIF 2</h2>
+    <h2>Kanji Mode:</h2>
+    <%= image_tag "tutorial1.gif", class: "tutorial-gif" %>
+
+    <h2>Practice Mode:</h2>
+    <%= image_tag "tutorial2.gif", class: "tutorial-gif" %>
   </div>
 </div>

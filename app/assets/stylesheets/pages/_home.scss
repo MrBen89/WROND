@@ -209,3 +209,38 @@ button {
 //   width: 200px;
 //   height: auto;
 // }
+
+/* Overlay to darken the background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  z-index: 98;
+  display: none;
+}
+
+/* Tutorial Content (Hidden initially) */
+.tutorial-content {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Start off-screen */
+  width: 400px; /* Adjust width */
+  height: 100%;
+  background: white;
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 99;
+  padding: 20px;
+  transition: right 0.3s ease-in-out; /* Smooth slide effect */
+}
+
+/* When active, slide in and show overlay */
+.tutorial-content.active {
+  right: 0; /* Slide in */
+}
+
+.overlay.active {
+  display: block;
+}
