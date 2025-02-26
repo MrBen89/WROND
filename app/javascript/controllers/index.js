@@ -5,14 +5,15 @@ import PuzzleController from "controllers/puzzle_controller"
 import ModeController from "controllers/mode_controller"  // Import your ModeSelectorController
 import WrondarouController from "controllers/wrondarou_controller"  // Import your ModeSelectorController
 import PracticeController from "controllers/practice_controller"
+import IndexSideMenuController from "controllers/index_side_menu_controller"
 
 eagerLoadControllersFrom("controllers", application)
 application.register("puzzle", PuzzleController)
 application.register("mode-selector", ModeController)  // Register your ModeSelectorController
-application.register("hint", WrondarouController) 
-application.register("practice", PracticeController)// Register your ModeSelectorController
+application.register("hint", WrondarouController)
+application.register("practice", PracticeController)
+application.register("index-side-menu", IndexSideMenuController)// Register your ModeSelectorController
 // import ModeController from "controllers/mode_controller"  // Import your ModeSelectorController
 
 
 // application.register("mode-selector", ModeController)  // Register your ModeSelectorController
-
