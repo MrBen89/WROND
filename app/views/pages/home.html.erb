@@ -44,3 +44,17 @@
 <div class="gif-container">
   <%= image_tag "tanuki.gif", class: "game-gif" %>
 </div>
+
+<div class="tutorial-container">
+  <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
+    Tutorial
+  </button>
+</div>
+
+<div class="tutorial-content" id="tutorial-content" style="display: none;">
+  <div class="gif-container">
+    <!-- Placeholder GIFs, replace with actual ones when ready -->
+    <h2>TUTURIAL GIF 1</h2>
+    <h2>TUTURIAL GIF 2</h2>
+  </div>
+</div>

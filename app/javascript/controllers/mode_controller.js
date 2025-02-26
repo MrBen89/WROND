@@ -40,4 +40,8 @@ export default class extends Controller {
       this.modeDescriptionTarget.innerHTML = descriptions[mode];
     }
   }
+  toggleTutorial() {
+    const tutorialContent = document.getElementById("tutorial-content");
+    tutorialContent.classList.toggle("active"); // Toggle the active class to slide in/out
+  }
 }

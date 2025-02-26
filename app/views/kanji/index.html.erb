@@ -61,7 +61,33 @@
       <% end %>
     </div>
   </div>
+
 </div>
+
+<div class="pagination">
+  <button id="prev-page" disabled>Previous</button>
+  <button id="next-page">Next</button>
+</div>
+
+<style>
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+</style>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -81,9 +107,46 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let isExpanded = false;
 
+  // Pagination logic
+  const prevButton = document.getElementById("prev-page");
+  const nextButton = document.getElementById("next-page");
+
+  const itemsPerPage = 20;
+  let currentPage = 1;
+
+  function updatePagination() {
+    const filteredCards = Array.from(cards).filter(card => card.style.display !== "none");
+    const totalPages = Math.ceil(filteredCards.length / itemsPerPage);
+
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+
+    filteredCards.forEach((card, index) => {
+      if (index >= start && index < end) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    prevButton.disabled = currentPage === 1;
+    nextButton.disabled = currentPage === totalPages;
+  }
+
+  nextButton.addEventListener("click", function () {
+    currentPage++;
+    updatePagination();
+  });
+
+  prevButton.addEventListener("click", function () {
+    currentPage--;
+    updatePagination();
+  });
+
+  // Show kanji information when a card is clicked
   cards.forEach((card) => {
     const kanjiData = card.dataset;
-    const isSolved = kanjiData.solved >= 1; // Ensure correct boolean comparison
+    const isSolved = kanjiData.solved >= 1;
     const questionMark = card.querySelector(".question-mark");
 
     questionMark.textContent = isSolved ? kanjiData.kanji : "?";
@@ -99,7 +162,6 @@ document.addEventListener("DOMContentLoaded", function () {
       cards.forEach((btn) => btn.classList.remove("active"));
       this.classList.add("active");
 
-      // Re-check if the kanji is solved inside the event listener
       const isSolved = Number(kanjiData.solved) > 0;
 
       selectedKanjiInput.value = kanjiData.kanji;
@@ -112,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
       grade.textContent = isSolved ? kanjiData.grade : "?";
 
       playButton.setAttribute("data-url", kanjiData.url);
-      playButton.disabled = false; // Ensure the button is enabled
+      playButton.disabled = false;
     });
   });
 
@@ -125,8 +187,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   levelFilters.forEach((filter) => {
     filter.addEventListener("click", function () {
-      const selectedLevel = this.classList[1];
+      levelFilters.forEach((filter) => filter.classList.remove("active"));
+      this.classList.add("active");
 
+      const selectedLevel = this.classList[1];
       cards.forEach((card) => {
         const cardLevel = card.dataset.jlpt;
 
@@ -136,10 +200,13 @@ document.addEventListener("DOMContentLoaded", function () {
           card.style.display = "none";
         }
       });
+
+      currentPage = 1; // Reset to first page whenever a filter is applied
+      updatePagination(); // Recalculate pagination based on filtered cards
     });
   });
 
-  document.querySelector(".level-4").click();
+  document.querySelector(".level-5").click(); // Default selection
 });
 
 </script>
