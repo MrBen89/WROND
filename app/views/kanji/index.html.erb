@@ -25,7 +25,7 @@
     <span class="level-filter level-5 hidden"><span id="n5_done"><%=@n5_done.count%></span>/<span id="n5_total"><%= @n5_total.count%></span>
   </div>
   <div class="button-box">
-    <div class="crown"> <%= image_tag "crown.png", id: "crown_all", class:"hidden" %> </div>
+    <div class="crown"> <%= image_tag "crown.png", id: "crown_all", class:"hidden"  %> </div>
     <div class="level-filter level-all">All!</div>
     <span class="level-filter level-all hidden"><span id="all_done"><%=@all_done.count%></span>/<span id="all_total"><%= @kanji.count%></span>
   </div>
@@ -65,7 +65,8 @@
 
   <div class="right-side">
     <div class="card-container">
-      <% @kanji.each_with_index do |kanji, index| %>
+      <% (@all_done).each_with_index do |kanji, index| %>
+      <% if @puzzles.any? {|p| p.kanji == kanji} %>
         <div class="card" data-kanji="<%= kanji.kanji %>"
              data-meaning="<%= kanji.meaning %>"
              data-onyomi="<%= kanji.onyomi %>"
@@ -81,6 +82,33 @@
             <div class="question-mark">?</div>
           </div>
         </div>
+        <% end %>
+      <% end %>
+      <% not_done = (
+        (@n5_total - @n5_done)[..10] +
+        (@n4_total - @n4_done)[..10] +
+        (@n3_total - @n3_done)[..10] +
+        (@n2_total - @n2_done)[..10] +
+        (@n1_total - @n1_done)[..10]
+        ) %>
+       <% (not_done).each_with_index do |kanji, index| %>
+        <div class="card" data-kanji="<%= kanji.kanji %>"
+             data-meaning="<%= kanji.meaning %>"
+             data-onyomi="<%= kanji.onyomi %>"
+             data-kunyomi="<%= kanji.kunyomi %>"
+             data-stroke-count="<%= kanji.stroke_count %>"
+             data-jlpt="<%= kanji.jlptLevel %>"
+             data-url="<%= kanji_path(kanji) %>"
+             data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
+
+          <div class="stars">★★★☆☆</div>
+          <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
+          <div class="white-box-for">
+            <div class="question-mark">?</div>
+          </div>
+        </div>
+        <% if @puzzles.any? {|p| p.kanji == kanji} %>
+        <% end %>
       <% end %>
     </div>
   </div>
