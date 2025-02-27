@@ -302,7 +302,7 @@ export default class extends Controller {
       document.getElementById('popup-button').addEventListener("click", () => {
         document.getElementById('conclussionModal').style.display = "none";
         document.getElementById('kanji-data').classList.add("expanded");
-        document.getElementById('highscores').classList.add("expanded");
+        document.querySelector('.highscores').classList.add("expanded");
       });
       this.experience_roller()
       if (this.check_for_level_up()) {

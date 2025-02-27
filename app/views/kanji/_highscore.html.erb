@@ -1,0 +1,7 @@
+<ul>
+  <% puzzles.each do |puzzle| %>
+    <% minutes = (puzzle.time / 60) < 10 ? "0#{(puzzle.time / 60)}" : puzzle.time / 60 %>
+    <% seconds = (puzzle.time % 60) < 10 ? "0#{(puzzle.time % 60)}" : puzzle.time % 60%>
+    <li class="list"><%= minutes %>:<%= seconds %> - <%= puzzle.user.user_profile.username %></li>
+  <% end %>
+</ul>
