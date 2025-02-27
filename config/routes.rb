@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   resources :puzzles, only: [:create]
   resources :user_profiles, only: [:show, :edit, :update]
   resources :upgrades, only: [:show]
-  resources :practice, only: [:index]
+  resources :practice, only: [:index, :show]
 
 
   # Defines the root path route ("/")

@@ -1,9 +1,12 @@
-class PracticePolicy <ApplicationPolicy
-  class Scope < ApplicationPolicy::Scope
-    # NOTE: Be explicit about which records you allow access to!
+class PracticePolicy < ApplicationPolicy
+  class Scope < Scope
     def resolve
-      UserProfile.find(user.user_profile)
+      scope.all
     end
+  end
+
+  def show?
+    true
   end
 
   def index?

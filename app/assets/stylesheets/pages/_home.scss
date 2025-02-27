@@ -254,7 +254,7 @@ button {
   height: 100%;
   pointer-events: none; /* So users can still interact with the page */
   overflow: hidden;
-  z-index: 999;
+  z-index: -1; /* Push it to the very back */
 }
 
 .kanji {

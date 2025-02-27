@@ -1,0 +1,30 @@
+<div class="kanji-container" data-controller="practice">
+  <div class="inner-container">
+    <div class="text-box">
+
+      <% @processed_sentences.each do |sentence| %>
+        <p class="sentence"><%= raw sentence[:modified] %></p>
+      <% end %>
+
+    </div>
+    <div class="kanji-boxes">
+      <% @unlocked_kanji.each do |kanji| %>
+        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
+        <%= kanji %>
+        </span>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="hidden">
+  <%= simple_form_for @user_profile, remote: true, html: { id: :practice_done } do |f| %>
+  <%= f.input :total_xp ,input_html: {id: "xp_field", value: @user_profile.total_xp }%>
+  <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
+  <%= f.button :submit, id: "practice-done-submit" %>
+  <% end %>
+</div>
+
+<div>
+  <%= render "practice/conclussion" %>
+</div>
