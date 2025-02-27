@@ -6,6 +6,7 @@ export default class extends Controller {
   connect() {
     console.log("Mode Selector Controller Connected!");
     this.playButtonTarget.disabled = true; // Disable play button initially
+    this.startKanjiRain(); // Start kanji rain
   }
 
   setMode(event) {
@@ -38,5 +39,29 @@ export default class extends Controller {
 
     tutorialContent.classList.toggle("active"); // Slide in/out
     overlay.classList.toggle("active"); // Show/hide overlay
+  }
+
+  startKanjiRain() {
+    const kanjiContainer = document.querySelector(".kanji-rain-container");
+    const kanjiList = ["漢", "字", "学", "習", "楽", "愛", "心", "友"]; // Cute kanji selection
+
+    setInterval(() => {
+      const kanji = document.createElement("span");
+      kanji.innerText = kanjiList[Math.floor(Math.random() * kanjiList.length)];
+      kanji.classList.add("kanji");
+
+      // Random position and animation speed
+      kanji.style.left = `${Math.random() * 100}vw`;
+      kanji.style.animationDuration = `${3 + Math.random() * 3}s`; // Slower fall (3-6 sec)
+      kanji.style.fontSize = `${20 + Math.random() * 10}px`; // Varying sizes
+      kanji.style.opacity = `${0.5 + Math.random() * 0.5}`; // Soft opacity
+
+      kanjiContainer.appendChild(kanji);
+
+      // Remove kanji after it falls
+      setTimeout(() => {
+        kanji.remove();
+      }, 6000); // Matches max animation duration
+    }, 500); // New kanji every 0.5 sec
   }
 }

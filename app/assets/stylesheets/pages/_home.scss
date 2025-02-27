@@ -244,3 +244,36 @@ button {
 .overlay.active {
   display: block;
 }
+
+
+.kanji-rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* So users can still interact with the page */
+  overflow: hidden;
+  z-index: 999;
+}
+
+.kanji {
+  position: absolute;
+  font-size: 24px; /* Adjust size for cuteness */
+  color: rgba(104, 102, 102, 0.8); /* Light and soft */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+
+/* Falling animation */
+@keyframes fall {
+  from {
+    transform: translateY(-10%);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
