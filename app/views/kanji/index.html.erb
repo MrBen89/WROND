@@ -1,13 +1,37 @@
 <div class="level-buttons">
-  <div class="level-filter level-1">N1</div>
-  <div class="level-filter level-2">N2</div>
-  <div class="level-filter level-3">N3</div>
-  <div class="level-filter level-4 active">N4</div>
-  <div class="level-filter level-5">N5</div>
-  <div class="level-filter level-all">All!</div>
+  <div class="button-box">
+    <div class="crown"> <%= image_tag "crown.png", id: "crown_n1", class:"hidden"%> </div>
+    <div class="level-filter level-1">N1</div>
+    <span class="level-filter level-1 hidden"><span id="n1_done"><%=@n1_done.count%></span>/<span id="n1_total"><%= @n1_total.count%></span>
+  </div>
+  <div class="button-box">
+    <div class="crown"> <%= image_tag "crown.png", id: "crown_n2", class:"hidden" %> </div>
+    <div class="level-filter level-2">N2</div>
+    <span class="level-filter level-2 hidden"><span id="n2_done"><%=@n2_done.count%></span>/<span id="n2_total"><%= @n2_total.count%></span>
+  </div>
+  <div class="button-box">
+    <div class="crown"> <%= image_tag "crown.png", id: "crown_n3", class:"hidden" %> </div>
+    <div class="level-filter level-3">N3</div>
+    <span class="level-filter level-3 hidden"><span id="n3_done"><%=@n3_done.count%></span>/<span id="n3_total"><%= @n3_total.count%></span>
+  </div>
+  <div class="button-box">
+    <div class="crown"> <%= image_tag "crown.png", id: "crown_n4", class:"hidden" %> </div>
+    <div class="level-filter level-4">N4</div>
+    <span class="level-filter level-4 hidden"><span id="n4_done"><%=@n4_done.count%></span>/<span id="n4_total"><%= @n4_total.count%></span>
+  </div>
+  <div class="button-box">
+    <div class="crown"> <%= image_tag "crown.png", id: "crown_n5", class:"hidden" %> </div>
+    <div class="level-filter level-5">N5</div>
+    <span class="level-filter level-5 hidden"><span id="n5_done"><%=@n5_done.count%></span>/<span id="n5_total"><%= @n5_total.count%></span>
+  </div>
+  <div class="button-box">
+    <div class="crown"> <%= image_tag "crown.png", id: "crown_all", class:"hidden"  %> </div>
+    <div class="level-filter level-all">All!</div>
+    <span class="level-filter level-all hidden"><span id="all_done"><%=@all_done.count%></span>/<span id="all_total"><%= @kanji.count%></span>
+  </div>
 </div>
 
-<div class="main-container">
+<div class="main-container" data-controller="index-side-menu">
   <div class="left-side">
     <div class="info-card">
       <p>Kanji:</p>
@@ -41,13 +65,13 @@
 
   <div class="right-side">
     <div class="card-container">
-      <% @kanji.each_with_index do |kanji, index| %>
+      <% (@all_done).each_with_index do |kanji, index| %>
+      <% if @puzzles.any? {|p| p.kanji == kanji} %>
         <div class="card" data-kanji="<%= kanji.kanji %>"
              data-meaning="<%= kanji.meaning %>"
              data-onyomi="<%= kanji.onyomi %>"
              data-kunyomi="<%= kanji.kunyomi %>"
              data-stroke-count="<%= kanji.stroke_count %>"
-             data-grade="<%= kanji.grade %>"
              data-jlpt="<%= kanji.jlptLevel %>"
              data-url="<%= kanji_path(kanji) %>"
              data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
@@ -58,88 +82,34 @@
             <div class="question-mark">?</div>
           </div>
         </div>
+        <% end %>
+      <% end %>
+      <% not_done = (
+        (@n5_total - @n5_done)[..10] +
+        (@n4_total - @n4_done)[..10] +
+        (@n3_total - @n3_done)[..10] +
+        (@n2_total - @n2_done)[..10] +
+        (@n1_total - @n1_done)[..10]
+        ) %>
+       <% (not_done).each_with_index do |kanji, index| %>
+        <div class="card" data-kanji="<%= kanji.kanji %>"
+             data-meaning="<%= kanji.meaning %>"
+             data-onyomi="<%= kanji.onyomi %>"
+             data-kunyomi="<%= kanji.kunyomi %>"
+             data-stroke-count="<%= kanji.stroke_count %>"
+             data-jlpt="<%= kanji.jlptLevel %>"
+             data-url="<%= kanji_path(kanji) %>"
+             data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
+
+          <div class="stars">★★★☆☆</div>
+          <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
+          <div class="white-box-for">
+            <div class="question-mark">?</div>
+          </div>
+        </div>
+        <% if @puzzles.any? {|p| p.kanji == kanji} %>
+        <% end %>
       <% end %>
     </div>
   </div>
 </div>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  const leftSide = document.querySelector(".left-side");
-  const rightSide = document.querySelector(".right-side");
-  const cards = document.querySelectorAll(".card");
-  const playButton = document.getElementById("play-btn");
-  const selectedKanjiInput = document.getElementById("selected-kanji");
-  const kanjiDisplay = document.getElementById("kanji-display");
-  const jlptLevel = document.getElementById("jlpt-level");
-  const meaning = document.getElementById("meaning");
-  const kunyomi = document.getElementById("kunyomi");
-  const onyomi = document.getElementById("onyomi");
-  const strokeCount = document.getElementById("stroke-count");
-  const grade = document.getElementById("grade");
-  const levelFilters = document.querySelectorAll(".level-filter");
-
-  let isExpanded = false;
-
-  cards.forEach((card) => {
-    const kanjiData = card.dataset;
-    const isSolved = kanjiData.solved >= 1; // Ensure correct boolean comparison
-    const questionMark = card.querySelector(".question-mark");
-
-    questionMark.textContent = isSolved ? kanjiData.kanji : "?";
-
-    card.addEventListener("click", function () {
-      if (!isExpanded) {
-        leftSide.classList.add("expanded");
-        rightSide.classList.add("shrunk");
-        leftSide.style.display = "block";
-        isExpanded = true;
-      }
-
-      cards.forEach((btn) => btn.classList.remove("active"));
-      this.classList.add("active");
-
-      // Re-check if the kanji is solved inside the event listener
-      const isSolved = Number(kanjiData.solved) > 0;
-
-      selectedKanjiInput.value = kanjiData.kanji;
-      kanjiDisplay.textContent = isSolved ? kanjiData.kanji : "?";
-      jlptLevel.textContent = kanjiData.jlpt || "N5";
-      meaning.textContent = isSolved ? kanjiData.meaning : "?";
-      kunyomi.textContent = isSolved ? kanjiData.kunyomi : "?";
-      onyomi.textContent = isSolved ? kanjiData.onyomi : "?";
-      strokeCount.textContent = isSolved ? kanjiData.strokeCount : "?";
-      grade.textContent = isSolved ? kanjiData.grade : "?";
-
-      playButton.setAttribute("data-url", kanjiData.url);
-      playButton.disabled = false; // Ensure the button is enabled
-    });
-  });
-
-  playButton.addEventListener("click", function () {
-    const url = playButton.getAttribute("data-url");
-    if (url) {
-      window.location.href = url;
-    }
-  });
-
-  levelFilters.forEach((filter) => {
-    filter.addEventListener("click", function () {
-      const selectedLevel = this.classList[1];
-
-      cards.forEach((card) => {
-        const cardLevel = card.dataset.jlpt;
-
-        if (selectedLevel === "level-all" || `level-${cardLevel}` === selectedLevel) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
-      });
-    });
-  });
-
-  document.querySelector(".level-4").click();
-});
-
-</script>
