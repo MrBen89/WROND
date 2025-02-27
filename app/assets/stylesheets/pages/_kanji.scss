@@ -93,16 +93,19 @@
   transform: scale(1.05);
 }
 
-
 .stars {
   font-size: 24px;
 }
 
-.level {
+.level-filter {
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 14px;
   margin-top: 10px;
+}
+
+span.level-filter {
+  font-size: 12px;
 }
 
 .question-mark {
@@ -201,4 +204,10 @@
 .button-container {
   display: flex;
   justify-content: center;
+}
+
+.crown {
+  margin: auto;
+  width: 32px;
+  height: 32px;
 }

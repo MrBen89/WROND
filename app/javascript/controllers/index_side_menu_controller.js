@@ -14,8 +14,14 @@ export default class extends Controller {
       const kunyomi = document.getElementById("kunyomi");
       const onyomi = document.getElementById("onyomi");
       const strokeCount = document.getElementById("stroke-count");
-      const grade = document.getElementById("grade");
       const levelFilters = document.querySelectorAll(".level-filter");
+
+      if (document.getElementById("n1_done").innerText == document.getElementById("n1_total").innerText){document.getElementById("crown_n1").classList.remove("hidden")}
+      if (document.getElementById("n2_done").innerText == document.getElementById("n2_total").innerText){document.getElementById("crown_n2").classList.remove("hidden")}
+      if (document.getElementById("n3_done").innerText == document.getElementById("n3_total").innerText){document.getElementById("crown_n3").classList.remove("hidden")}
+      if (document.getElementById("n4_done").innerText == document.getElementById("n4_total").innerText){document.getElementById("crown_n4").classList.remove("hidden")}
+      if (document.getElementById("n5_done").innerText == document.getElementById("n5_total").innerText){document.getElementById("crown_n5").classList.remove("hidden")}
+      if (document.getElementById("all_done").innerText == document.getElementById("all_total").innerText){document.getElementById("crown_all").classList.remove("hidden")}
 
       let isExpanded = false;
 
@@ -47,7 +53,6 @@ export default class extends Controller {
           kunyomi.textContent = isSolved ? kanjiData.kunyomi : "?";
           onyomi.textContent = isSolved ? kanjiData.onyomi : "?";
           strokeCount.textContent = isSolved ? kanjiData.strokeCount : "?";
-          grade.textContent = isSolved ? kanjiData.grade : "?";
 
           playButton.setAttribute("data-url", kanjiData.url);
           playButton.disabled = false; // Ensure the button is enabled
@@ -62,6 +67,16 @@ export default class extends Controller {
       });
 
       levelFilters.forEach((filter) => {
+        filter.addEventListener("mouseenter", function () {
+          let temp = this.innerText
+          this.innerText = this.parentNode.querySelector("span").innerText
+          this.parentNode.querySelector("span").innerText = temp;
+        })
+        filter.addEventListener("mouseleave", function () {
+          let temp = this.innerText
+          this.innerText = this.parentNode.querySelector("span").innerText
+          this.parentNode.querySelector("span").innerText = temp;
+        })
         filter.addEventListener("click", function () {
           const selectedLevel = this.classList[1];
 
