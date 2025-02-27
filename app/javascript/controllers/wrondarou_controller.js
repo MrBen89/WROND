@@ -5,11 +5,12 @@ export default class extends Controller {
 
   connect() {
   setTimeout(() => {
-    this.hintTarget.classList.remove("hidden");
+    document.querySelector(".game-gif-bottom").addEventListener("click", this.toggle.bind(this));
+    document.querySelector(".ask-wrondarou-btn").classList.remove("hidden");
   }, 5000);
   }
 
   toggle() {
-    this.hintTarget.classList.toggle("d-none");
+    document.querySelector(".words-of-wisdom").classList.remove("hidden");
   }
 }
