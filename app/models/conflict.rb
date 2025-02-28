@@ -32,10 +32,12 @@ class Conflict < ApplicationRecord
   end
 
   def broadcast_update_p2
-    broadcast_update_to self,
-    target: "room#{self.id}player#{user2.id}",
-    partial: "conflicts/p2puzzle",
-    locals: { conflict: self }
+    unless user2.nil?
+      broadcast_update_to self,
+      target: "room#{self.id}player#{user2.id}",
+      partial: "conflicts/p2puzzle",
+      locals: { conflict: self }
+    end
   end
 end
 # def update_message

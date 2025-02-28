@@ -52,7 +52,7 @@ export default class extends Controller {
     if (this.data.get("status") == "in_progress"){
       this.start_puzzle()
     } else if (this.data.get("status") == "complete") {
-      this.stop_puzzle()
+      this.puzzle_ended()
     }
 
   }
@@ -189,7 +189,6 @@ export default class extends Controller {
   // }
 
   stop_puzzle(handleClick) {
-    document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
     let block = document.querySelector(".cornerBlock");
     block.classList.add("cleared");
     let cells = document.getElementsByClassName("cell");
@@ -221,4 +220,33 @@ export default class extends Controller {
 
 
   };
+
+  puzzle_ended() {
+    const p2data = JSON.parse(this.data.get("p2data"));
+    const rootDiv = this.p2RootDivTarget
+    for (let i = 0; i < 16; i++){
+      let row = document.createElement("div")
+      row.classList.add("row");
+      rootDiv.appendChild(row);
+      //create guide cell
+      let box = document.createElement("div")
+      box.classList.add("yGuide")
+      row.appendChild(box);
+      //create columns
+      for (let n = 0; n < 16; n++){
+          //add columns to current_patern
+          let box = document.createElement("div");
+          box.classList.add(`col${n}`);
+          box.classList.add(`row${i}`);
+          box.classList.add(`cell`);
+          box.classList.add("finished")
+          if (p2data[i][n] == 1){
+            box.classList.add("selected")
+          }
+          box.dataset.x = n;
+          box.dataset.y = i;
+        row.appendChild(box);
+      }
+    }
+  }
 }

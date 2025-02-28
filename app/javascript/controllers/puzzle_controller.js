@@ -298,10 +298,18 @@ export default class extends Controller {
       }
     },1);
     setTimeout(() => {
+
       document.getElementById('conclussionModal').classList.remove("hidden");
       document.getElementById('popup-button').addEventListener("click", () => {
         document.getElementById('conclussionModal').style.display = "none";
         document.getElementById('kanji-data').classList.add("expanded");
+        console.log(window.location.pathname);
+        fetch(window.location.pathname, {
+          headers: {
+            "X-Requested-With": "XMLHttpRequest", // Treat as AJAX request
+            "Turbo-Frame": "highscore_partial" // Target Turbo Frame
+          }
+        });
         document.querySelector('.highscores').classList.add("expanded");
       });
       this.experience_roller()
@@ -316,9 +324,9 @@ export default class extends Controller {
           //document.getElementById('level-up-image').classList.remove("hidden");
         },1500)
       }
-      this.update_user_record();
-      this.create_puzzle_record();
-    },1000)
 
+    },1000)
+    this.update_user_record();
+    this.create_puzzle_record();
   };
 }

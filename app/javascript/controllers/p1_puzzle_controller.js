@@ -73,26 +73,26 @@ let timer = (() => {setInterval(() => {
 export default class extends Controller {
   static targets = ["p1RootDiv"]
   connect() {
+    const user_id = document.getElementById("user_id").innerText
 
-    if (user_id.innerHTML == this.data.get("user1")){
+    if (user_id == this.data.get("user1")){
       player = 1
     } else {
-      console.log(user_id.innerHTML)
-      console.log(this.data.get("user1"))
-      console.log(this.data.get("user2"))
       player = 2
     }
 
     //rootDiv is where to mount the puzzle
     const rootDiv = this.p1RootDivTarget;
-
+    let status = this.data.get("status")
     this.start_puzzle = this.start_puzzle.bind(this);
     this.stop_puzzle = this.stop_puzzle.bind(this);
     this.check_for_start = this.check_for_start.bind(this);
-    if (this.data.get("status") == "in_progress"){
+    if (status == "in_progress"){
       this.start_puzzle()
-    } else if (this.data.get("status") == "complete"){
-      this.stop_puzzle()
+    } else if (status == "complete"){
+      this.puzzle_ended()
+    } else if((status == "p1ready" && player == 1) || (status == "p2ready" && player == 2)){
+      this.check_for_start()
     } else {
       let button = document.createElement("button");
       button.innerHTML = "START!"
@@ -105,11 +105,13 @@ export default class extends Controller {
   check_for_start(){
     console.log(player)
     if ((this.data.get("status") == "p2ready" && player == 1) || (this.data.get("status") == "p1ready" && player == 2)){
-      console.log(0)
       this.start_puzzle()
     } else if (player == 1){
       if (this.data.get("status") == "p1ready") {
         document.getElementById("waiting").classList.remove("hidden")
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
       document.getElementById("status_field").value = "p1ready";
       document.getElementById("conflict_form").requestSubmit();
@@ -117,6 +119,9 @@ export default class extends Controller {
     } else if (player == 2){
       if (this.data.get("status") == "p2ready") {
         document.getElementById("waiting").classList.remove("hidden")
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
       document.getElementById("status_field").value = "p2ready";
       document.getElementById("conflict_form").requestSubmit();
@@ -125,14 +130,15 @@ export default class extends Controller {
   }
 
   start_puzzle() {
+    console.log(player)
     const rootDiv = this.p1RootDivTarget
     let mouse_status = "up"
     let mode = "draw"
 
     if (document.querySelector(".p1startButton")) {document.querySelector(".p1startButton").remove()}
+    clearInterval(timer)
     timer()
     //current pattern is the working array
-    //let current_pattern = []
     //puzzledata is the solution array
     const puzzledata = JSON.parse(this.data.get("variable"));
     const user_id = document.getElementById("user_id").innerText
@@ -163,6 +169,8 @@ export default class extends Controller {
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],]
+      document.getElementById("state_field").value = JSON.stringify(current_pattern);
+      document.getElementById("conflict_form").requestSubmit()
     }
     //create the hints arrays
     let xValues = xWriter(puzzledata);
@@ -190,8 +198,8 @@ export default class extends Controller {
     row.classList.add("row");
     let box = document.createElement("div");
     box.classList.add("cornerBlock");
-    box.setAttribute("id", "timerBox");
-    box.innerText = "00:00";
+    // box.setAttribute("id", "timerBox");
+    // // box.innerText = "00:00";
     row.appendChild(box);
     for (let i = 0; i < 16; i ++){
       let box = document.createElement("div")
@@ -335,7 +343,7 @@ export default class extends Controller {
   }
 
   update_conflict() {
-    document.getElementById("time_field").value = seconds_absolute;
+    document.getElementById("time_field").value = parseInt(document.getElementById("seconds_abs").innerText);
     document.getElementById("status_field").value = "complete";
     document.getElementById("winner_field").value = user_id;
     document.getElementById("conflict_form").requestSubmit();
@@ -359,6 +367,8 @@ export default class extends Controller {
   };
 
   stop_puzzle(handleClick) {
+    let minutes = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) / 60)
+    let seconds = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) % 60)
     document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
     let block = document.querySelector(".cornerBlock");
     block.classList.add("cleared");
@@ -412,4 +422,33 @@ export default class extends Controller {
     },1000)
 
   };
-};
+
+  puzzle_ended() {
+    const p1data = JSON.parse(this.data.get("p1data"));
+    const rootDiv = this.p1RootDivTarget
+    for (let i = 0; i < 16; i++){
+      let row = document.createElement("div")
+      row.classList.add("row");
+      rootDiv.appendChild(row);
+      //create guide cell
+      let box = document.createElement("div")
+      box.classList.add("yGuide")
+      row.appendChild(box);
+      //create columns
+      for (let n = 0; n < 16; n++){
+          //add columns to current_patern
+          let box = document.createElement("div");
+          box.classList.add(`col${n}`);
+          box.classList.add(`row${i}`);
+          box.classList.add(`cell`);
+          box.classList.add("finished")
+          if (p1data[i][n] == 1){
+            box.classList.add("selected")
+          }
+          box.dataset.x = n;
+          box.dataset.y = i;
+        row.appendChild(box);
+      }
+    }
+  }
+}
