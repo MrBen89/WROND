@@ -176,7 +176,7 @@ users = [
 ]
 
 users.each do |user_data|
-  user = User.create!(
+  User.create!(
     email: user_data[:email],
     password: 'password'
   )
