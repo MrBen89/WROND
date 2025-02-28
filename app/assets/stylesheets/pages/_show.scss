@@ -231,7 +231,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
+
+.ask-wrondarou-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-left: 40px;
+  padding-right: 40px;
+  height: 15%;
+  margin: auto;
+
 
 .gif-container-bottom {
   flex: 1;
