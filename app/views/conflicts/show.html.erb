@@ -10,15 +10,20 @@
     <h3><%= @conflict.user1.user_profile.username %></h3>
     <%= image_tag "#{@conflict.user1.user_profile.profile_pic}", class: "avatar_display"%>
     <h1>VS.</h1>
-    <%= image_tag "#{@conflict.user2.user_profile.profile_pic}", class: "avatar_display"%>
-    <h3><%= @conflict.user2.user_profile.username %></h3>
+    <% if @conflict.user2.nil? %>
+      <%= image_tag "WROND.png", class: "avatar_display"%>
+      <h3>Waiting for opponent</h3>
+    <% else %>
+      <%= image_tag "#{@conflict.user2.user_profile.profile_pic}", class: "avatar_display"%>
+      <h3><%= @conflict.user2.user_profile.username %></h3>
+    <% end %>
     <span class="hidden" id="seconds_abs"><%= @conflict.time%></span>
     <div id="timerBox"> 00:00
     </div>
   </div>
   <div class="p-3 m-6 puzzle_box" id=<%="room#{@conflict.id}player#{@user.id}"%>>
     <%= turbo_frame_tag :conflict_p2_partial do %>
-      <%= render "p2puzzle", conflict: @conflict, user: @user, user_profile: @conflict.user2.user_profile  %>
+      <%= render "p2puzzle", conflict: @conflict, user: @user  %>
     <% end %>
   </div>
 </div>

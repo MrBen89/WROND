@@ -16,3 +16,25 @@
 .puzzle_box {
   margin: auto;
 }
+
+.conflict_box_bottom {
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.conflict_box_top {
+  text-align: center;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 20px;
+}
+
+.card, .level-filter {
+  margin: 6px;
+  display: inline;
+}
+
+.games {
+  padding: 20px;
+}

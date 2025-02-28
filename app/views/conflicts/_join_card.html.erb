@@ -1,5 +1,6 @@
-<div class="card" id="conflict-<%= conflict.id %>">
-  <%= conflict.user1.user_profile.username %>
-  <%= conflict.kanji.jlptLevel %>
-  <%= conflict.status %>
-</div>
+<%= button_to conflicts_path(commit: "N#{conflict.kanji.jlptLevel}"), method: :post do %>
+  <div class="card" id="conflict-<%= conflict.id %>">
+    <%= conflict.user1.user_profile.username %>
+    N<%= conflict.kanji.jlptLevel %>
+  </div>
+<% end %>

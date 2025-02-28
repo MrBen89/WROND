@@ -57,17 +57,17 @@ let seconds = 0;
 let minutes = 0;
 let seconds_absolute = 0;
 
-let timer = (() => {setInterval(() => {
-  document.getElementById('timerBox').innerHTML=
-  (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
-  seconds ++;
-  seconds_absolute ++;
-  if (seconds >= 60) {
-      minutes ++;
-      seconds = 0
-    }
-  }, 1000);
-})
+// let timer = (() => {setInterval(() => {
+//   document.getElementById('timerBox').innerHTML=
+//   (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+//   seconds ++;
+//   seconds_absolute ++;
+//   if (seconds >= 60) {
+//       minutes ++;
+//       seconds = 0
+//     }
+//   }, 1000);
+// })
 
 // Connects to data-controller="puzzle"
 export default class extends Controller {
@@ -93,7 +93,7 @@ export default class extends Controller {
       this.puzzle_ended()
     } else if((status == "p1ready" && player == 1) || (status == "p2ready" && player == 2)){
       this.check_for_start()
-    } else {
+    } else if (this.data.get("user2") != 0){
       let button = document.createElement("button");
       button.innerHTML = "START!"
       button.classList.add("p1startButton")
@@ -130,14 +130,13 @@ export default class extends Controller {
   }
 
   start_puzzle() {
-    console.log(player)
     const rootDiv = this.p1RootDivTarget
     let mouse_status = "up"
     let mode = "draw"
 
     if (document.querySelector(".p1startButton")) {document.querySelector(".p1startButton").remove()}
-    clearInterval(timer)
-    timer()
+    // clearInterval(timer)
+    // timer()
     //current pattern is the working array
     //puzzledata is the solution array
     const puzzledata = JSON.parse(this.data.get("variable"));
@@ -292,7 +291,8 @@ export default class extends Controller {
               }
             }
               //check for win
-              if (checkArrays(current_pattern, puzzledata)){
+              console.log(current_pattern.map(x =>  x.map(y => y == "2" ? "0" : y)))
+              if (checkArrays(current_pattern.map(x =>  x.map(y => y == "2" ? "0" : y)), puzzledata)){
                 this.stop_puzzle(handleClick)
             }
           }

@@ -16,7 +16,7 @@ class ConflictsController < ApplicationController
   def create
     @conflicts = Conflict.where(status: "searching")
     if conflict_params[:commit] == "All!" && @conflicts.length > 0
-      @conflict = @conflicts.sample
+      @conflict = @conflicts.where.not(user1: current_user).sample
       @conflict.user2 = current_user
       @conflict.status = "starting"
       @conflict.save
@@ -29,14 +29,15 @@ class ConflictsController < ApplicationController
         respond_to do |format|
           format.turbo_stream do
             render turbo_stream: turbo_stream.append(:games, partial: "conflicts/join_card", locals: { conflict: @conflict })
+
           end
           format.html { redirect_to conflicts_path }
         end
       end
     else
       @conflicts = @conflicts.joins(:kanji).where("kanji.jlptLevel" => conflict_params[:commit].gsub("N", ""))
-      if @conflicts.count > 0
-        @conflict = @conflicts.sample
+      if @conflicts.where.not(user1: current_user).count > 0
+        @conflict = @conflicts.where.not(user1: current_user).sample
         @conflict.user2 = current_user
         @conflict.status = "starting"
         @conflict.save
@@ -47,7 +48,8 @@ class ConflictsController < ApplicationController
         if @conflict.save
           respond_to do |format|
             format.turbo_stream do
-              render turbo_stream: turbo_stream.append(:games, partial: "conflicts/join_card", locals: { conflict: @conflict })
+              # render turbo_stream: turbo_stream.append(:games, partial: "conflicts/join_card", locals: { conflict: @conflict })
+              redirect_to conflict_path(@conflict)
             end
             format.html { redirect_to conflicts_path }
           end
