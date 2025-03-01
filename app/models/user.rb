@@ -6,6 +6,7 @@ class User < ApplicationRecord
     :recoverable, :rememberable, :validatable
 
   has_one :user_profile, class_name: "UserProfile"
+  has_many :conflicts
   has_many :unlocks
   has_many :puzzles
   has_many :unlocked_kanji, through: :unlocks, source: :kanji

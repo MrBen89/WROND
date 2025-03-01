@@ -1,0 +1,35 @@
+<%# <div class="level-buttons">
+  <div class="level-filter level-1">N1</div>
+  <div class="level-filter level-2">N2</div>
+  <div class="level-filter level-3">N3</div>
+  <div class="level-filter level-4 active">N4</div>
+  <div class="level-filter level-5">N5</div>
+  <div class="level-filter level-all">All!</div>
+</div> %>
+
+<div class="main-container d-flex justify-content-center">
+  <div>
+   <div class="conflict_box_top d-flex flex-column">
+    <h2> Start A New Battle! </h2>
+    <div class="level-buttons-horizontal justify-content-center">
+      <%= simple_form_for @conflict do |f| %>
+        <%= f.submit "N1", class: "level-filter-horizontal level-1" %>
+        <%= f.submit "N2", class: "level-filter-horizontal level-2" %>
+        <%= f.submit "N3", class: "level-filter-horizontal level-3" %>
+        <%= f.submit "N4", class: "level-filter-horizontal level-4" %>
+        <%= f.submit "N5", class: "level-filter-horizontal level-5" %>
+        <%= f.submit "All!", class: "level-filter-horizontal level-all" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="conflict_box_bottom justify-content-center">
+    <h2> Join Now! </h2>
+      <%= turbo_stream_from "available_games" %>
+      <div id="games" class="games d-flex">
+      <% @conflicts.each do |conflict| %>
+        <%= render "join_card", conflict: conflict %>
+      <% end %>
+    </div>
+  </div>
+  </div>
+</div>

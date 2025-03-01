@@ -18,6 +18,16 @@
   height: auto; /* Could be more or less, depending on screen size */
 }
 
+.popup-waiting {
+  background-color: #fefefebd;
+  display: block;
+  margin: 300px auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 320px;
+  height: auto; /* Could be more or less, depending on screen size */
+}
+
 .popup-footer {
   display: flex;
   flex-direction: row-reverse;

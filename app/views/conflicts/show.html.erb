@@ -1,0 +1,50 @@
+
+<div class="container d-flex">
+  <%= turbo_stream_from @conflict %>
+  <div class="p-3 m-6 puzzle_box" id="conflicts_box">
+    <%= turbo_frame_tag :conflict_partial do %>
+      <%= render "p1puzzle", conflict: @conflict, user: @user, user_profile: @conflict.user1.user_profile  %>
+    <% end %>
+  </div>
+  <div class="center-partition" data-controller="timer">
+    <h3><%= @conflict.user1.user_profile.username %></h3>
+    <%= image_tag "#{@conflict.user1.user_profile.profile_pic}", class: "avatar_display"%>
+    <h1>VS.</h1>
+    <% if @conflict.user2.nil? %>
+      <%= image_tag "WROND.png", class: "avatar_display"%>
+      <h3>Waiting for opponent</h3>
+    <% else %>
+      <%= image_tag "#{@conflict.user2.user_profile.profile_pic}", class: "avatar_display"%>
+      <h3><%= @conflict.user2.user_profile.username %></h3>
+    <% end %>
+    <span class="hidden" id="seconds_abs"><%= @conflict.time%></span>
+    <div id="timerBox"> 00:00
+    </div>
+  </div>
+  <div class="p-3 m-6 puzzle_box" id=<%="room#{@conflict.id}player#{@user.id}"%>>
+    <%= turbo_frame_tag :conflict_p2_partial do %>
+      <%= render "p2puzzle", conflict: @conflict, user: @user  %>
+    <% end %>
+  </div>
+</div>
+<div class="popup hidden" id="waiting">
+  <%= image_tag "waiting.gif", class: "popup-waiting" %>
+</div>
+
+
+<div class="hidden">
+   <%= simple_form_for @conflict, remote: true, html: { id: :conflict_form } do |f| %>
+  <%= f.input :time ,input_html: {id: "time_field" }%>
+  <%= f.input :state, input_html: {id: "state_field", value: [] } %>
+  <%= f.input :status , input_html: {id: "status_field", value: "in_progress" }%>
+  <%= f.input :winner, input_html: {id: "winner_field" } %>
+  <%= f.input :player ,input_html: {id: "player_field", value: @user.id }%>
+  <%= f.input :total_xp ,input_html: {id: "xp_field", value: @user_profile.total_xp }%>
+  <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
+  <%= f.button :submit, id: "conflict-submit" %>
+  <% end %>
+
+  <div class="hidden" id="user_id"><%= @user.id %></div>
+</div>
+
+<%= render "conclussion" %>

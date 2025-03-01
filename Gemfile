@@ -55,6 +55,7 @@ gem "sassc-rails"
 gem "pundit"
 gem "ruby-openai"
 gem 'ostruct'
+gem "solid_cable"
 
 group :development, :test do
   gem "dotenv-rails"

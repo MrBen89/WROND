@@ -1,0 +1,40 @@
+.avatar_display {
+  width: 160px;
+  height: 160px;
+  image-rendering: pixelated;
+}
+
+.center-partition {
+  margin: 50px;
+  text-align: center;
+}
+
+.container {
+  margin: auto;
+}
+
+.puzzle_box {
+  margin: auto;
+}
+
+.conflict_box_bottom {
+  text-align: center;
+  width: 100%;
+  padding: 20px;
+}
+
+.conflict_box_top {
+  text-align: center;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 20px;
+}
+
+.card, .level-filter-horizontal {
+  margin: 6px;
+  display: inline;
+}
+
+.games {
+  padding: 20px;
+}

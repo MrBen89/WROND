@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :user_profiles, only: [:show, :edit, :update]
   resources :upgrades, only: [:show]
   resources :practice, only: [:index]
+  resources :conflicts, only: [:index, :show, :create, :update]
 
 
   # Defines the root path route ("/")

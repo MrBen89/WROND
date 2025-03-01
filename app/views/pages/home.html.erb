@@ -27,6 +27,32 @@
           </div>
           <p class="mode-label">STORY MODE</p>
         </button>
+
+        <button
+          type="button"
+          class="mode-box"
+          data-action="click->mode-selector#setMode"
+          data-mode="battle"
+          data-target="mode-selector.button"
+        >
+          <div class="white-box" data-mode="battle">
+            <span class="kanji-text" data-mode="battle">競争</span>
+          </div>
+          <p class="mode-label">BATTLE MODE</p>
+        </button>
+
+        <button
+          type="button"
+          class="mode-box"
+          data-action="click->mode-selector#setMode"
+          data-mode="daily"
+          data-target="mode-selector.button"
+        >
+          <div class="white-box" data-mode="daily">
+            <span class="kanji-text" data-mode="daily">毎日</span>
+          </div>
+          <p class="mode-label">DAILY CHALLENGE</p>
+        </button>
       </div>
     </form>
 

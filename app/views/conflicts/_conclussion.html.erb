@@ -1,0 +1,25 @@
+<div class="popup hidden" id="conclussionModal" tabindex="-1" role="dialog" aria-labelledby="conclussionModalLabel" aria-hidden="true">
+  <div class="popup-dialog" role="document">
+    <div class="popup-content justify-content-center">
+      <div class="popup-header">
+        <h5 class="popup-title" id="conclussionpopupLabel"></h5>
+      </div>
+      <div class="popup-body d-flex justify-content-between px-3">
+        <p class="px-3 text-large">XP <span id="xp-value">0 </span></p>
+        <p><%= image_tag "clock.png" %>  <span id="time-span"></span></p>
+      </div>
+      <div class="level-up hidden" id="level-up">
+        <div class="popup-body d-flex justify-content-center" >
+          <p>Level Up! <span id="level-span">1</span> &rarr; <span id="level-up-span">2 </span></p>
+        </div>
+        <div class="popup-body d-flex justify-content-center" id="level-up-image">
+          <%= image_tag "celebrate.GIF" %>
+        </div>
+      </div>
+      <div class="popup-footer">
+        <%= link_to "Play Again?", conflicts_path, class: "btn btn-secondary popup-button", id: "popup-again-button" %>
+        <%= link_to "Main Menu", root_path, class: "btn btn-secondary popup-button", id: "popup-again-button" %>
+      </div>
+    </div>
+  </div>
+</div>
