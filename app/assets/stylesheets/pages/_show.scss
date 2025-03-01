@@ -18,8 +18,8 @@
 }
 
 .kanji-data, .highscores {
-  width: 100%;
-  height: 80vh;
+  width: 350px;
+  height: 400px;
   background-color: aqua;
   display: flex;
   flex-direction: column;
@@ -231,6 +231,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
 
 .ask-wrondarou-btn {
   display: flex;
@@ -275,5 +276,4 @@
   100% {
     left: calc(100% - 250px);
   }
-}
 }
