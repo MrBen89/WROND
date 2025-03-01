@@ -2,27 +2,14 @@ class PracticeController < ApplicationController
 
   def index
     @user_profile = UserProfile.find(current_user.user_profile.id)
-    @unlocked_kanji = policy_scope(Unlock).where(user: current_user).map { |unlock| unlock.kanji.kanji }
-
-    # all_sentences = [
-    #   "私は二級を合格して、一級を受けたいと思います。",
-    #   "十個の単語を覚えなければならない",
-    #   "鉛筆が折れた",
-    #   "私の誕生日は二十一日",
-    #   "私は日本語を勉強しています",
-    #   "一個のりんご"
-    # ]
-
-    # selected_sentences = all_sentences.sample(5)
-
-    # @processed_sentences = selected_sentences.map { |sentence| generate_sentence_with_missing_kanji(sentence) }
+    @unlocked_kanji = policy_scope(Unlock).where(user: current_user).map { |unlock| unlock.kanji.kanji }.reverse.take(5)
 
     client = OpenAI::Client.new
     chatgpt_response = client.chat(parameters: {
       model: "gpt-4o-mini",
       messages: [{
         role: "system",
-        content: "Make an example sentence using #{@unlocked_kanji} in Japanese.\nOnly give the example sentence and give one for each kanji."
+        content: "Make an example story using #{@unlocked_kanji} in Japanese in N5 level.\nOnly give the example story and use all the kanji."
       }]
     })
     @content = chatgpt_response["choices"][0]["message"]["content"]
