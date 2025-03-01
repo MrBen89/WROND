@@ -1,3 +1,7 @@
+.overall-container {
+  height: 80vh;
+}
+
 .white-box {
   background: #fff;
   border-radius: 8px;
@@ -9,7 +13,7 @@
 }
 
 .game-container {
-  margin-top: 110px;
+  margin-top: .1vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,7 +37,8 @@ font-family: 'Press Start 2P';
 }
 
 #mode-description {
-  margin-top: 100px;
+  margin-top: 80px;
+  height: 70px;
 }
 
 .mode-options {
@@ -126,9 +131,14 @@ button {
   align-items: center; /* Center the GIF vertically */
   position: absolute;
   width: 100%; /* Ensure it takes full width */
-  height: 500px; /* Adjust height if needed */
+  height: 350px; /* Adjust height if needed */
   overflow: hidden; /* Prevents scrollbars */
   padding: 100px;
+}
+
+.bottom-half {
+  width: 100vw;
+  justify-content:last baseline;
 }
 
 .game-gif {
@@ -149,9 +159,11 @@ button {
 // }
 
 .stats-panel {
-  background: #8c8c8c;
+  background: #d5d3d3;
   border-radius: 8px;
-  width: 100px;
+  width: 500px;
+  height:300px;
+  margin-left: 30px;
 }
 
 

@@ -1,96 +1,96 @@
 <div class="kanji-rain-container"></div>
 
+<div class="overall-container d-flex flex-column justify-content-between">
+  <div class="game-container" data-controller="mode-selector">
+    <div class="mode-selection">
+      <form action="/kanji/index" method="get">
+        <div class="mode-options">
+          <button
+            type="button"
+            class="mode-box"
+            data-action="click->mode-selector#setMode"
+            data-mode="kanji"
+            data-target="mode-selector.button"
+          >
+            <div class="white-box" data-mode="kanji">
+              <span class="kanji-text" data-mode="kanji">漢字</span>
+            </div>
+            <p class="mode-label">KANJI MODE</p>
+          </button>
 
-<div class="game-container" data-controller="mode-selector">
-  <div class="mode-selection">
-    <form action="/kanji/index" method="get">
-      <div class="mode-options">
-        <button
-          type="button"
-          class="mode-box"
-          data-action="click->mode-selector#setMode"
-          data-mode="kanji"
-          data-target="mode-selector.button"
-        >
-          <div class="white-box" data-mode="kanji">
-            <span class="kanji-text" data-mode="kanji">漢字</span>
-          </div>
-          <p class="mode-label">KANJI MODE</p>
-        </button>
+          <button
+            type="button"
+            class="mode-box"
+            data-action="click->mode-selector#setMode"
+            data-mode="story"
+            data-target="mode-selector.button"
+          >
+            <div class="white-box" data-mode="story">
+              <span class="kanji-text" data-mode="story">物語</span>
+            </div>
+            <p class="mode-label">STORY MODE</p>
+          </button>
 
-        <button
-          type="button"
-          class="mode-box"
-          data-action="click->mode-selector#setMode"
-          data-mode="story"
-          data-target="mode-selector.button"
-        >
-          <div class="white-box" data-mode="story">
-            <span class="kanji-text" data-mode="story">物語</span>
-          </div>
-          <p class="mode-label">STORY MODE</p>
-        </button>
+          <button
+            type="button"
+            class="mode-box"
+            data-action="click->mode-selector#setMode"
+            data-mode="battle"
+            data-target="mode-selector.button"
+          >
+            <div class="white-box" data-mode="battle">
+              <span class="kanji-text" data-mode="battle">競争</span>
+            </div>
+            <p class="mode-label">BATTLE MODE</p>
+          </button>
 
-        <button
-          type="button"
-          class="mode-box"
-          data-action="click->mode-selector#setMode"
-          data-mode="battle"
-          data-target="mode-selector.button"
-        >
-          <div class="white-box" data-mode="battle">
-            <span class="kanji-text" data-mode="battle">競争</span>
-          </div>
-          <p class="mode-label">BATTLE MODE</p>
-        </button>
+          <button
+            type="button"
+            class="mode-box"
+            data-action="click->mode-selector#setMode"
+            data-mode="daily"
+            data-target="mode-selector.button"
+          >
+            <div class="white-box" data-mode="daily">
+              <span class="kanji-text" data-mode="daily">毎日</span>
+            </div>
+            <p class="mode-label">DAILY CHALLENGE</p>
+          </button>
+        </div>
+      </form>
 
-        <button
-          type="button"
-          class="mode-box"
-          data-action="click->mode-selector#setMode"
-          data-mode="daily"
-          data-target="mode-selector.button"
-        >
-          <div class="white-box" data-mode="daily">
-            <span class="kanji-text" data-mode="daily">毎日</span>
-          </div>
-          <p class="mode-label">DAILY CHALLENGE</p>
+      <p class="mode-description" id="mode-description" data-target="mode-selector.modeDescription">
+        Choose a mode!
+      </p>
+
+      <form action="/" method="get">
+        <input type="hidden" name="mode" id="selected-mode" data-target="mode-selector.selectedMode" value="">
+        <button type="submit" class="play-button" id="play-btn" data-target="mode-selector.playButton" disabled>Play!</button>
+      </form>
+    </div>
+  <div class="bottom-half">
+        <div class="gif-container">
+        <%= image_tag "tanuki.gif", class: "game-gif" %>
+      </div>
+      <div class="stats-panel">
+        <h2>Stats:
+          <span id="stats" data-target="mode-selector.stats">?</span>
+        </h2>
+
+  </div>
+    <div>
+      <div class="tutorial-container">
+        <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
+          Tutorial
         </button>
       </div>
-    </form>
 
-    <p class="mode-description" id="mode-description" data-target="mode-selector.modeDescription">
-      Choose a mode!
-    </p>
-
-    <form action="/" method="get">
-      <input type="hidden" name="mode" id="selected-mode" data-target="mode-selector.selectedMode" value="">
-      <button type="submit" class="play-button" id="play-btn" data-target="mode-selector.playButton" disabled>Play!</button>
-    </form>
+      <div class="tutorial-container">
+        <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
+          Tutorial
+        </button>
+    </div>
   </div>
-</div>
-
-<div class="gif-container">
-  <%= image_tag "tanuki.gif", class: "game-gif" %>
-</div>
-
-<div class="stats-panel">
-  <h2>Stats:
-    <span id="stats" data-target="mode-selector.stats">?</span>
-  </h2>
-
-</div>
-
-<div class="tutorial-container">
-  <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
-    Tutorial
-  </button>
-</div>
-
-<div class="tutorial-container">
-  <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
-    Tutorial
-  </button>
 </div>
 
 <!-- Overlay to darken background -->
