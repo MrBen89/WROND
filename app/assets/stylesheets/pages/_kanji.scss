@@ -1,18 +1,12 @@
-// .main-container {
-//   display: flex;
-//   justify-content: space-between;
-//   padding: 5px;
-//   width: 100vw;
-//   height: 100vh;
-//   transition: all 1s ease-in-out;
-//   margin-left: 5px;
-// }
 .main-container {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: stretch;
-  height: 100vh;
+  padding: 5px;
+  width: 100vw;
+  height: 80vh;
+  transition: all 1s ease-in-out;
+  margin-top: 60px;
+  margin-left: 5px;
 }
 
 .left-side {
@@ -31,9 +25,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 20px;
-  height: 800px;
+  height: 70%;
   transition: flex 1s ease-in-out, width 1s ease-in-out;
 }
 
@@ -46,10 +39,11 @@
   display: flex;
   flex-wrap: wrap; /* Allow wrapping of cards into rows */
   gap: 20px;
-  margin-top: 30px;
+  // margin-top: 30px;
   overflow-y: auto;
-  max-height: 500px;
   width: 100%; /* Adjust to make it take full width */
+  justify-content: center;
+  height: auto;
 }
 
 .card {
