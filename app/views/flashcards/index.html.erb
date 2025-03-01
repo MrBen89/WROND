@@ -2,25 +2,82 @@
 
 <div class="flashcards-container">
   <% @unlocked_kanji.each do |kanji| %>
-    <div class="flashcard">
-      <div class="kanji-front">
+    <div class="flashcard" onclick="openFlashcard(this)">
+      <div class="flashcard-front">
         <%= kanji.kanji %>
       </div>
-      <div class="kanji-back">
-        <p><strong>Meaning:</strong> <%= kanji.meaning.join(", ") %></p>
-        <p><strong>Onyomi:</strong> <%= kanji.onyomi %></p>
-        <p><strong>Kunyomi:</strong> <%= kanji.kunyomi %></p>
-        <p><strong>JLPT Level:</strong> <%= kanji.jlptLevel %></p>
+
+      <div class="flashcard-back">
+        <button class="close-btn" onclick="closeFlashcard(event, this)">✖️</button>
+
+        <div class="flashcard-content">
+          <div class="flashcard-column left">
+            <p><strong>Onyomi:</strong> <span><%= kanji.onyomi.is_a?(Array) ? kanji.onyomi.join(", ") : kanji.onyomi %></span></p>
+            <p><strong>Kunyomi:</strong> <span><%= kanji.kunyomi.is_a?(Array) ? kanji.kunyomi.join(", ") : kanji.kunyomi %></span></p>
+            <p><strong>JLPT Level:</strong> <span><%= kanji.jlptLevel %></span></p>
+          </div>
+
+          <div class="flashcard-kanji">
+            <%= kanji.kanji %>
+          </div>
+
+<div class="flashcard-column right">
+  <p><strong>Meaning:</strong> <span><%= kanji.meaning.is_a?(Array) ? kanji.meaning.join(", ") : kanji.meaning %></span></p>
+
+  <% if kanji.audio.present? %>
+    <p><strong>Audio:</strong>
+      <button class="audio-btn" onclick="event.stopPropagation(); document.getElementById('audio-<%= kanji.kanji %>').play();">
+        🔊 Play
+      </button>
+    </p>
+    <audio id="audio-<%= kanji.kanji %>" src="<%= kanji.audio %>"></audio>
+  <% end %>
+
+  <% if kanji.example_sentences.present? && kanji.example_sentences.any? %>
+    <p><strong>Example Sentences:</strong></p>
+    <ul class="example-sentences">
+      <% kanji.example_sentences.first(2).each do |sentence| %>
+        <li>
+          <p><strong>JP:</strong> <%= sentence["japanese"] %></p>
+          <p><strong>EN:</strong> <%= sentence["english"] %></p>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+        </div>
       </div>
     </div>
   <% end %>
 </div>
 
+<div class="flashcard-overlay" onclick="closeAllFlashcards()"></div>
+
+<script>
+function openFlashcard(card) {
+  document.querySelectorAll('.flashcard').forEach(f => f.classList.remove('active'));
+  document.querySelector(".flashcard-overlay").style.display = "block";
+  card.classList.add("active");
+}
+
+function closeFlashcard(event, button) {
+  event.stopPropagation();
+  button.closest(".flashcard").classList.remove("active");
+  document.querySelector(".flashcard-overlay").style.display = "none";
+}
+
+function closeAllFlashcards() {
+  document.querySelectorAll('.flashcard').forEach(f => f.classList.remove('active'));
+  document.querySelector(".flashcard-overlay").style.display = "none";
+}
+</script>
+
 <style>
 .flashcards-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 15px;
+  justify-content: center;
 }
 
 .flashcard {
@@ -30,23 +87,130 @@
   border: 2px solid black;
   border-radius: 10px;
   text-align: center;
-  padding: 20px;
-}
-
-.kanji-front {
-  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
   font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
 }
 
-.kanji-back {
+/* 🔥 EXPAND CARD ON CLICK */
+.flashcard.active {
+  width: 450px;
+  height: 350px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  z-index: 30;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.example-sentences {
+  list-style: none;
+  padding: 0;
+  margin-top: 5px;
+  font-size: 12px;
+  max-height: 100px;
+  overflow-y: auto;
+}
+
+.example-sentences li {
+  margin-bottom: 5px;
+}
+
+.flashcard.active .flashcard-front {
   display: none;
 }
 
-.flashcard:hover .kanji-front {
+.flashcard-back {
   display: none;
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }
 
-.flashcard:hover .kanji-back {
-  display: block;
+.flashcard.active .flashcard-back {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flashcard-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+}
+
+.flashcard-column {
+  width: 45%;
+  font-size: 14px;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.flashcard-column p {
+  font-size: 14px;
+  margin: 5px 0;
+  max-height: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.flashcard-kanji {
+  font-size: 70px;
+  font-weight: bold;
+  text-align: center;
+  flex-grow: 1;
+  max-width: 100px;
+}
+
+.flashcard-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 20;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.audio-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.audio-btn:hover {
+  background: #0056b3;
 }
 </style>
