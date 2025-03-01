@@ -9,12 +9,13 @@
 }
 
 .game-container {
+  margin-top: 110px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   transform: none;
-
+  gap: 20px;
 }
 
 .status-text {
@@ -29,6 +30,10 @@ font-family: 'Press Start 2P';
   border-radius: 8px;
   padding: 20px;
   text-align: center;
+}
+
+#mode-description {
+  margin-top: 100px;
 }
 
 .mode-options {
@@ -56,6 +61,7 @@ font-family: 'Press Start 2P';
 }
 
 .kanji-text {
+  font-family: "JFDot";
   font-size: 40px;
   display: flex;
   align-items: center;
@@ -110,13 +116,6 @@ button {
   cursor: not-allowed;
 }
 
-.game-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-}
-
 .mode-selection {
   flex: 1;
 }
@@ -128,7 +127,7 @@ button {
   align-items: center; /* Center the GIF vertically */
   position: absolute;
   width: 100%; /* Ensure it takes full width */
-  height: 210px; /* Adjust height if needed */
+  height: 500px; /* Adjust height if needed */
   overflow: hidden; /* Prevents scrollbars */
   padding: 100px;
 }
@@ -160,6 +159,9 @@ button {
   top: 80%;
   right: 20px;
   z-index: 1000;
+  height: 30%;
+  max-height: 150px;
+  min-height: 100px;
 }
 
 .tutorial-button {

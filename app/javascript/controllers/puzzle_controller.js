@@ -324,9 +324,10 @@ export default class extends Controller {
           //document.getElementById('level-up-image').classList.remove("hidden");
         },1500)
       }
+      this.update_user_record();
+      this.create_puzzle_record();
 
     },1000)
-    this.update_user_record();
-    this.create_puzzle_record();
+
   };
 }
