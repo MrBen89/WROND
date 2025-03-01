@@ -50,7 +50,6 @@ puts "📝 Extracted Sentences for #{word}: #{example_sentences}"
               example_sentences: example_sentences
             )
 
-            # Debugging Output
             puts "📘 Word: #{word}, Reading: #{reading}, Audio: #{audio}"
             puts "📝 Example Sentences: #{example_sentences}"
           end
@@ -64,7 +63,6 @@ puts "📝 Extracted Sentences for #{word}: #{example_sentences}"
       end
     end
 
-    # Run the scraper for all JLPT levels
     JLPT_LEVELS.keys.each { |level| fetch_words(level, JLPT_LEVELS[level]) }
 
     puts "✅ Kanji data updated in the database!"

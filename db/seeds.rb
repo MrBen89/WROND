@@ -204,7 +204,9 @@ kanji_records = kanji_data.map do |kanji, details|
     onyomi: "{#{details['readings_on']&.map { |o| o.gsub('"', '') }.join(',')}}",
     stroke_count: details["strokes"] || 0,
     grade: details["grade"],
-    puzzleInfo: kanji_puzzle_map[kanji] || []
+    puzzleInfo: kanji_puzzle_map[kanji] || [],
+    audio: details["audio"],
+    example_sentences: details["example_sentences"] || []
   }
 end
 
