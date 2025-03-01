@@ -35,14 +35,6 @@
   transition: all .5s ease-in-out;
 }
 
-.right-side {
-  display: flex;
-  flex-direction: column; /* Ensure the children are stacked vertically */
-  justify-content: center; /* Center the children vertically */
-  align-items: center;
-  height: 100vh; /* Ensure the parent container takes up the full height */
-  width: 100%;
-}
 
 .kanji-data {
   transform-origin: left;
@@ -81,7 +73,7 @@
   font-size: 70px;
 }
 .spacer {
-  height: 125px;
+  height: 140px;
   width: 350px;
 }
 
