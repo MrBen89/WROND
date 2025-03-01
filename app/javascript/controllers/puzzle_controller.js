@@ -303,7 +303,6 @@ export default class extends Controller {
       document.getElementById('popup-button').addEventListener("click", () => {
         document.getElementById('conclussionModal').style.display = "none";
         document.getElementById('kanji-data').classList.add("expanded");
-        console.log(window.location.pathname);
         fetch(window.location.pathname, {
           headers: {
             "X-Requested-With": "XMLHttpRequest", // Treat as AJAX request
@@ -311,6 +310,7 @@ export default class extends Controller {
           }
         });
         document.querySelector('.highscores').classList.add("expanded");
+        document.getElementById("next_link").classList.remove("hidden");
       });
       this.experience_roller()
       if (this.check_for_level_up()) {

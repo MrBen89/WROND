@@ -16,3 +16,15 @@
     </div>
   </div>
 </div>
+
+<div class="hidden">
+  <%= simple_form_for @user_profile, remote: true, html: { id: :practice_done } do |f| %>
+  <%= f.input :total_xp ,input_html: {id: "xp_field", value: @user_profile.total_xp }%>
+  <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
+  <%= f.button :submit, id: "practice-done-submit" %>
+  <% end %>
+</div>
+
+<div>
+  <%= render "practice/conclussion" %>
+</div>

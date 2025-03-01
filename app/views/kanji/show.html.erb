@@ -50,6 +50,21 @@
   <%= render "kanji/conclussion" %>
 </div>
 
-<div class="gif-container-bottom">
-  <%= image_tag "tanuki.gif", class: "game-gif-bottom" %>
+<div class="ask-wrondarou-btn hidden" data-controller="hint" data-target="hint">
+  <span>
+    Ask Wrondarou-sama for a hint?
+  </span>
+
+  <div class="hidden words-of-wisdom" data-hint-target="hint">
+    <p><%= @content %></p>
+  </div>
 </div>
+
+<div class="button_box">
+  <%= link_to "Back", kanji_index_path %>
+  <%= link_to "Another Puzzle?", kanji_path(@next_kanji), class: "hidden", id: "next_link" %>
+</div>
+
+  <div class="gif-container-bottom" data-action="click->hint#toggle">
+    <%= image_tag "tanuki.gif", class: "game-gif-bottom" %>
+  </div>

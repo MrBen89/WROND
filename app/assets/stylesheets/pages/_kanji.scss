@@ -93,16 +93,19 @@
   transform: scale(1.05);
 }
 
-
 .stars {
   font-size: 24px;
 }
 
-.level {
+.level-filter {
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 14px;
   margin-top: 10px;
+}
+
+span.level-filter {
+  font-size: 12px;
 }
 
 .question-mark {
@@ -174,31 +177,57 @@
   justify-content: left;
 }
 
-.level-1 {
+.level.level-1 {
   background-color: red;
   color: black;
+  margin: auto;
+  width: 70px;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
-.level-2 {
+.level.level-2 {
   background-color: orange;
   color: black;
+  margin: auto;
+  width: 70px;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
-.level-3 {
+.level.level-3 {
   background-color: yellow;
   color: black;
+  margin: auto;
+  width: 70px;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
-.level-4 {
+.level.level-4 {
   background-color: #6abe30;
   color: black;
+  margin: auto;
+  width: 70px;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
-.level-5 {
+.level.level-5 {
   background-color: #0897f6;
   color: black;
+  margin: auto;
+  width: 70px;
+  border-radius: 5px;
+  margin-bottom: 5px;
 }
 
 .button-container {
   display: flex;
   justify-content: center;
+}
+
+.crown {
+  margin: auto;
+  width: 32px;
+  height: 32px;
 }
