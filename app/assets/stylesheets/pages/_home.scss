@@ -1,5 +1,3 @@
-
-
 .white-box {
   background: #fff;
   border-radius: 8px;
@@ -48,7 +46,6 @@ font-family: 'Press Start 2P';
   box-shadow: 3px 3px 0px #000;
   border: none;
   cursor: pointer;
-  font-family: inherit;
   transition: transform 0.2s, background 0.2s;
   display: flex;
   flex-direction: column;
@@ -59,7 +56,6 @@ font-family: 'Press Start 2P';
 }
 
 .kanji-text {
-  font-family: JFDot;
   font-size: 40px;
   display: flex;
   align-items: center;
@@ -153,3 +149,129 @@ button {
 //     left: calc(100% - 250px); /* Moves to the right edge */
 //   }
 // }
+
+
+
+
+
+/* Tutorial Button in Top Right */
+.tutorial-container {
+  position: fixed;
+  top: 80%;
+  right: 20px;
+  z-index: 1000;
+}
+
+.tutorial-button {
+  background: #ccc;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.tutorial-button:hover {
+  background: #bbb;
+  transform: scale(1.05);
+}
+
+/* Hidden Tutorial Content (Initially Hidden) */
+.tutorial-content {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50%;
+  height: 100%;
+  background: black;
+  box-shadow: -3px 0px 15px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  padding: 20px;
+  display: none; /* Initially hidden */
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.tutorial-content.active {
+  transform: translateX(0); /* Slide in */
+}
+
+// /* GIF Containers */
+// .gif-container {
+//   display: flex;
+//   justify-content: center;
+//   gap: 20px;
+// }
+
+// .tutorial-gif {
+//   width: 200px;
+//   height: auto;
+// }
+
+/* Overlay to darken the background */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  z-index: 98;
+  display: none;
+}
+
+/* Tutorial Content (Hidden initially) */
+.tutorial-content {
+  position: fixed;
+  top: 0;
+  right: -100%; /* Start off-screen */
+  width: 400px; /* Adjust width */
+  height: 100%;
+  background: white;
+  box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 99;
+  padding: 20px;
+  transition: right 0.3s ease-in-out; /* Smooth slide effect */
+}
+
+/* When active, slide in and show overlay */
+.tutorial-content.active {
+  right: 0; /* Slide in */
+}
+
+.overlay.active {
+  display: block;
+}
+
+
+.kanji-rain-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* So users can still interact with the page */
+  overflow: hidden;
+  z-index: -1; /* Push it to the very back */
+}
+
+.kanji {
+  position: absolute;
+  font-size: 24px; /* Adjust size for cuteness */
+  color: rgba(104, 102, 102, 0.8); /* Light and soft */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+
+/* Falling animation */
+@keyframes fall {
+  from {
+    transform: translateY(-10%);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
