@@ -15,12 +15,13 @@ require 'net/http'
 require 'uri'
 require 'httparty'
 
-
+Conflict.destroy_all
+Unlock.destroy_all
 Puzzle.destroy_all
 UserProfile.destroy_all
+Upgrade.destroy_all
 User.destroy_all
 Kanji.destroy_all
-Upgrade.destroy_all
 
 Upgrade.create!(
   name:"Grey Squares",
@@ -169,10 +170,10 @@ default_user = User.create!(
 )
 
 users = [
-  { username: 'miaracoon', email: 'miaracoon@gmail.com' },
-  { username: 'bigben69', email: 'bigben69@gmail.com' },
-  { username: 'liamlovehotel', email: 'liamlovehotel@gmail.com' },
-  { username: 'welovejulian', email: 'welovejulian@gmail.com' }
+  { username: 'mankymia', email: 'mankymia@gmail.com' },
+  { username: 'bigben', email: 'bigben@gmail.com' },
+  { username: 'lovelyliam', email: 'lovelyliam@gmail.com' },
+  { username: 'juicyjulian', email: 'juicyjulian@gmail.com' }
 ]
 
 users.each do |user_data|
