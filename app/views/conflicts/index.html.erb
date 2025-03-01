@@ -13,12 +13,12 @@
     <h2> Start A New Battle! </h2>
     <div class="level-buttons-horizontal justify-content-center">
       <%= simple_form_for @conflict do |f| %>
-        <%= f.submit "N1", class: "level-filter level-1" %>
-        <%= f.submit "N2", class: "level-filter level-2" %>
-        <%= f.submit "N3", class: "level-filter level-3" %>
-        <%= f.submit "N4", class: "level-filter level-4" %>
-        <%= f.submit "N5", class: "level-filter level-5" %>
-        <%= f.submit "All!", class: "level-filter level-all" %>
+        <%= f.submit "N1", class: "level-filter-horizontal level-1" %>
+        <%= f.submit "N2", class: "level-filter-horizontal level-2" %>
+        <%= f.submit "N3", class: "level-filter-horizontal level-3" %>
+        <%= f.submit "N4", class: "level-filter-horizontal level-4" %>
+        <%= f.submit "N5", class: "level-filter-horizontal level-5" %>
+        <%= f.submit "All!", class: "level-filter-horizontal level-all" %>
       <% end %>
     </div>
   </div>

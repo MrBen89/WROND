@@ -419,6 +419,10 @@ export default class extends Controller {
       this.check_for_level_up();
       this.update_user_record();
       this.update_conflict();
+      for(i=0; i<100; i++)
+        {
+            window.clearInterval(i);
+        }
     },1000)
 
   };

@@ -7,7 +7,7 @@ export default class extends Controller {
     let minutes = 0;
     let seconds_absolute = 0;
     let timer = document.getElementById('timerBox')
-    setInterval(() => {
+    window.setInterval(() => {
       seconds ++;
       seconds_absolute ++;
       timer.innerHTML=
