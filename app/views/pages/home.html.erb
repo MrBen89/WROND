@@ -1,3 +1,6 @@
+<div class="kanji-rain-container"></div>
+
+
 <div class="game-container" data-controller="mode-selector">
   <div class="mode-selection">
     <form action="/kanji/index" method="get">
@@ -69,4 +72,30 @@
 
 <div class="gif-container">
   <%= image_tag "tanuki.gif", class: "game-gif" %>
+</div>
+
+<div class="tutorial-container">
+  <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
+    Tutorial
+  </button>
+</div>
+
+<div class="tutorial-container">
+  <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
+    Tutorial
+  </button>
+</div>
+
+<!-- Overlay to darken background -->
+<div class="overlay" id="overlay" data-action="click->mode-selector#toggleTutorial"></div>
+
+<!-- Tutorial Content -->
+<div class="tutorial-content" id="tutorial-content">
+  <div class="gif-container">
+    <h2>Kanji Mode:</h2>
+
+
+    <h2>Practice Mode:</h2>
+
+  </div>
 </div>
