@@ -46,7 +46,12 @@
   height: auto;
 }
 
+#onyomi, #kunyomi {
+  font-family: "JFDot";
+}
+
 .card {
+  font-family: "JFDot";
   background: #ddd;
   border-radius: 8px;
   padding: 20px;

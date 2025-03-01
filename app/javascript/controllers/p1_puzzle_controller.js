@@ -435,7 +435,13 @@ export default class extends Controller {
             window.clearInterval(i);
         }
     },1000)
-
+    let conclussionModal = document.getElementById('conclussionModal')
+    if (winner == user_id) {
+      conclussionModal.classList.add("win")
+    } else {
+      conclussionModal.classList.add("lose")
+    }
+    conclussionModal.classList.remove("hidden");
   };
 
   puzzle_ended() {

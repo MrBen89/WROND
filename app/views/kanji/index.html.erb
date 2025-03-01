@@ -40,7 +40,6 @@
       <p><strong>Onyomi:</strong> <span id="onyomi">?</span></p>
       <p><strong>Kunyomi:</strong> <span id="kunyomi">?</span></p>
       <p><strong>Stroke Count:</strong> <span id="stroke-count">?</span></p>
-      <p><strong>Grade: N</strong><span id="grade">?</span></p>
       <p><strong>JLPT Level:</strong> <span id="jlpt-level">?</span></p>
 
       <div class="button-container">
@@ -53,10 +52,9 @@
       <div class="hidden-kanji-data"
            data-kanji="<%= kanji.kanji %>"
            data-meaning="<%= kanji.meaning %>"
-           data-onyomi="<%= kanji.onyomi %>"
+           data-onyomi="<%= kanji.onyomi[1..-2] %>"
            data-kunyomi="<%= kanji.kunyomi %>"
            data-stroke-count="<%= kanji.stroke_count %>"
-           data-grade="<%= kanji.grade %>"
            data-jlpt="<%= kanji.jlptLevel %>"
            data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
       </div>
@@ -68,9 +66,9 @@
       <% (@all_done).each_with_index do |kanji, index| %>
       <% if @puzzles.any? {|p| p.kanji == kanji} %>
         <div class="card" data-kanji="<%= kanji.kanji %>"
-             data-meaning="<%= kanji.meaning %>"
-             data-onyomi="<%= kanji.onyomi %>"
-             data-kunyomi="<%= kanji.kunyomi %>"
+             data-meaning="<%= kanji.meaning.join(" ")  %>"
+             data-onyomi="<%= kanji.onyomi[1..-2] %>"
+             data-kunyomi="<%= kanji.kunyomi[1..-2]  %>"
              data-stroke-count="<%= kanji.stroke_count %>"
              data-jlpt="<%= kanji.jlptLevel %>"
              data-url="<%= kanji_path(kanji) %>"

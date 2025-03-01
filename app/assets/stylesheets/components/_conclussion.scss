@@ -9,10 +9,10 @@
   background-color: rgba(0,0,0,0.4)
 }
 .popup.win {
-  background-color: rgb(0,255,0); /* Fallback color */
+  background-color: rgba(0, 248, 0, 0.465); /* Fallback color */
 }
 .popup.lose {
-  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(248,0,0, 0.465); /* Fallback color */
 }
 
 .popup-content {
