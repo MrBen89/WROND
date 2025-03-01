@@ -22,32 +22,24 @@ namespace :scraper do
           doc = Nokogiri::HTML(html)
 
           doc.css(".concept_light").each do |entry|
-            # ✅ Get Kanji Word
             word = entry.at_css(".concept_light-representation span.text")&.text&.strip || "Unknown"
 
-            # ✅ Get Furigana (reading)
             furigana_elements = entry.css(".furigana span").map(&:text)
             reading = furigana_elements.join("")
 
-            # ✅ Get Meanings
             meanings = entry.css(".meaning-meaning").map(&:text).map(&:strip)
 
-            # ✅ Get Audio (Fix missing https:)
             audio_tag = entry.at_css("audio source")
             audio = audio_tag ? "https:" + audio_tag["src"] : nil
 
-            # ✅ Get Example Sentences
-            # Example sentences extraction
 example_sentences = entry.css(".sentence").map do |sentence|
   japanese = sentence.css("ul.japanese li").map(&:text).join(" ")
   english = sentence.at_css(".english")&.text&.strip || "N/A"
   { "japanese" => japanese, "english" => english }
 end
 
-# ✅ Debugging output to check extraction
 puts "📝 Extracted Sentences for #{word}: #{example_sentences}"
 
-            # ✅ Save to Database
             kanji_entry = Kanji.find_or_initialize_by(kanji: word)
             kanji_entry.update!(
               meaning: meanings,
