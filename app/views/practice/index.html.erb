@@ -1,10 +1,17 @@
-<h2>pick 5 kanjis to practice</h2>
+<h2>Pick 5 Kanjis to Practice</h2>
 
-<div class="kanji-boxes">
+<div class="main-container">
+  <div class="left-side"></div>
+
+  <div class="right-side">
+    <div class="card-container">
       <% @unlocked_kanji.each do |kanji| %>
-        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
-        <%= kanji %>
+        <span class="card kanji-character"
+              data-kanji-target="kanji"
+              data-kanji="<%= kanji %>">
+          <%= kanji %>
         </span>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>
