@@ -52,7 +52,7 @@ export default class extends Controller {
     if (this.data.get("status") == "in_progress"){
       this.start_puzzle()
     } else if (this.data.get("status") == "complete") {
-      this.puzzle_ended()
+      this.stop_puzzle()
     }
 
   }
@@ -73,6 +73,7 @@ export default class extends Controller {
       player = 2
     }
     let p2data = []
+    console.log(player)
     if (player == 1){
       p2data = JSON.parse(this.data.get("p2data"));
     } else {
@@ -189,64 +190,64 @@ export default class extends Controller {
   // }
 
   stop_puzzle(handleClick) {
-    let block = document.querySelector(".cornerBlock");
-    block.classList.add("cleared");
-    let cells = document.getElementsByClassName("cell");
-    for (const cell of cells) {
-      cell.replaceWith(cell.cloneNode(true))
-    }
-    let guides = document.getElementsByClassName("xGuide");
-    for (const guide of guides) {
-      guide.classList.add("cleared")
-    }
-    guides = document.getElementsByClassName("yGuide");
-    for (const guide of guides) {
-      guide.classList.add("cleared")
-    }
-    setTimeout(() => {
-      let cells = document.getElementsByClassName("cell");
-      for (const cell of cells) {
-        cell.classList.remove("flagged")
-        cell.classList.add("finished")
-      }
-      for (const guide of guides) {
-        guide.innerText = ""
-      }
-      guides = document.getElementsByClassName("xGuide");
-      for (const guide of guides) {
-        guide.innerText = ""
-      }
-    },1);
+    // let block = document.querySelector(".cornerBlock");
+    // block.classList.add("cleared");
+    // let cells = document.getElementsByClassName("cell");
+    // for (const cell of cells) {
+    //   cell.replaceWith(cell.cloneNode(true))
+    // }
+    // let guides = document.getElementsByClassName("xGuide");
+    // for (const guide of guides) {
+    //   guide.classList.add("cleared")
+    // }
+    // guides = document.getElementsByClassName("yGuide");
+    // for (const guide of guides) {
+    //   guide.classList.add("cleared")
+    // }
+    // setTimeout(() => {
+    //   let cells = document.getElementsByClassName("cell");
+    //   for (const cell of cells) {
+    //     cell.classList.remove("flagged")
+    //     cell.classList.add("finished")
+    //   }
+    //   for (const guide of guides) {
+    //     guide.innerText = ""
+    //   }
+    //   guides = document.getElementsByClassName("xGuide");
+    //   for (const guide of guides) {
+    //     guide.innerText = ""
+    //   }
+    // },1);
 
 
   };
 
-  puzzle_ended() {
-    const p2data = JSON.parse(this.data.get("p2data"));
-    const rootDiv = this.p2RootDivTarget
-    for (let i = 0; i < 16; i++){
-      let row = document.createElement("div")
-      row.classList.add("row");
-      rootDiv.appendChild(row);
-      //create guide cell
-      let box = document.createElement("div")
-      box.classList.add("yGuide")
-      row.appendChild(box);
-      //create columns
-      for (let n = 0; n < 16; n++){
-          //add columns to current_patern
-          let box = document.createElement("div");
-          box.classList.add(`col${n}`);
-          box.classList.add(`row${i}`);
-          box.classList.add(`cell`);
-          box.classList.add("finished")
-          if (p2data[i][n] == 1){
-            box.classList.add("selected")
-          }
-          box.dataset.x = n;
-          box.dataset.y = i;
-        row.appendChild(box);
-      }
-    }
-  }
+  // puzzle_ended() {
+  //   const p2data = JSON.parse(this.data.get("p2data"));
+  //   const rootDiv = this.p2RootDivTarget
+  //   for (let i = 0; i < 16; i++){
+  //     let row = document.createElement("div")
+  //     row.classList.add("row");
+  //     rootDiv.appendChild(row);
+  //     //create guide cell
+  //     let box = document.createElement("div")
+  //     box.classList.add("yGuide")
+  //     row.appendChild(box);
+  //     //create columns
+  //     for (let n = 0; n < 16; n++){
+  //         //add columns to current_patern
+  //         let box = document.createElement("div");
+  //         box.classList.add(`col${n}`);
+  //         box.classList.add(`row${i}`);
+  //         box.classList.add(`cell`);
+  //         box.classList.add("finished")
+  //         if (p2data[i][n] == 1){
+  //           box.classList.add("selected")
+  //         }
+  //         box.dataset.x = n;
+  //         box.dataset.y = i;
+  //       row.appendChild(box);
+  //     }
+  //   }
+  // }
 }
