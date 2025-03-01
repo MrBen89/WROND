@@ -208,7 +208,47 @@
   transform: scaleX(1);
 }
 
+@keyframes cloudFadeIn {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(1.2); /* Slightly larger, like it's materializing */
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1); /* Normal size */
+  }
+}
 
+/* Default hidden state */
+.words-of-wisdom {
+  display: grid;
+  place-items: center;
+  background: white;
+  width: 150px;
+  height: 50px;
+  box-shadow:
+    20px 0 white, 40px 0 white,
+    -20px 20px white, 0 20px white, 20px 20px white, 40px 20px white, 60px 20px white,
+    -20px 40px white, 0 40px white, 20px 40px white, 40px 40px white, 60px 40px white,
+    0 60px white, 20px 60px white, 40px 60px white;
+  image-rendering: pixelated;
+
+  opacity: 0; /* Start invisible */
+  filter: blur(10px);
+  transform: scale(1.2);
+
+  position: absolute; /* Needed for centering */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2); /* Centered */
+}
+
+/* Apply animation when .show is added */
+.words-of-wisdom.show {
+  animation: cloudFadeIn 1.5s ease-out forwards;
+}
 
 .ask-wrondarou-btn {
   display: flex;
@@ -239,6 +279,9 @@
   image-rendering: pixelated;
   position: absolute;
   animation: walkAnimation 10s linear infinite alternate;
+  display: block !important;
+  opacity: 1;
+  visibility: visible;
 }
 
 .button_box {
