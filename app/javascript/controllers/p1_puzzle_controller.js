@@ -84,9 +84,11 @@ export default class extends Controller {
     //rootDiv is where to mount the puzzle
     const rootDiv = this.p1RootDivTarget;
     let status = this.data.get("status")
+    let winner = this.data.get("winner")
     this.start_puzzle = this.start_puzzle.bind(this);
     this.stop_puzzle = this.stop_puzzle.bind(this);
     this.check_for_start = this.check_for_start.bind(this);
+    console.log(winner)
     if (status == "in_progress"){
       this.start_puzzle()
     } else if (status == "complete"){
@@ -130,9 +132,11 @@ export default class extends Controller {
   }
 
   start_puzzle() {
+    const user_id = document.getElementById("user_id").innerText
     const rootDiv = this.p1RootDivTarget
     let mouse_status = "up"
     let mode = "draw"
+    console.log(typeof user_id)
 
     if (document.querySelector(".p1startButton")) {document.querySelector(".p1startButton").remove()}
     // clearInterval(timer)
@@ -140,7 +144,7 @@ export default class extends Controller {
     //current pattern is the working array
     //puzzledata is the solution array
     const puzzledata = JSON.parse(this.data.get("variable"));
-    const user_id = document.getElementById("user_id").innerText
+
 
     let current_pattern = []
 
@@ -343,9 +347,12 @@ export default class extends Controller {
   }
 
   update_conflict() {
+    const user_id = document.getElementById("user_id")
+    console.log(user_id)
+    console.log(user_id.innerText)
     document.getElementById("time_field").value = parseInt(document.getElementById("seconds_abs").innerText);
     document.getElementById("status_field").value = "complete";
-    document.getElementById("winner_field").value = user_id;
+    document.getElementById("winner_field").value = user_id.innerText;
     document.getElementById("conflict_form").requestSubmit();
   }
   update_user_record() {
@@ -367,44 +374,48 @@ export default class extends Controller {
   };
 
   stop_puzzle(handleClick) {
-    let minutes = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) / 60)
-    let seconds = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) % 60)
-    document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
-    let block = document.querySelector(".cornerBlock");
-    block.classList.add("cleared");
-    let cells = document.getElementsByClassName("cell");
-    for (const cell of cells) {
-      cell.replaceWith(cell.cloneNode(true))
-    }
-    let guides = document.getElementsByClassName("xGuide");
-    for (const guide of guides) {
-      guide.classList.add("cleared")
-    }
-    guides = document.getElementsByClassName("yGuide");
-    for (const guide of guides) {
-      guide.classList.add("cleared")
-    }
+    console.log(user_id.value)
+    // let minutes = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) / 60)
+    // let seconds = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) % 60)
+    // document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+    // let block = document.querySelector(".cornerBlock");
+    // block.classList.add("cleared");
+    // let cells = document.getElementsByClassName("cell");
+    // for (const cell of cells) {
+    //   cell.replaceWith(cell.cloneNode(true))
+    // }
+    // let guides = document.getElementsByClassName("xGuide");
+    // for (const guide of guides) {
+    //   guide.classList.add("cleared")
+    // }
+    // guides = document.getElementsByClassName("yGuide");
+    // for (const guide of guides) {
+    //   guide.classList.add("cleared")
+    // }
+    // setTimeout(() => {
+    //   let cells = document.getElementsByClassName("cell");
+    //   for (const cell of cells) {
+    //     cell.classList.remove("flagged")
+    //     cell.classList.add("finished")
+    //   }
+    //   for (const guide of guides) {
+    //     guide.innerText = ""
+    //   }
+    //   guides = document.getElementsByClassName("xGuide");
+    //   for (const guide of guides) {
+    //     guide.innerText = ""
+    //   }
+    // },1);
+    let winner = this.data.get("winner")
     setTimeout(() => {
-      let cells = document.getElementsByClassName("cell");
-      for (const cell of cells) {
-        cell.classList.remove("flagged")
-        cell.classList.add("finished")
+      let conclussionModal = document.getElementById('conclussionModal')
+      if (winner == user_id) {
+        conclussionModal.classList.add("win")
+      } else {
+        conclussionModal.classList.add("lose")
       }
-      for (const guide of guides) {
-        guide.innerText = ""
-      }
-      guides = document.getElementsByClassName("xGuide");
-      for (const guide of guides) {
-        guide.innerText = ""
-      }
-    },1);
-    setTimeout(() => {
-      document.getElementById('conclussionModal').classList.remove("hidden");
-      document.getElementById('popup-button').addEventListener("click", () => {
-        document.getElementById('conclussionModal').style.display = "none";
-        // document.getElementById('kanji-data').classList.add("expanded");
-        // document.getElementById('highscores').classList.add("expanded");
-      });
+      conclussionModal.classList.remove("hidden");
+
       if (this.check_for_level_up) {
         setTimeout(() => {
           document.getElementById('level-up').classList.remove("hidden");
@@ -418,8 +429,8 @@ export default class extends Controller {
       this.experience_roller();
       this.check_for_level_up();
       this.update_user_record();
-      this.update_conflict();
-      for(i=0; i<100; i++)
+      this.update_conflict(user_id);
+      for(let i=0; i<100; i++)
         {
             window.clearInterval(i);
         }
@@ -428,6 +439,28 @@ export default class extends Controller {
   };
 
   puzzle_ended() {
+    let winner = this.data.get("winner")
+    console.log(winner)
+
+    setTimeout(() => {
+      let conclussionModal = document.getElementById('conclussionModal')
+      if (winner == user_id.innerText) {
+        conclussionModal.classList.add("win")
+      } else {
+        conclussionModal.classList.add("lose")
+      }
+      conclussionModal.classList.remove("hidden");
+
+      if (this.check_for_level_up) {
+        setTimeout(() => {
+          document.getElementById('level-up').classList.remove("hidden");
+          setTimeout(() => {
+            document.getElementById('level-up').classList.add("expanded");
+          },1)
+
+          //document.getElementById('level-up-image').classList.remove("hidden");
+        },1500)
+      }
     const p1data = JSON.parse(this.data.get("p1data"));
     const rootDiv = this.p1RootDivTarget
     for (let i = 0; i < 16; i++){
@@ -454,5 +487,5 @@ export default class extends Controller {
         row.appendChild(box);
       }
     }
-  }
+  })}
 }
