@@ -158,6 +158,9 @@ button {
   top: 80%;
   right: 20px;
   z-index: 1000;
+  height: 30%;
+  max-height: 150px;
+  min-height: 100px;
 }
 
 .tutorial-button {
