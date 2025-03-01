@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   after_create :create_profile
+  { on_delete: :cascade }
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -7,8 +8,8 @@ class User < ApplicationRecord
 
   has_one :user_profile, class_name: "UserProfile"
   has_many :conflicts
-  has_many :unlocks
-  has_many :puzzles
+  has_many :unlocks, dependent: :destroy
+  has_many :puzzles, dependent: :destroy
   has_many :unlocked_kanji, through: :unlocks, source: :kanji
 
   private
