@@ -25,9 +25,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   </head>
 
-  <body><%= render "shared/navbar" %>
+  <body>
+    <%= render "shared/navbar" %>
+    <% if user_signed_in? %>
+      <%= render "shared/xpbar" %>
+    <% end %>
     <%= render "shared/flashes" %>
-      <%= yield %>
-      <%= render "shared/bottom-bar" %>
+    <%= yield %>
+    <%= render "shared/bottom-bar" %>
   </body>
 </html>
