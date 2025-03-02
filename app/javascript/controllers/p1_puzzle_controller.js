@@ -356,11 +356,16 @@ export default class extends Controller {
     document.getElementById("conflict_form").requestSubmit();
   }
   update_user_record() {
-    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 100
+    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 50
+  }
+
+  get_xp() {
+    const level = parseInt(document.getElementById("jlpt-level").innerText)
+    return 50 * level
   }
 
   experience_roller() {
-    let target = 100;
+    let target = 50;
     let count = parseInt(document.getElementById("xp-value").innerText);
     let increment = 1;
     if (count < target) {

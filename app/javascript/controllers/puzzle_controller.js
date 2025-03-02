@@ -232,17 +232,20 @@ export default class extends Controller {
   }
 
   check_for_level_up() {
-    let xp = document.getElementById("xp_field").value
     let level = parseInt(document.getElementById("level_field").value)
-    console.log(document.getElementById("level_field").value)
+    let base_xp = this.data.get("base_xp")
     document.getElementById("level-span").innerText = level;
-    document.getElementById("level-up-span").innerText = Math.floor(xp / 100);
-    if (xp / 100 >= (level + 1)) {
-      document.getElementById("level_field").value = Math.floor(xp / 100);
-      console.log("levelup")
+    document.getElementById("level-up-span").innerText = level + 1;
+    if (base_xp + this.get_xp() >= (50 + level * 50) ) {
+      document.getElementById("level_field").value = level + 1;
       return true
     }
     return false
+  }
+
+  get_xp() {
+    const level = parseInt(document.getElementById("jlpt-level").innerText)
+    return 175 - (25 * level)
   }
 
   create_puzzle_record() {
@@ -250,11 +253,11 @@ export default class extends Controller {
     document.getElementById("puzzle_form").requestSubmit();
   }
   update_user_record() {
-    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 100
+    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + this.get_xp()
   }
 
   experience_roller() {
-    let target = 100;
+    let target = this.get_xp();
     let count = parseInt(document.getElementById("xp-value").innerText);
     let increment = 1;
     if (count < target) {
@@ -262,7 +265,7 @@ export default class extends Controller {
       document.getElementById("xp-value").innerText = `${count}`;
       setTimeout(() => {
         this.experience_roller()
-      }, 5);
+      }, 10);
     }
 
   }
