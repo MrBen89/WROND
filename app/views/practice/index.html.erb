@@ -1,30 +1,45 @@
-<div class="kanji-container" data-controller="practice">
-  <div class="inner-container">
-    <div class="text-box">
+<div class="d-flex gap-4">
+  <div class="kanji-container" data-controller="practice">
+    <div class="inner-container">
+      <div class="text-box">
 
-      <% @processed_sentences.each do |sentence| %>
-        <p class="sentence"><%= raw sentence[:modified] %></p>
-      <% end %>
+      <div class="sentence">
+        <% @processed_sentences.each do |sentence| %>
+          <p><%= raw sentence[:modified] %></p>
+        <% end %>
+      </div>
 
+      </div>
+      <div class="kanji-boxes">
+        <% @unlocked_kanji.each do |kanji| %>
+          <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
+          <%= kanji %>
+          </span>
+        <% end %>
+      </div>
     </div>
-    <div class="kanji-boxes">
-      <% @unlocked_kanji.each do |kanji| %>
-        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
-        <%= kanji %>
-        </span>
-      <% end %>
-    </div>
+  </div>
+
+  <div class="hidden">
+    <%= simple_form_for @user_profile, remote: true, html: { id: :practice_done } do |f| %>
+    <%= f.input :total_xp ,input_html: {id: "xp_field", value: @user_profile.total_xp }%>
+    <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
+    <%= f.button :submit, id: "practice-done-submit" %>
+    <% end %>
+  </div>
+
+  <div>
+    <%= render "practice/conclussion" %>
+  </div>
+
+<div class="gif-container-fight">
+  <div class="gif-container-right">
+    <%= image_tag "tanuki.gif", class: "game-gif tanuki" %>
+  </div>
+  <div class="gif-container-left">
+    <%= image_tag "momotaro.GIF", class: "game-gif momotaro" %>
   </div>
 </div>
 
-<div class="hidden">
-  <%= simple_form_for @user_profile, remote: true, html: { id: :practice_done } do |f| %>
-  <%= f.input :total_xp ,input_html: {id: "xp_field", value: @user_profile.total_xp }%>
-  <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
-  <%= f.button :submit, id: "practice-done-submit" %>
-  <% end %>
-</div>
 
-<div>
-  <%= render "practice/conclussion" %>
 </div>
