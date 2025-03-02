@@ -1,5 +1,6 @@
 
-<div class="container d-flex">
+<div class="conflicts-container">
+  <div class = "conflict-inner d-flex">
   <%= turbo_stream_from @conflict %>
   <div class="p-3 m-6 puzzle_box" id="conflicts_box">
     <%= turbo_frame_tag :conflict_partial do %>
@@ -25,6 +26,7 @@
     <%= turbo_frame_tag :conflict_p2_partial do %>
       <%= render "p2puzzle", conflict: @conflict, user: @user  %>
     <% end %>
+  </div>
   </div>
 </div>
 <div class="popup hidden" id="waiting">

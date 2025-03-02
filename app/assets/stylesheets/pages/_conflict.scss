@@ -5,13 +5,28 @@
 }
 
 .center-partition {
-  width:150px;
-  margin: 50px;
+  min-width:150px;
+  margin: 10px;
   text-align: center;
 }
 
-.container {
+.conflicts-container {
   margin: auto;
+  max-width: 100%;
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.conflict-inner {
+  justify-content: space-between;
+  margin-top: 5%;
+  width: 100%;
+}
+
+html, body {
+  height: 100vh;
 }
 
 .puzzle_box {

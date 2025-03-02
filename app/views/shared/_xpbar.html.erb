@@ -1,0 +1,9 @@
+<div class="xpbar d-flex">
+  <div class="xp-value">
+    Lv<%= current_user.user_profile.level %> : <%= @current_xp %> / <%= @next_level %>
+  </div>
+  <div class="fill-container">
+    <div class="fillbar" style="width: <%= @ratio %>%">
+    </div>
+  </div>
+</div>
