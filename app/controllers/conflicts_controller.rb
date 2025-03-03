@@ -76,8 +76,11 @@ class ConflictsController < ApplicationController
     @conflict.time = edit_conflict_params[:time] if edit_conflict_params.has_key?(:time)
     if @conflict.save
         # format.turbo_stream do
-        render turbo_stream: [turbo_stream.update(:conflicts_box, partial: "conflicts/p1puzzle", locals: { conflict: @conflict }),
-          turbo_stream.update(:conflicts, partial: "conflicts/p2puzzle", locals: { conflict: @conflict })]
+        if params[:player] == current_user
+          render turbo_stream: turbo_stream.update(:conflicts_box, partial: "conflicts/p1puzzle", locals: { conflict: @conflict })
+        else
+          render turbo_stream: turbo_stream.update(:conflicts, partial: "conflicts/p2puzzle", locals: { conflict: @conflict })
+        end
         # end
         # redirect_to conflict_path(@conflict)
     end
