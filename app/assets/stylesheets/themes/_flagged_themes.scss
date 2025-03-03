@@ -1,7 +1,52 @@
-.flagged.Red_Squares {
-  background-color: rgb(255, 0, 153);
+.flagged.Grey_Squares {
+  background-color: rgb(151, 151, 151);
 }
 
-.flagged.Grey_Squares {
-  background-color: rgb(164, 164, 164);
+.flagged.Red_Squares {
+  background-color: rgb(255, 0, 0);
+}
+
+.flagged.Orange_Squares {
+  background-color: rgb(255, 128, 0);
+}
+
+.flagged.Yellow_Squares {
+  background-color: rgb(225, 255, 0);
+}
+
+.flagged.Green_Squares {
+  background-color: rgb(0, 201, 0);
+}
+
+.flagged.Blue_Squares {
+  background-color: rgb(46, 171, 255);
+}
+
+.col0.flagged.WROND\!_Squares,
+.col1.flagged.WROND\!_Squares {
+  background-color: rgb(255, 0, 0);
+}
+.col2.flagged.WROND\!_Squares,
+.col3.flagged.WROND\!_Squares,
+.col4.flagged.WROND\!_Squares {
+  background-color: rgb(255, 128, 0);
+}
+.col5.flagged.WROND\!_Squares,
+.col6.flagged.WROND\!_Squares,
+.col7.flagged.WROND\!_Squares {
+  background-color: rgb(225, 255, 0);
+}
+.col8.flagged.WROND\!_Squares,
+.col9.flagged.WROND\!_Squares,
+.col10.flagged.WROND\!_Squares {
+  background-color: rgb(0, 201, 0);
+}
+.col11.flagged.WROND\!_Squares,
+.col12.flagged.WROND\!_Squares,
+.col13.flagged.WROND\!_Squares {
+  background-color: rgb(46, 171, 255);
+}
+.col14.flagged.WROND\!_Squares,
+.col15.flagged.WROND\!_Squares {
+  background-color: rgb(170, 0, 255);
 }

@@ -72,9 +72,11 @@
              data-stroke-count="<%= kanji.stroke_count %>"
              data-jlpt="<%= kanji.jlptLevel %>"
              data-url="<%= kanji_path(kanji) %>"
-             data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
+             data-solved="1">
 
-          <div class="stars">★★★☆☆</div>
+          <div class="stars">
+            <%= kanji.stroke_count > 0 ? "★" : "☆" %><%= kanji.stroke_count > 3 ? "★" : "☆" %><%= kanji.stroke_count > 6 ? "★" : "☆" %><%= kanji.stroke_count > 9 ? "★" : "☆" %><%= kanji.stroke_count > 12 ? "★" : "☆" %>
+          </div>
           <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
           <div class="white-box-for">
             <div class="question-mark">?</div>
@@ -99,7 +101,9 @@
              data-url="<%= kanji_path(kanji) %>"
              data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
 
-          <div class="stars">★★★☆☆</div>
+          <div class="stars">
+            <%= kanji.stroke_count > 0 ? "★" : "☆" %><%= kanji.stroke_count > 3 ? "★" : "☆" %><%= kanji.stroke_count > 6 ? "★" : "☆" %><%= kanji.stroke_count > 9 ? "★" : "☆" %><%= kanji.stroke_count > 12 ? "★" : "☆" %>
+          </div>
           <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
           <div class="white-box-for">
             <div class="question-mark">?</div>
