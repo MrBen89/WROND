@@ -1,24 +1,56 @@
-.Grey_Squares {
-  background-color: rgba($color: #999999, $alpha: 0.2);
+.Grey_Background {
+  background-color: rgba(151, 151, 151, 0.49);
 }
 
-
-.Red_Squares {
-  background-color: rgba($color: #ff0000, $alpha: 0.2);
+.Red_Background {
+  background-color: rgb(70, 70, 70);
 }
 
-.Orange_Squares {
-  background-color: rgba($color: #ffaa00, $alpha: 0.2);
+.Orange_Background {
+  background-color: rgb(255, 166, 0);
 }
 
-.Yellow_Squares {
-  background-color: rgba($color: #ddff00, $alpha: 0.2);
+.Yellow_Background {
+  background-color: rgb(70, 70, 70);
 }
 
-.Green_Squares {
-  background-color: rgba($color: #00ff80, $alpha: 0.2);
+.Green_Background {
+  background-color: rgb(70, 70, 70);
 }
 
-.Blue_Squares {
-  background-color: rgba($color: #2b00ff, $alpha: 0.2);
+.Blue_Background {
+  background-color: rgb(85, 0, 255);
+}
+
+.col0.WROND\!_Background,
+.col1.WROND\!_Background {
+  background-color: rgba(255, 0, 0, 0.5);
+}
+.col2.WROND\!_Background,
+.col3.WROND\!_Background,
+.col4.WROND\!_Background {
+  background-color: rgba(255, 128, 0, 0.5);
+}
+.col5.WROND\!_Background,
+.col6.WROND\!_Background,
+.col7.WROND\!_Background {
+  background-color: rgba(225, 255, 0, 0.5);
+}
+.col8.WROND\!_Background,
+.col9.WROND\!_Background,
+.col10.WROND\!_Background {
+  background-color: rgba(0, 201, 0, 0.5);
+}
+.col11.WROND\!_Background,
+.col12.WROND\!_Background,
+.col13.WROND\!_Background {
+  background-color: rgba(46, 171, 255, 0.5);
+}
+.col14.WROND\!_Background,
+.col15.WROND\!_Background {
+  background-color: rgba(170, 0, 255, 0.5);
+}
+
+.Dark_Grey_Background {
+  background-color: rgb(50, 50, 50);
 }

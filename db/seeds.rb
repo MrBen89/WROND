@@ -24,43 +24,43 @@ User.destroy_all
 Kanji.destroy_all
 
 Upgrade.create!(
-  name:"Grey Squares",
+  name:"Grey Background",
   level: 0,
   description: "The default. Some might say classic.",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"Red Squares",
+  name:"Red Background",
   level: 1,
   description: "Squares as red as the setting sun",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"Orange Squares",
+  name:"Orange Background",
   level: 2,
   description: "Squares as orange as the sweetest fruit",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"Yellow Squares",
+  name:"Yellow Background",
   level: 3,
   description: "Squares as yellow as foul smelling sulphur",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"Green Squares",
+  name:"Green Background",
   level: 4,
   description: "Squares as green as the softest grass",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"Blue Squares",
+  name:"Blue Background",
   level: 5,
   description: "Squares as blue as the deepest ocean",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"WROND! Squares",
+  name:"WROND! Background",
   level: 10,
   description: "Squares that are just WROND!",
   upgrade_type: "cell"

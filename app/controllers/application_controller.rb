@@ -21,9 +21,11 @@ class ApplicationController < ActionController::Base
   end
 
   def calc_xp
-    @next_level = 50 + (current_user.user_profile.level.to_i * 50)
-    @current_xp = current_user.user_profile.total_xp - calc_base_xp(current_user.user_profile.level.to_i - 1)
-    @ratio = (100 - ((@current_xp.to_f / @next_level.to_f) * 100)).to_i
+    if current_user.user_profile.present?
+      @next_level = 50 + (current_user.user_profile.level.to_i * 50)
+      @current_xp = current_user.user_profile.total_xp - calc_base_xp(current_user.user_profile.level.to_i - 1)
+      @ratio = (100 - ((@current_xp.to_f / @next_level.to_f) * 100)).to_i
+    end
   end
 
   def set_default_meta_tags

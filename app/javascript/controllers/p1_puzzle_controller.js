@@ -179,10 +179,10 @@ export default class extends Controller {
     let xValues = xWriter(puzzledata);
     let yValues = yWriter(puzzledata);
 
-    const bg_style = this.data.get("background_style").replace(" ", "_")
-    const cell_style = this.data.get("cell_style").replace(" ", "_")
-    const active_style = this.data.get("active_style").replace(" ", "_")
-    const flagged_style = this.data.get("flagged_style").replace(" ", "_")
+    const bg_style = this.data.get(`u${player}_background_style`).replace(" ", "_")
+    const cell_style = this.data.get(`u${player}_cell_style`).replace(" ", "_")
+    const active_style = this.data.get(`u${player}_active_style`).replace(" ", "_")
+    const flagged_style = this.data.get(`u${player}_flagged_style`).replace(" ", "_")
 
     rootDiv.classList.add(bg_style)
 
@@ -335,13 +335,13 @@ export default class extends Controller {
   };
 
   check_for_level_up() {
-    let xp = document.getElementById("xp_field").value
     let level = parseInt(document.getElementById("level_field").value)
+    let base_xp = this.data.get("base_xp")
     document.getElementById("level-span").innerText = level;
-    document.getElementById("level-up-span").innerText = Math.floor(xp / 100);
-    if (xp / 100 >= (level + 1)) {
-      document.getElementById("level_field").value = Math.floor(xp / 100);
-    return true
+    document.getElementById("level-up-span").innerText = level + 1;
+    if (base_xp + this.get_xp() >= (50 + level * 50) ) {
+      document.getElementById("level_field").value = level + 1;
+      return true
     }
     return false
   }
@@ -360,12 +360,16 @@ export default class extends Controller {
   }
 
   get_xp() {
-    const level = parseInt(document.getElementById("jlpt-level").innerText)
-    return 50 * level
+    let winner = this.data.get("winner")
+    if (winner == user_id){
+      return 150;
+    } else {
+      return 50;
+    }
   }
 
   experience_roller() {
-    let target = 50;
+    let target = this.get_xp();
     let count = parseInt(document.getElementById("xp-value").innerText);
     let increment = 1;
     if (count < target) {
@@ -373,7 +377,7 @@ export default class extends Controller {
       document.getElementById("xp-value").innerText = `${count}`;
       setTimeout(() => {
         this.experience_roller()
-      }, 5);
+      }, 10);
     }
 
   };
@@ -432,7 +436,6 @@ export default class extends Controller {
         },1500)
       }
       this.experience_roller();
-      this.check_for_level_up();
       this.update_user_record();
       this.update_conflict(user_id);
       for(let i=0; i<100; i++)
@@ -451,7 +454,6 @@ export default class extends Controller {
 
   puzzle_ended() {
     let winner = this.data.get("winner")
-    console.log(winner)
 
     setTimeout(() => {
       let conclussionModal = document.getElementById('conclussionModal')

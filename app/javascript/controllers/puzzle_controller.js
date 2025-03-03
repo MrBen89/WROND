@@ -55,17 +55,21 @@ let seconds = 0;
 let minutes = 0;
 let seconds_absolute = 0;
 
-let timer = (() => {setInterval(() => {
-  document.getElementById('timerBox').innerHTML=
-  (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
-  seconds ++;
-  seconds_absolute ++;
-  if (seconds >= 60) {
-      minutes ++;
-      seconds = 0
-    }
-  }, 1000);
-})
+// let clock
+
+// let timer = (() => {
+//   clock = setInterval(() => {
+//     document.getElementById('timerBox').innerHTML=
+//     (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+//     seconds ++;
+//     seconds_absolute ++;
+//     if (seconds >= 60) {
+//         minutes ++;
+//         seconds = 0
+//       }
+//     }, 1000);
+// })
+
 
 // Connects to data-controller="puzzle"
 export default class extends Controller {
@@ -88,7 +92,17 @@ export default class extends Controller {
     let mode = "draw"
 
     document.querySelector(".startButton").remove()
-    timer()
+    let timer = 0;
+    timer = setInterval(() => {
+      document.getElementById('timerBox').innerHTML=
+      (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+      seconds ++;
+      seconds_absolute ++;
+      if (seconds >= 60) {
+          minutes ++;
+          seconds = 0
+        }
+      }, 1000);
     //current patern is the working array
     let current_pattern = []
     //puzzledata is the solution array
@@ -169,7 +183,8 @@ export default class extends Controller {
 
               //check for win
               if (checkArrays(current_pattern, puzzledata)){
-                  this.stop_puzzle(handleClick)
+                clearInterval(timer)
+                this.stop_puzzle(handleClick)
               }
 
             } else if (mouse_status == "right") {
@@ -188,7 +203,6 @@ export default class extends Controller {
           const handleClick = () => {
             event.button == 0 ? mouse_status = "left" : mouse_status = "right"
             if (mouse_status == "left"){
-              console.log("left")
               if (event.currentTarget.classList.contains("selected")){
                 mode = "erase"
               } else if (!event.currentTarget.classList.contains("selected")){
@@ -205,8 +219,6 @@ export default class extends Controller {
           }
 
           const handleRightClick = () => {
-            //console.log(mouse_status)
-            //console.log(event.currentTarget.classList)
             if (mouse_status == "right"){
               if (event.currentTarget.classList.contains("flagged")){
                 mode = "erase"
