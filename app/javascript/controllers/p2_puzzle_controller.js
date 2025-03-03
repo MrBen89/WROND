@@ -80,6 +80,14 @@ export default class extends Controller {
       p2data = JSON.parse(this.data.get("p1data"));
     }
 
+    let not_player = 0
+    if (user_id == this.data.get("user1")){
+      not_player = 2
+    } else {
+      not_player = 1
+    }
+
+
     if (p2data.length == 0){
       p2data = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -101,8 +109,12 @@ export default class extends Controller {
     //create the hints arrays
     let xValues = xWriter(puzzledata);
     let yValues = yWriter(puzzledata);
+    const bg_style = this.data.get(`u${not_player}_background_style`).replace(" ", "_")
+    const cell_style = this.data.get(`u${not_player}_cell_style`).replace(" ", "_")
+    const active_style = this.data.get(`u${not_player}_active_style`).replace(" ", "_")
+    const flagged_style = this.data.get(`u${not_player}_flagged_style`).replace(" ", "_")
 
-
+    rootDiv.classList.add(bg_style)
 
     //create a puzzle guides row
     let row = document.createElement("div");
@@ -142,6 +154,9 @@ export default class extends Controller {
           box.classList.add(`col${n}`);
           box.classList.add(`row${i}`);
           box.classList.add(`cell`);
+          box.classList.add(active_style)
+          box.classList.add(flagged_style)
+          box.classList.add(cell_style)
           if (p2data[i][n] == 1){
             box.classList.add("selected")
           } else if (p2data[i][n] == 2){

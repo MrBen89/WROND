@@ -64,6 +64,7 @@ class ConflictsController < ApplicationController
   def update
     @conflict = Conflict.find(params[:id])
     @user_profile = UserProfile.find(current_user.user_profile.id)
+    @user = current_user
     authorize @user_profile
     if User.find(edit_conflict_params[:player]) == @conflict.user1
       @conflict.u1_state = edit_conflict_params[:state]

@@ -18,15 +18,15 @@ class User < ApplicationRecord
     user_prof = UserProfile.new
     user_prof.user = self
     user_prof.username = self.email.split("@")[0]
-    user_prof.level = 0
+    user_prof.level = 1
     user_prof.total_xp = 0
     user_prof.tagline = "I Love Pies"
     user_prof.bio = "Tell us about yourself!"
-    user_prof.cell_style = Upgrade.where(name: "Grey Squares", upgrade_type: "cell").first
+    user_prof.cell_style = Upgrade.where(name: "Grey Background", upgrade_type: "cell").first
     user_prof.active_style = Upgrade.where(name: "Grey Squares", upgrade_type: "active").first
     user_prof.flagged_style = Upgrade.where(name: "Grey Squares", upgrade_type: "flagged").first
     user_prof.background_style = Upgrade.where(name: "None", upgrade_type: "background").first
-    user_prof.save
+    user_prof.save!
   end
 
 end
