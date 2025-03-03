@@ -14,23 +14,29 @@ class UserProfilesController < ApplicationController
   end
 
   def update
-    p Upgrade.find(params[:upgrade])
-    if Upgrade.find(params[:upgrade]).upgrade_type == "cell"
-      @user_profile.update(cell_style: Upgrade.find(params[:upgrade].to_i))
-      redirect_to @user_profile, notice: "Style changed."
-    elsif Upgrade.find(params[:upgrade]).upgrade_type =="active"
-      @user_profile.update(active_style: Upgrade.find(params[:upgrade].to_i))
-      redirect_to @user_profile, notice: "Style changed."
-    elsif Upgrade.find(params[:upgrade]).upgrade_type == "flagged"
-      @user_profile.update(flagged_style: Upgrade.find(params[:upgrade].to_i))
-      redirect_to @user_profile, notice: "Style changed."
-    elsif Upgrade.find(params[:upgrade]).upgrade_type == "background"
-      @user_profile.update(background_style: Upgrade.find(params[:upgrade].to_i))
-      redirect_to @user_profile, notice: "Style changed."
-    elsif @user_profile.update(user_profile_params)
-      redirect_to @user_profile, notice: "User profile was successfully updated."
-    else
-      render :edit, status: :unprocessable_entity
+    if !user_profile_params[:total_xp].nil?
+      @user_profile.total_xp = user_profile_params[:total_xp]
+      @user_profile.level = user_profile_params[:level]
+      @user_profile.save
+      redirect_to "/"
+    elsif  params[:upgrade].exist?
+      if Upgrade.find(params[:upgrade]).upgrade_type == "cell"
+        @user_profile.update(cell_style: Upgrade.find(params[:upgrade].to_i))
+        redirect_to @user_profile, notice: "Style changed."
+      elsif Upgrade.find(params[:upgrade]).upgrade_type =="active"
+        @user_profile.update(active_style: Upgrade.find(params[:upgrade].to_i))
+        redirect_to @user_profile, notice: "Style changed."
+      elsif Upgrade.find(params[:upgrade]).upgrade_type == "flagged"
+        @user_profile.update(flagged_style: Upgrade.find(params[:upgrade].to_i))
+        redirect_to @user_profile, notice: "Style changed."
+      elsif Upgrade.find(params[:upgrade]).upgrade_type == "background"
+        @user_profile.update(background_style: Upgrade.find(params[:upgrade].to_i))
+        redirect_to @user_profile, notice: "Style changed."
+      elsif @user_profile.update(user_profile_params)
+        redirect_to @user_profile, notice: "User profile was successfully updated."
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
   end
 

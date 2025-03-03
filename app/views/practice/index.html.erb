@@ -21,10 +21,10 @@
   </div>
 
   <div class="hidden">
-    <%= simple_form_for @user_profile, remote: true, html: { id: :practice_done } do |f| %>
+    <%= simple_form_for @user_profile, remote: true, :method => :patch, html: { id: :practice_form } do |f| %>
     <%= f.input :total_xp ,input_html: {id: "xp_field", value: @user_profile.total_xp }%>
     <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
-    <%= f.button :submit, id: "practice-done-submit" %>
+    <%= f.button :submit, id: "practice-submit" %>
     <% end %>
   </div>
 
@@ -41,5 +41,6 @@
   </div>
 </div>
 
-
+<div class="hidden" id="base_xp"><%= @current_xp %></div>
+<div class="hidden" id="kanji_count"><%= @unlocked_kanji.count %></div>
 </div>

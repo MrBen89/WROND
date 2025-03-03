@@ -1,14 +1,14 @@
 import { Controller } from "@hotwired/stimulus";
 
 let text = "";
-
+const kanjiCharacters = document.querySelectorAll(".kanji-character");
 export default class extends Controller {
   static targets = ["kanji", "dropZone"];
 
   connect() {
     console.log("Kanji Controller Connected!");
 
-    const kanjiCharacters = document.querySelectorAll(".kanji-character");
+
     kanjiCharacters.forEach(kanji => {
       kanji.setAttribute("draggable", true);
       kanji.addEventListener("dragstart", this.dragStart.bind(this));
@@ -58,14 +58,14 @@ export default class extends Controller {
 
   check_for_level_up() {
     console.log("Checking for level up...");
-    let xp = parseInt(document.getElementById("xp_field").value);
+    let base_xp = parseInt(document.getElementById("base_xp").innerText);
     let level = parseInt(document.getElementById("level_field").value);
 
     document.getElementById("level-span").innerText = level;
-    document.getElementById("level-up-span").innerText = Math.floor(xp / 100);
+    document.getElementById("level-up-span").innerText = level + 1;
 
-    if (xp / 100 >= (level + 1)) {
-      document.getElementById("level_field").value = Math.floor(xp / 100);
+    if (base_xp + (parseInt(document.getElementById("kanji_count").innerText) * 25) >= (50 + level * 50)) {
+      document.getElementById("level_field").value = level + 1;
       console.log("Level up!");
       return true;
     }
@@ -73,12 +73,15 @@ export default class extends Controller {
   }
 
   update_user_record() {
+    let multiplier = parseInt(document.getElementById("kanji_count").innerText)
     let xpField = document.getElementById("xp_field");
-    xpField.value = parseInt(xpField.value) + 100;
+    xpField.value = parseInt(xpField.value) + multiplier * 25;
+    console.log(document.getElementById("practice-submit"))
+    document.getElementById("practice_form").requestSubmit();
   }
 
   experience_roller() {
-    let target = 100;
+    let target = parseInt(document.getElementById("kanji_count").innerText) * 25
     let count = parseInt(document.getElementById("xp-value").innerText);
     let increment = 1;
 
@@ -87,7 +90,7 @@ export default class extends Controller {
       document.getElementById("xp-value").innerText = `${count}`;
       setTimeout(() => {
         this.experience_roller();
-      }, 5);
+      }, 10);
     }
   }
 
@@ -100,12 +103,9 @@ export default class extends Controller {
         document.getElementById("conclussionModal").classList.remove("hidden");
         document.getElementById("popup-button").addEventListener("click", () => {
           document.getElementById("conclussionModal").style.display = "none";
+          this.update_user_record();
         });
-
         this.experience_roller();
-        this.update_user_record();
-        console.log(this.check_for_level_up());
-
         if (this.check_for_level_up()) {
           setTimeout(() => {
             document.getElementById("level-up").classList.remove("hidden");
@@ -114,6 +114,7 @@ export default class extends Controller {
             }, 1);
           }, 1500);
         }
+
       }, 1000);
     }
   }
