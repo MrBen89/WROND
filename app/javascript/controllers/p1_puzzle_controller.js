@@ -336,7 +336,7 @@ export default class extends Controller {
 
   check_for_level_up() {
     let level = parseInt(document.getElementById("level_field").value)
-    let base_xp = this.data.get("base_xp")
+    let base_xp = parseInt(this.data.get("base_xp"))
     document.getElementById("level-span").innerText = level;
     document.getElementById("level-up-span").innerText = level + 1;
     if (base_xp + this.get_xp() >= (50 + level * 50) ) {
