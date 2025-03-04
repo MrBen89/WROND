@@ -50,13 +50,13 @@
 
     <% @kanji.each do |kanji| %>
       <div class="hidden-kanji-data"
-           data-kanji="<%= kanji.kanji %>"
-           data-meaning="<%= kanji.meaning %>"
-           data-onyomi="<%= kanji.onyomi[1..-2] %>"
-           data-kunyomi="<%= kanji.kunyomi %>"
-           data-stroke-count="<%= kanji.stroke_count %>"
-           data-jlpt="<%= kanji.jlptLevel %>"
-           data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
+            data-kanji="<%= kanji.kanji %>"
+            data-meaning="<%= kanji.meaning %>"
+            data-onyomi="<%= kanji.onyomi[1..-2] %>"
+            data-kunyomi="<%= kanji.kunyomi %>"
+            data-stroke-count="<%= kanji.stroke_count %>"
+            data-jlpt="<%= kanji.jlptLevel %>"
+            data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
       </div>
     <% end %>
   </div>
