@@ -62,56 +62,58 @@
   </div>
 
   <div class="right-side">
-    <div class="card-container">
-      <% (@all_done).each_with_index do |kanji, index| %>
-      <% if @puzzles.any? {|p| p.kanji == kanji} %>
-        <div class="card" data-kanji="<%= kanji.kanji %>"
-             data-meaning="<%= kanji.meaning.join(" ")  %>"
-             data-onyomi="<%= kanji.onyomi[1..-2] %>"
-             data-kunyomi="<%= kanji.kunyomi[1..-2]  %>"
-             data-stroke-count="<%= kanji.stroke_count %>"
-             data-jlpt="<%= kanji.jlptLevel %>"
-             data-url="<%= kanji_path(kanji) %>"
-             data-solved="1">
-
-          <div class="stars">
-            <%= kanji.stroke_count > 0 ? "★" : "☆" %><%= kanji.stroke_count > 3 ? "★" : "☆" %><%= kanji.stroke_count > 6 ? "★" : "☆" %><%= kanji.stroke_count > 9 ? "★" : "☆" %><%= kanji.stroke_count > 12 ? "★" : "☆" %>
-          </div>
-          <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
-          <div class="white-box-for">
-            <div class="question-mark">?</div>
-          </div>
-        </div>
-        <% end %>
-      <% end %>
-      <% not_done = (
-        (@n5_total - @n5_done)[..10] +
-        (@n4_total - @n4_done)[..10] +
-        (@n3_total - @n3_done)[..10] +
-        (@n2_total - @n2_done)[..10] +
-        (@n1_total - @n1_done)[..10]
-        ) %>
-       <% (not_done).each_with_index do |kanji, index| %>
-        <div class="card" data-kanji="<%= kanji.kanji %>"
-             data-meaning="<%= kanji.meaning %>"
-             data-onyomi="<%= kanji.onyomi %>"
-             data-kunyomi="<%= kanji.kunyomi %>"
-             data-stroke-count="<%= kanji.stroke_count %>"
-             data-jlpt="<%= kanji.jlptLevel %>"
-             data-url="<%= kanji_path(kanji) %>"
-             data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
-
-          <div class="stars">
-            <%= kanji.stroke_count > 0 ? "★" : "☆" %><%= kanji.stroke_count > 3 ? "★" : "☆" %><%= kanji.stroke_count > 6 ? "★" : "☆" %><%= kanji.stroke_count > 9 ? "★" : "☆" %><%= kanji.stroke_count > 12 ? "★" : "☆" %>
-          </div>
-          <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
-          <div class="white-box-for">
-            <div class="question-mark">?</div>
-          </div>
-        </div>
+    <div data-controller="fade" class="index-bottom-fade" data-action="scroll->fade#action">
+      <div class="card-container">
+        <% (@all_done).each_with_index do |kanji, index| %>
         <% if @puzzles.any? {|p| p.kanji == kanji} %>
+          <div class="card" data-kanji="<%= kanji.kanji %>"
+              data-meaning="<%= kanji.meaning.join(" ")  %>"
+              data-onyomi="<%= kanji.onyomi[1..-2] %>"
+              data-kunyomi="<%= kanji.kunyomi[1..-2]  %>"
+              data-stroke-count="<%= kanji.stroke_count %>"
+              data-jlpt="<%= kanji.jlptLevel %>"
+              data-url="<%= kanji_path(kanji) %>"
+              data-solved="1">
+
+            <div class="stars">
+              <%= kanji.stroke_count > 0 ? "★" : "☆" %><%= kanji.stroke_count > 3 ? "★" : "☆" %><%= kanji.stroke_count > 6 ? "★" : "☆" %><%= kanji.stroke_count > 9 ? "★" : "☆" %><%= kanji.stroke_count > 12 ? "★" : "☆" %>
+            </div>
+            <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
+            <div class="white-box-for">
+              <div class="question-mark">?</div>
+            </div>
+          </div>
+          <% end %>
         <% end %>
-      <% end %>
+        <% not_done = (
+          (@n5_total - @n5_done)[..10] +
+          (@n4_total - @n4_done)[..10] +
+          (@n3_total - @n3_done)[..10] +
+          (@n2_total - @n2_done)[..10] +
+          (@n1_total - @n1_done)[..10]
+          ) %>
+        <% (not_done).each_with_index do |kanji, index| %>
+          <div class="card" data-kanji="<%= kanji.kanji %>"
+              data-meaning="<%= kanji.meaning %>"
+              data-onyomi="<%= kanji.onyomi %>"
+              data-kunyomi="<%= kanji.kunyomi %>"
+              data-stroke-count="<%= kanji.stroke_count %>"
+              data-jlpt="<%= kanji.jlptLevel %>"
+              data-url="<%= kanji_path(kanji) %>"
+              data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
+
+            <div class="stars">
+              <%= kanji.stroke_count > 0 ? "★" : "☆" %><%= kanji.stroke_count > 3 ? "★" : "☆" %><%= kanji.stroke_count > 6 ? "★" : "☆" %><%= kanji.stroke_count > 9 ? "★" : "☆" %><%= kanji.stroke_count > 12 ? "★" : "☆" %>
+            </div>
+            <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
+            <div class="white-box-for">
+              <div class="question-mark">?</div>
+            </div>
+          </div>
+          <% if @puzzles.any? {|p| p.kanji == kanji} %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
