@@ -54,7 +54,7 @@
 
 <div class="ask-wrondarou-btn hidden" data-target="hint">
   <span>
-    Ask Wrondarou-sama for a hint?
+    Click on Wrondarou-sama for a hint?
   </span>
 
   <div class="words-of-wisdom" data-hint-target="hint">
@@ -67,7 +67,7 @@
   <%= link_to "Another Puzzle?", kanji_path(@next_kanji), class: "hidden", id: "next_link" %>
 </div>
 
-<div class="gif-container-bottom" style="background: blue" >
+<div class="gif-container-bottom">
   <%= image_tag asset_path("click-me-wrondarou.GIF"),
                 class: "game-gif-bottom",
                 data:{hint_target: "wrondarou", action: "click->hint#appear"}
