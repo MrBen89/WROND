@@ -248,11 +248,30 @@ export default class extends Controller {
     let base_xp = this.data.get("base_xp")
     document.getElementById("level-span").innerText = level;
     document.getElementById("level-up-span").innerText = level + 1;
-    if (base_xp + this.get_xp() >= (50 + level * 50) ) {
+    if (base_xp + this.get_xp() >= (50 + (level * 50)) ) {
       document.getElementById("level_field").value = level + 1;
       return true
     }
     return false
+  }
+
+  update_xp_bar () {
+    const xp_bar_level_element = document.getElementById("xp_bar_level");
+    const xp_bar_current_element = document.getElementById("xp_bar_current");
+    const xp_bar_level_next = document.getElementById("xp_bar_next");
+    const fillbar = document.getElementById("fillbar");
+    let level = parseInt(xp_bar_level_element.innerText)
+    let total_xp = parseInt(xp_bar_current_element.innerText) + this.get_xp();
+    let next_xp = parseInt(xp_bar_level_next.innerText)
+    if (total_xp > next_xp){
+      total_xp -= next_xp
+      next_xp = (50 + level * 50)
+      level += 1
+    }
+    xp_bar_current_element.innerText = total_xp
+    xp_bar_level_next.innerText = next_xp
+    xp_bar_level_element.innerText = level
+    fillbar.style.width = `${100 - (total_xp / next_xp * 100)}%`
   }
 
   get_xp() {
@@ -328,6 +347,7 @@ export default class extends Controller {
         document.getElementById("next_link").classList.remove("hidden");
       });
       this.experience_roller()
+      this.update_xp_bar()
       if (this.check_for_level_up()) {
 
         setTimeout(() => {

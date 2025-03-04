@@ -382,6 +382,25 @@ export default class extends Controller {
 
   };
 
+  update_xp_bar () {
+    const xp_bar_level_element = document.getElementById("xp_bar_level");
+    const xp_bar_current_element = document.getElementById("xp_bar_current");
+    const xp_bar_level_next = document.getElementById("xp_bar_next");
+    const fillbar = document.getElementById("fillbar");
+    let level = parseInt(xp_bar_level_element.innerText)
+    let total_xp = parseInt(xp_bar_current_element.innerText) + this.get_xp();
+    let next_xp = parseInt(xp_bar_level_next.innerText)
+    if (total_xp > next_xp){
+      total_xp -= next_xp
+      next_xp = (50 + level * 50)
+      level += 1
+    }
+    xp_bar_current_element.innerText = total_xp
+    xp_bar_level_next.innerText = next_xp
+    xp_bar_level_element.innerText = level
+    fillbar.style.width = `${100 - (total_xp / next_xp * 100)}%`
+  }
+
   stop_puzzle(handleClick) {
     console.log(user_id.value)
     // let minutes = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) / 60)
@@ -435,6 +454,7 @@ export default class extends Controller {
           //document.getElementById('level-up-image').classList.remove("hidden");
         },1500)
       }
+      this.update_xp_bar()
       this.experience_roller();
       this.update_user_record();
       this.update_conflict(user_id);
