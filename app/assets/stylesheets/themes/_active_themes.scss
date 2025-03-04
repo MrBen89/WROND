@@ -1,12 +1,52 @@
 .selected.Grey_Squares {
-  background-color: rgb(70, 70, 70);
+  background-color: rgb(151, 151, 151);
 }
 
+.selected.Red_Squares {
+  background-color: rgb(255, 0, 0);
+}
+
+.selected.Orange_Squares {
+  background-color: rgb(255, 128, 0);
+}
+
+.selected.Yellow_Squares {
+  background-color: rgb(225, 255, 0);
+}
+
+.selected.Green_Squares {
+  background-color: rgb(0, 201, 0);
+}
 
 .selected.Blue_Squares {
-  background-color: rgb(85, 0, 255);
+  background-color: rgb(46, 171, 255);
 }
 
-.selected.Dark_Grey_Squares {
-  background-color: rgb(50, 50, 50);
+.col0.selected.WROND\!_Squares,
+.col1.selected.WROND\!_Squares {
+  background-color: rgb(255, 0, 0);
+}
+.col2.selected.WROND\!_Squares,
+.col3.selected.WROND\!_Squares,
+.col4.selected.WROND\!_Squares {
+  background-color: rgb(255, 128, 0);
+}
+.col5.selected.WROND\!_Squares,
+.col6.selected.WROND\!_Squares,
+.col7.selected.WROND\!_Squares {
+  background-color: rgb(225, 255, 0);
+}
+.col8.selected.WROND\!_Squares,
+.col9.selected.WROND\!_Squares,
+.col10.selected.WROND\!_Squares {
+  background-color: rgb(0, 201, 0);
+}
+.col11.selected.WROND\!_Squares,
+.col12.selected.WROND\!_Squares,
+.col13.selected.WROND\!_Squares {
+  background-color: rgb(46, 171, 255);
+}
+.col14.selected.WROND\!_Squares,
+.col15.selected.WROND\!_Squares {
+  background-color: rgb(170, 0, 255);
 }
