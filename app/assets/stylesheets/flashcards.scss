@@ -151,3 +151,31 @@
 .audio-btn:hover {
   background: #0056b3;
 }
+
+.progress-container {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.progress {
+  height: 100%;
+  background-color: #4caf50;
+  width: 0%;
+  transition: width 0.5s ease-in-out;
+}
+
+
+.progress-container:nth-child(1) .progress { background-color: #ff9800; } /* N5 - Orange */
+.progress-container:nth-child(2) .progress { background-color: #ffcc00; } /* N4 - Yellow */
+.progress-container:nth-child(3) .progress { background-color: #4caf50; } /* N3 - Green */
+.progress-container:nth-child(4) .progress { background-color: #2196f3; } /* N2 - Blue */
+.progress-container:nth-child(5) .progress { background-color: #9c27b0; } /* N1 - Purple */

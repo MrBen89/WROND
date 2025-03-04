@@ -1,5 +1,18 @@
-<h1>Your Flashcards</h1>
+<h1>Your Unlocked Kanji</h1>
 
+<div class="jlpt-progress">
+  <% [["5", @n5_done, @n5_total], ["4", @n4_done, @n4_total], ["3", @n3_done, @n3_total], ["2", @n2_done, @n2_total], ["1", @n1_done, @n1_total]].each do |level, done, total| %>
+    <% next if total == 0 %>
+
+    <div class="progress-container">
+      <p>JLPT N<%= level %>: <strong><%= done.count %></strong> / <strong><%= total %></strong> kanji unlocked (<%= (done.count.to_f / total * 100).round(2) %>%)</p>
+      <div class="progress-bar">
+        <div class="progress" style="width: <%= (done.count.to_f / total * 100).round(2) %>%;"></div>
+      </div>
+    </div>
+
+  <% end %>
+</div>
 <div class="flashcards-container">
   <% @unlocked_kanji.each do |kanji| %>
     <div class="flashcard" onclick="openFlashcard(this)">
