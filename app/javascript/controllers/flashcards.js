@@ -17,3 +17,15 @@ function closeAllFlashcards() {
   document.querySelectorAll('.flashcard').forEach(f => f.classList.remove('active'));
   document.querySelector(".flashcard-overlay").style.display = "none";
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".toggle-details-btn").forEach(button => {
+    button.addEventListener("click", function() {
+      let target = document.getElementById(this.dataset.target);
+      if (target) {
+        target.classList.toggle("hidden");
+        this.textContent = target.classList.contains("hidden") ? "Show Details" : "Hide Details";
+      }
+    });
+  });
+});

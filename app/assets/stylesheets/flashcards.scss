@@ -20,10 +20,9 @@
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   position: relative;
-  overflow: hidden;
+  perspective: 1000px;
 }
 
-/* 🔥 EXPAND CARD ON CLICK */
 .flashcard.active {
   width: 80%;
   max-width: 600px;
@@ -152,8 +151,9 @@
   background: #0056b3;
 }
 
+
 .progress-container {
-  margin: 10px 0;
+  margin: 15px 0;
   text-align: center;
 }
 
@@ -168,14 +168,26 @@
 
 .progress {
   height: 100%;
-  background-color: #4caf50;
-  width: 0%;
-  transition: width 0.5s ease-in-out;
+  transition: width 1s ease-in-out;
 }
 
+.progress-container:nth-child(1) .progress { background-color: #ff0000; }
+.progress-container:nth-child(2) .progress { background-color: #ff9800; }
+.progress-container:nth-child(3) .progress { background-color: #ffcc00; }
+.progress-container:nth-child(4) .progress { background-color: #4caf50; }
+.progress-container:nth-child(5) .progress { background-color: #2196f3; }
 
-.progress-container:nth-child(1) .progress { background-color: #ff9800; } /* N5 - Orange */
-.progress-container:nth-child(2) .progress { background-color: #ffcc00; } /* N4 - Yellow */
-.progress-container:nth-child(3) .progress { background-color: #4caf50; } /* N3 - Green */
-.progress-container:nth-child(4) .progress { background-color: #2196f3; } /* N2 - Blue */
-.progress-container:nth-child(5) .progress { background-color: #9c27b0; } /* N1 - Purple */
+.jlpt-kanji {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.kanji-card {
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 18px;
+  background: #f8f8f8;
+  border-radius: 5px;
+  margin: 3px;
+  border: 1px solid #ddd;
+}

@@ -4,62 +4,66 @@
   <% [["5", @n5_done, @n5_total], ["4", @n4_done, @n4_total], ["3", @n3_done, @n3_total], ["2", @n2_done, @n2_total], ["1", @n1_done, @n1_total]].each do |level, done, total| %>
     <% next if total == 0 %>
 
+    <% percent = (done.count.to_f / total * 100).round(2) %>
+
     <div class="progress-container">
-      <p>JLPT N<%= level %>: <strong><%= done.count %></strong> / <strong><%= total %></strong> kanji unlocked (<%= (done.count.to_f / total * 100).round(2) %>%)</p>
+      <p>JLPT N<%= level %>: <strong><%= percent %>%</strong> unlocked</p>
       <div class="progress-bar">
-        <div class="progress" style="width: <%= (done.count.to_f / total * 100).round(2) %>%;"></div>
-      </div>
-    </div>
-
-  <% end %>
-</div>
-<div class="flashcards-container">
-  <% @unlocked_kanji.each do |kanji| %>
-    <div class="flashcard" onclick="openFlashcard(this)">
-      <div class="flashcard-front">
-        <%= kanji.kanji %>
+        <div class="progress" style="width: <%= percent %>%;"></div>
       </div>
 
-      <div class="flashcard-back">
-        <button class="close-btn" onclick="closeFlashcard(event, this)">✖️</button>
+      <% if done.any? %>
+        <div class="flashcards-container">
+          <% done.each do |kanji| %>
+            <div class="flashcard" onclick="openFlashcard(this)">
+              <div class="flashcard-front">
+                <%= kanji.kanji %>
+              </div>
 
-        <div class="flashcard-content">
-          <div class="flashcard-column left">
-            <p><strong>Onyomi:</strong> <span><%= kanji.onyomi.is_a?(Array) ? kanji.onyomi.join(", ") : kanji.onyomi %></span></p>
-            <p><strong>Kunyomi:</strong> <span><%= kanji.kunyomi.is_a?(Array) ? kanji.kunyomi.join(", ") : kanji.kunyomi %></span></p>
-            <p><strong>JLPT Level:</strong> <span><%= kanji.jlptLevel %></span></p>
-          </div>
+              <div class="flashcard-back">
+                <button class="close-btn" onclick="closeFlashcard(event, this)">✖️</button>
 
-          <div class="flashcard-kanji">
-            <%= kanji.kanji %>
-          </div>
+                <div class="flashcard-content">
+                  <div class="flashcard-column left">
+                    <p><strong>Onyomi:</strong> <span><%= kanji.onyomi.is_a?(Array) ? kanji.onyomi.join(", ") : kanji.onyomi %></span></p>
+                    <p><strong>Kunyomi:</strong> <span><%= kanji.kunyomi.is_a?(Array) ? kanji.kunyomi.join(", ") : kanji.kunyomi %></span></p>
+                    <p><strong>JLPT Level:</strong> <span><%= kanji.jlptLevel %></span></p>
+                  </div>
 
-<div class="flashcard-column right">
-  <p><strong>Meaning:</strong> <span><%= kanji.meaning.is_a?(Array) ? kanji.meaning.join(", ") : kanji.meaning %></span></p>
+                  <div class="flashcard-kanji">
+                    <%= kanji.kanji %>
+                  </div>
 
-  <% if kanji.audio.present? %>
-    <p><strong>Audio:</strong>
-      <button class="audio-btn" onclick="event.stopPropagation(); document.getElementById('audio-<%= kanji.kanji %>').play();">
-        🔊 Play
-      </button>
-    </p>
-    <audio id="audio-<%= kanji.kanji %>" src="<%= kanji.audio %>"></audio>
-  <% end %>
+                  <div class="flashcard-column right">
+                    <p><strong>Meaning:</strong> <span><%= kanji.meaning.is_a?(Array) ? kanji.meaning.join(", ") : kanji.meaning %></span></p>
 
-  <% if kanji.example_sentences.present? && kanji.example_sentences.any? %>
-    <p><strong>Example Sentences:</strong></p>
-    <ul class="example-sentences">
-      <% kanji.example_sentences.first(2).each do |sentence| %>
-        <li>
-          <p><strong>JP:</strong> <%= sentence["japanese"] %></p>
-          <p><strong>EN:</strong> <%= sentence["english"] %></p>
-        </li>
-      <% end %>
-    </ul>
-  <% end %>
-</div>
+                    <% if kanji.audio.present? %>
+                      <p><strong>Audio:</strong>
+                        <button class="audio-btn" onclick="event.stopPropagation(); document.getElementById('audio-<%= kanji.kanji %>').play();">
+                          🔊 Play
+                        </button>
+                      </p>
+                      <audio id="audio-<%= kanji.kanji %>" src="<%= kanji.audio %>"></audio>
+                    <% end %>
+
+                    <% if kanji.example_sentences.present? && kanji.example_sentences.any? %>
+                      <p><strong>Example Sentences:</strong></p>
+                      <ul class="example-sentences">
+                        <% kanji.example_sentences.first(2).each do |sentence| %>
+                          <li>
+                            <p><strong>JP:</strong> <%= sentence["japanese"] %></p>
+                            <p><strong>EN:</strong> <%= sentence["english"] %></p>
+                          </li>
+                        <% end %>
+                      </ul>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
-      </div>
+      <% end %>
     </div>
   <% end %>
 </div>
