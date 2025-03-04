@@ -17,6 +17,7 @@
   cursor: pointer;
   font-weight: bold;
   transition: all 0.3s ease;
+  color: black;
 
   &:hover {
     background-color: #ddd;
@@ -36,4 +37,16 @@
   color: white;
   font-size: 15px;
   justify-content: center;
+}
+
+.another {
+  width: 200px;
+}
+
+.back {
+
+}
+
+.blank {
+  width: 100px;
 }
