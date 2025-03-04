@@ -392,8 +392,8 @@ export default class extends Controller {
     let next_xp = parseInt(xp_bar_level_next.innerText)
     if (total_xp > next_xp){
       total_xp -= next_xp
-      next_xp = (50 + level * 50)
       level += 1
+      next_xp = (50 + level * 50)
     }
     xp_bar_current_element.innerText = total_xp
     xp_bar_level_next.innerText = next_xp
