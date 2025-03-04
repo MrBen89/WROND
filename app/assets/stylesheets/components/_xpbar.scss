@@ -29,6 +29,6 @@
 .fillbar {
   background: #c0c0c0;
   height: 100%;
-  width: 80%;
   float: right;
+  transition: width 2s ease-in-out;
 }
