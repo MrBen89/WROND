@@ -4,17 +4,24 @@ class KanjiController < ApplicationController
   def index
     @kanji = policy_scope(Kanji)
     @puzzles = Puzzle.where(user: current_user)
+
     @n5_done = Kanji.joins(:puzzles).distinct.where(jlptLevel: "5")
     @n5_total = Kanji.where(jlptLevel: "5")
+
     @n4_done = Kanji.joins(:puzzles).distinct.where(jlptLevel: "4")
     @n4_total = Kanji.where(jlptLevel: "4")
+
     @n3_done = Kanji.joins(:puzzles).distinct.where(jlptLevel: "3")
     @n3_total = Kanji.where(jlptLevel: "3")
+
     @n2_done = Kanji.joins(:puzzles).distinct.where(jlptLevel: "2")
     @n2_total = Kanji.where(jlptLevel: "2")
+
     @n1_done = Kanji.joins(:puzzles).distinct.where(jlptLevel: "1")
     @n1_total = Kanji.where(jlptLevel: "1")
+
     @all_done = Kanji.joins(:puzzles).distinct
+    @all_total = Kanji.count
   end
 
   def show
