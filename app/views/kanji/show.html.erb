@@ -1,3 +1,5 @@
+<div data-controller="hint">
+
 <div class="container d-flex">
   <div>
     <div class="spacer"></div>
@@ -51,12 +53,12 @@
   <%= render "kanji/conclussion" %>
 </div>
 
-<div class="ask-wrondarou-btn hidden" data-controller="hint" data-target="hint">
+<div class="ask-wrondarou-btn hidden" data-target="hint">
   <span>
-    Ask Wrondarou-sama for a hint?
+    Click on Wrondarou-sama for a hint?
   </span>
 
-  <div class="hidden words-of-wisdom" data-hint-target="hint">
+  <div class="words-of-wisdom" data-hint-target="hint">
     <p><%= @content %></p>
   </div>
 </div>
@@ -66,6 +68,19 @@
   <%= link_to "Another Puzzle?", kanji_path(@next_kanji), class: "hidden", id: "next_link" %>
 </div>
 
-  <div class="gif-container-bottom" data-action="click->hint#toggle">
-    <%= image_tag "tanuki.gif", class: "game-gif-bottom" %>
-  </div>
+<div class="gif-container-bottom">
+  <%= image_tag asset_path("click-me-wrondarou.GIF"),
+                class: "game-gif-bottom",
+                data:{hint_target: "wrondarou", action: "click->hint#appear"}
+  %>
+</div>
+
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  let gif = document.querySelector(".game-gif-bottom");
+
+  // Ensure the GIF is visible when the page loads
+  gif.style.display = "block";
+});
+</script>
