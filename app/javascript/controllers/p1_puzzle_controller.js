@@ -449,6 +449,7 @@ export default class extends Controller {
           document.getElementById('level-up').classList.remove("hidden");
           setTimeout(() => {
             document.getElementById('level-up').classList.add("expanded");
+            document.getElementById("level_up_audio").play()
           },1)
 
           //document.getElementById('level-up-image').classList.remove("hidden");

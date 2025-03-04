@@ -263,7 +263,7 @@ export default class extends Controller {
     let level = parseInt(xp_bar_level_element.innerText)
     let total_xp = parseInt(xp_bar_current_element.innerText) + this.get_xp();
     let next_xp = parseInt(xp_bar_level_next.innerText)
-    if (total_xp > next_xp){
+    if (total_xp >= next_xp){
       total_xp -= next_xp
       next_xp = (50 + level * 50)
       level += 1
@@ -354,6 +354,7 @@ export default class extends Controller {
           document.getElementById('level-up').classList.remove("hidden");
           setTimeout(() => {
             document.getElementById('level-up').classList.add("expanded");
+            document.getElementById("level_up_audio").play()
           },1)
 
           //document.getElementById('level-up-image').classList.remove("hidden");
