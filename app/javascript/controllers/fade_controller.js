@@ -17,18 +17,15 @@ export default class extends Controller {
 
     let fadeEffect;
 
-    if (scrollTop === 0) {
-      fadeEffect = "linear-gradient(to bottom, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 95%)";
-      this.element.style.opacity = "0.95"; // Keeps a slight visibility instead of disappearing instantly
-    } else if (scrollTop + clientHeight >= scrollHeight - 5) {
-      fadeEffect = "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 5%)";
-      this.element.style.opacity = "0.95";
-    } else {
-      fadeEffect = "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 90%)";
-      this.element.style.opacity = "1";
+    if (scrollTop <= 1) {  // Top fade
+      fadeEffect = "linear-gradient(to bottom, rgba(0, 0, 0, 1) 98%, rgba(0, 0, 0, 0) 100%)";
+    } else if (scrollTop + clientHeight >= scrollHeight - 1) {  // Bottom fade
+      fadeEffect = "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 2%)";
+    } else {  // Mid-scroll effect
+      fadeEffect = "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%)";
     }
 
-    this.element.style.transition = "mask-image 15s ease-in-out, -webkit-mask-image 15s ease-in-out, opacity 15s ease-in-out";
+    this.element.style.transition = "mask-image 1.5s ease, opacity 1.4s ease"; // Faster but smooth transition
     this.element.style.maskImage = fadeEffect;
     this.element.style.webkitMaskImage = fadeEffect;
   }
@@ -36,13 +33,13 @@ export default class extends Controller {
   setMask(position) {
     if (position === "top") {
       this.element.style.maskImage =
-        "linear-gradient(to bottom, rgba(0, 0, 0, 1) 5%, rgba(0, 0, 0, 0) 95%)";
+        "linear-gradient(to bottom, rgba(0, 0, 0, 1) 98%, rgba(0, 0, 0, 0) 100%)";
     } else if (position === "bottom") {
       this.element.style.maskImage =
-        "linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 5%)";
+        "linear-gradient(to bottom, rgba(0, 0, 0, 0) 98%, rgba(0, 0, 0, 0) 100%)";
     } else {
       this.element.style.maskImage =
-        "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 0) 90%)";
+        "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%)";
     }
     this.element.style.webkitMaskImage = this.element.style.maskImage; // Safari support
   }
