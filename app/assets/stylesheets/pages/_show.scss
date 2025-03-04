@@ -1,4 +1,3 @@
-
 .puzzle-header {
   display: flex;
   //justify-content: center;
@@ -208,7 +207,70 @@
   transform: scaleX(1);
 }
 
+@keyframes cloudFadeIn {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(1.2); /* Slightly larger, like it's materializing */
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1); /* Normal size */
+  }
+}
 
+.words-of-wisdom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: lightgrey;
+  width: 400px;
+  height: 120px; /* Increased height for a more cloud-like shape */
+  border-radius: 0.1px; /* Rounded corners for a cloud-like shape */
+  box-shadow:
+
+    20px -10px lightgrey, 40px -5px lightgrey,
+    -20px 10px lightgrey, 0px 10px lightgrey, 20px 10px lightgrey, 40px 10px lightgrey, 60px 10px lightgrey,
+    -25px 30px lightgrey, -5px 30px lightgrey, 15px 30px lightgrey, 35px 30px lightgrey, 55px 30px lightgrey, 75px 30px lightgrey,
+    0px 50px lightgrey, 20px 50px lightgrey, 40px 50px lightgrey;
+  image-rendering: pixelated;
+
+  opacity: 0; /* Start invisible */
+  filter: blur(10px);
+  transform: translate(-50%, -50%) scale(1.2);
+
+  position: absolute;
+  top: 70%;
+  left: 50%;
+}
+
+/* Apply animation when .show is added */
+.words-of-wisdom.show {
+  animation: cloudFadeIn 1.5s ease-out forwards, cloudShake 2s ease-in-out;
+}
+
+@keyframes cloudFadeIn {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes cloudShake {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  25% { transform: translate(calc(-50% - 2px), calc(-50% + 2px)) rotate(-2deg); }
+  50% { transform: translate(calc(-50% + 2px), calc(-50% - 2px)) rotate(2deg); }
+  75% { transform: translate(calc(-50% - 1px), calc(-50% + 1px)) rotate(-1deg); }
+  100% { transform: translate(-50%, -50%) rotate(0deg); }
+}
 
 .ask-wrondarou-btn {
   display: flex;
@@ -239,6 +301,9 @@
   image-rendering: pixelated;
   position: absolute;
   animation: walkAnimation 10s linear infinite alternate;
+  display: block !important;
+  opacity: 1;
+  visibility: visible;
 }
 
 .button_box {
