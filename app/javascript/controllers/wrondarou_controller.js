@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["hint", "wrondarou"];
+  static targets = ["hint", "wrondarou", "button"];
 
   connect() {
     this.clickable = false;
@@ -16,5 +16,9 @@ export default class extends Controller {
     document.getElementById("click_me").innerText = ""
     this.hintTarget.classList.add("show");
     // this.hintTarget.classList.style.transition = "opacity 1s";
+  }
+
+  swoosh() {
+    this.buttonTarget.classList.add("swoosh")
   }
 }
