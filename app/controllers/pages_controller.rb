@@ -19,8 +19,16 @@ class PagesController < ApplicationController
       end
       redirect_to kanji_path(kanji)
     end
+    @last_five_kanji = last_five_kanji(@user_profile)
+    @unlocked_kanji = policy_scope(Unlock).where(user: current_user).map { |unlock| unlock.kanji.kanji }.reverse.take(5)
   end
 
   def index
+  end
+
+  private
+
+  def last_five_kanji(user_profile)
+    Unlock.where(user: current_user).includes(:kanji).order(created_at: :desc).limit(5).map { |unlock| unlock.kanji }
   end
 end

@@ -74,10 +74,24 @@
   <%= image_tag "tanuki.gif", class: "game-gif" %>
 </div>
 
-<div class="tutorial-container">
-  <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
-    Tutorial
-  </button>
+<div class="stats-panel">
+  <h3>Total XP: <span class="stat-number"><%= @user_profile.total_xp %></span></h3>
+  <h3>Level: <span class="stat-number"><%= @user_profile.level %></span></h3>
+
+  <h4>Last 5 completed Kanji:</h4>
+  <ul>
+    <% @last_five_kanji.each do |kanji| %>
+      <li>
+        <a href="<%= flashcards_path(kanji.id) %>" class="kanji-link">
+          <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
+            <%= kanji.kanji %>
+          </span>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+
+  <h4>Kanji Completed: <span class="stat-number"><%= @unlocked_kanji.count %></span> / <%= Kanji.count %></h4>
 </div>
 
 <div class="tutorial-container">

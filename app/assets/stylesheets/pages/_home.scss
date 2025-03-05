@@ -149,15 +149,80 @@ button {
 //   }
 // }
 
+.stats-panel {
+  background: #ddd;
+  font-size: 15px;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 3px 3px 0px #000;
+  border: none;
+  transition: transform 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 540px;
+  height: 300px;
+  position: absolute; /* Position it absolutely */
+  left: 50px;
+}
 
+.stats-panel h3 {
+  font-size: 20px;
+  color: #000000;
+  margin-bottom: 15px; /* Change this to the desired color for labels */
+}
 
+.stats-panel h4 {
+  font-size: 20px;
+  color: #000000;
+  margin-bottom: 15px; /* Change this to the desired color for labels */
+}
 
+.stats-panel .stat-number {
+  color: #4e4e4e; /* Black color for numbers */
+}
 
+.stats-panel ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+}
+
+.stats-panel li {
+  margin-right: 10px; /* Adjust spacing as needed */
+  color: #999; /* Change this to the desired color */
+}
+
+.kanji-character {
+  font-family: "JFDot";
+  font-size: 30px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 3px 3px 0px #000;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #000; /* Change this to the desired color */
+}
+
+.kanji-character:hover{
+  background: #6abe30;
+  transform: scale(1.05);
+  text-decoration: none; /* Add underline on hover */
+}
 /* Tutorial Button in Top Right */
 .tutorial-container {
   position: fixed;
   top: 80%;
-  right: 20px;
+  right: 10px;
   z-index: 1000;
   height: 30%;
   max-height: 150px;
@@ -258,6 +323,7 @@ button {
 }
 
 .kanji {
+  font-family: "JFDot";
   position: absolute;
   font-size: 24px; /* Adjust size for cuteness */
   color: rgba(104, 102, 102, 0.8); /* Light and soft */
