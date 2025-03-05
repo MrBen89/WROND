@@ -13,7 +13,7 @@ export default class extends Controller {
 
   appear() {
     if (!this.clickable) return;
-
+    document.getElementById("click_me").innerText = ""
     this.hintTarget.classList.add("show");
     // this.hintTarget.classList.style.transition = "opacity 1s";
   }
