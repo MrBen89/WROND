@@ -136,7 +136,6 @@ export default class extends Controller {
     const rootDiv = this.p1RootDivTarget
     let mouse_status = "up"
     let mode = "draw"
-    console.log(typeof user_id)
 
     if (document.querySelector(".p1startButton")) {document.querySelector(".p1startButton").remove()}
     // clearInterval(timer)
@@ -339,7 +338,9 @@ export default class extends Controller {
     let base_xp = parseInt(this.data.get("base_xp"))
     document.getElementById("level-span").innerText = level;
     document.getElementById("level-up-span").innerText = level + 1;
-    if (base_xp + this.get_xp() >= (50 + level * 50) ) {
+    console.log(parseInt(base_xp))
+    console.log(this.get_xp)
+    if (parseInt(base_xp) + this.get_xp() >= (50 + level * 50) ) {
       document.getElementById("level_field").value = level + 1;
       return true
     }
@@ -361,7 +362,9 @@ export default class extends Controller {
 
   get_xp() {
     let winner = this.data.get("winner")
-    if (winner == user_id){
+    console.log(winner)
+    console.log(user_id)
+    if (winner == user_id.innerText){
       return 150;
     } else {
       return 50;
@@ -381,6 +384,35 @@ export default class extends Controller {
     }
 
   };
+
+  draw_answer() {
+    const p1data = JSON.parse(this.data.get("variable"));
+    const rootDiv = document.getElementById("ending_puzzle")
+    for (let i = 0; i < 16; i++){
+      let row = document.createElement("div")
+      row.classList.add("row");
+      rootDiv.appendChild(row);
+      //create columns
+      for (let n = 0; n < 16; n++){
+          //add columns to current_patern
+          let box = document.createElement("div");
+          box.classList.add(`col${n}`);
+          box.classList.add(`row${i}`);
+          box.classList.add(`cell`);
+          box.classList.add(`Grey_Background`);
+          box.classList.add(`Grey_Squares`);
+          box.classList.add("finished")
+          if (p1data[i][n] == 1){
+            box.classList.add("selected")
+          }
+          box.dataset.x = n;
+          box.dataset.y = i;
+        row.appendChild(box);
+      }
+    }
+  }
+
+
 
   update_xp_bar () {
     const xp_bar_level_element = document.getElementById("xp_bar_level");
@@ -402,7 +434,6 @@ export default class extends Controller {
   }
 
   stop_puzzle(handleClick) {
-    console.log(user_id.value)
     // let minutes = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) / 60)
     // let seconds = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) % 60)
     // document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
@@ -437,11 +468,8 @@ export default class extends Controller {
     let winner = this.data.get("winner")
     setTimeout(() => {
       let conclussionModal = document.getElementById('conclussionModal')
-      if (winner == user_id) {
-        conclussionModal.classList.add("win")
-      } else {
-        conclussionModal.classList.add("lose")
-      }
+      conclussionModal.classList.add("win")
+      //this.draw_answer()
       conclussionModal.classList.remove("hidden");
 
       if (this.check_for_level_up) {
@@ -458,23 +486,17 @@ export default class extends Controller {
       this.update_xp_bar()
       this.experience_roller();
       this.update_user_record();
-      this.update_conflict(user_id);
+      this.update_conflict();
       for(let i=0; i<100; i++)
         {
             window.clearInterval(i);
         }
     },1000)
-    let conclussionModal = document.getElementById('conclussionModal')
-    if (winner == user_id) {
-      conclussionModal.classList.add("win")
-    } else {
-      conclussionModal.classList.add("lose")
-    }
-    conclussionModal.classList.remove("hidden");
   };
 
   puzzle_ended() {
     let winner = this.data.get("winner")
+    this.draw_answer()
 
     setTimeout(() => {
       let conclussionModal = document.getElementById('conclussionModal')
@@ -484,8 +506,7 @@ export default class extends Controller {
         conclussionModal.classList.add("lose")
       }
       conclussionModal.classList.remove("hidden");
-
-      if (this.check_for_level_up) {
+      if (this.check_for_level_up()) {
         setTimeout(() => {
           document.getElementById('level-up').classList.remove("hidden");
           setTimeout(() => {
@@ -521,5 +542,9 @@ export default class extends Controller {
         row.appendChild(box);
       }
     }
-  })}
+  },1)
+  this.update_xp_bar()
+  this.experience_roller();
+  this.update_user_record();
+  }
 }
