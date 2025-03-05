@@ -82,9 +82,11 @@
   <ul>
     <% @last_five_kanji.each do |kanji| %>
       <li>
-        <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
-          <%= kanji.kanji %>
-        </span>
+        <a href="<%= flashcards_path(kanji.id) %>" class="kanji-link">
+          <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
+            <%= kanji.kanji %>
+          </span>
+        </a>
       </li>
     <% end %>
   </ul>
