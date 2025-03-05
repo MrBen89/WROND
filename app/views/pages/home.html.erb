@@ -75,8 +75,8 @@
 </div>
 
 <div class="stats-panel">
-  <h3>Total XP: <%= @user_profile.total_xp %></h3>
-  <h3>Level: <%= @user_profile.level %></h3>
+  <h3>Total XP: <span class="stat-number"><%= @user_profile.total_xp %></span></h3>
+  <h3>Level: <span class="stat-number"><%= @user_profile.level %></span></h3>
 
   <h4>Last 5 completed Kanji:</h4>
   <ul>
@@ -89,13 +89,7 @@
     <% end %>
   </ul>
 
-  <h4>Kanji Completed: <%= @unlocked_kanji.count %> / <%= Kanji.count %></h4>
-</div>
-
-<div class="tutorial-container">
-  <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
-    Tutorial
-  </button>
+  <h4>Kanji Completed: <span class="stat-number"><%= @unlocked_kanji.count %></span> / <%= Kanji.count %></h4>
 </div>
 
 <div class="tutorial-container">
