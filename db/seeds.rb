@@ -15,51 +15,52 @@ require 'net/http'
 require 'uri'
 require 'httparty'
 
-
+Conflict.destroy_all
+Unlock.destroy_all
 Puzzle.destroy_all
 UserProfile.destroy_all
+Upgrade.destroy_all
 User.destroy_all
 Kanji.destroy_all
-Upgrade.destroy_all
 
 Upgrade.create!(
-  name:"Grey Squares",
+  name:"Grey Background",
   level: 0,
   description: "The default. Some might say classic.",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"Red Squares",
+  name:"Red Background",
   level: 1,
   description: "Squares as red as the setting sun",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"Orange Squares",
+  name:"Orange Background",
   level: 2,
   description: "Squares as orange as the sweetest fruit",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"Yellow Squares",
+  name:"Yellow Background",
   level: 3,
   description: "Squares as yellow as foul smelling sulphur",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"Green Squares",
+  name:"Green Background",
   level: 4,
   description: "Squares as green as the softest grass",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"Blue Squares",
+  name:"Blue Background",
   level: 5,
   description: "Squares as blue as the deepest ocean",
   upgrade_type: "cell"
 )
 Upgrade.create!(
-  name:"WROND! Squares",
+  name:"WROND! Background",
   level: 10,
   description: "Squares that are just WROND!",
   upgrade_type: "cell"
@@ -169,10 +170,10 @@ default_user = User.create!(
 )
 
 users = [
-  { username: 'miaracoon', email: 'miaracoon@gmail.com' },
-  { username: 'bigben69', email: 'bigben69@gmail.com' },
-  { username: 'liamlovehotel', email: 'liamlovehotel@gmail.com' },
-  { username: 'welovejulian', email: 'welovejulian@gmail.com' }
+  { username: 'mankymia', email: 'mankymia@gmail.com' },
+  { username: 'bigben', email: 'bigben@gmail.com' },
+  { username: 'lovelyliam', email: 'lovelyliam@gmail.com' },
+  { username: 'juicyjulian', email: 'juicyjulian@gmail.com' }
 ]
 
 users.each do |user_data|
@@ -203,7 +204,9 @@ kanji_records = kanji_data.map do |kanji, details|
     onyomi: "{#{details['readings_on']&.map { |o| o.gsub('"', '') }.join(',')}}",
     stroke_count: details["strokes"] || 0,
     grade: details["grade"],
-    puzzleInfo: kanji_puzzle_map[kanji] || []
+    puzzleInfo: kanji_puzzle_map[kanji] || [],
+    audio: details["audio"],
+    example_sentences: details["example_sentences"] || []
   }
 end
 

@@ -40,7 +40,6 @@
       <p><strong>Onyomi:</strong> <span id="onyomi">?</span></p>
       <p><strong>Kunyomi:</strong> <span id="kunyomi">?</span></p>
       <p><strong>Stroke Count:</strong> <span id="stroke-count">?</span></p>
-      <p><strong>Grade: N</strong><span id="grade">?</span></p>
       <p><strong>JLPT Level:</strong> <span id="jlpt-level">?</span></p>
 
       <div class="button-container">
@@ -51,39 +50,46 @@
 
     <% @kanji.each do |kanji| %>
       <div class="hidden-kanji-data"
-           data-kanji="<%= kanji.kanji %>"
-           data-meaning="<%= kanji.meaning %>"
-           data-onyomi="<%= kanji.onyomi %>"
-           data-kunyomi="<%= kanji.kunyomi %>"
-           data-stroke-count="<%= kanji.stroke_count %>"
-           data-grade="<%= kanji.grade %>"
-           data-jlpt="<%= kanji.jlptLevel %>"
-           data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
+            data-kanji="<%= kanji.kanji %>"
+            data-meaning="<%= kanji.meaning %>"
+            data-onyomi="<%= kanji.onyomi[1..-2] %>"
+            data-kunyomi="<%= kanji.kunyomi %>"
+            data-stroke-count="<%= kanji.stroke_count %>"
+            data-jlpt="<%= kanji.jlptLevel %>"
+            data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
       </div>
     <% end %>
   </div>
 
-  <div class="right-side">
+   <div class="right-side">
     <div class="card-container">
       <% (@all_done).each_with_index do |kanji, index| %>
-      <% if @puzzles.any? {|p| p.kanji == kanji} %>
+        <% stroke_count = kanji.stroke_count %>
+        <% stars = case stroke_count
+                   when 1..2 then "★☆☆☆☆"
+                   when 3..4 then "★★☆☆☆"
+                   when 5..10 then "★★★☆☆"
+                   when 11..12 then "★★★★☆"
+                   else "★★★★★"
+                   end %>
+
         <div class="card" data-kanji="<%= kanji.kanji %>"
-             data-meaning="<%= kanji.meaning %>"
-             data-onyomi="<%= kanji.onyomi %>"
-             data-kunyomi="<%= kanji.kunyomi %>"
+             data-meaning="<%= kanji.meaning.join(" ") %>"
+             data-onyomi="<%= kanji.onyomi[1..-2] %>"
+             data-kunyomi="<%= kanji.kunyomi[1..-2] %>"
              data-stroke-count="<%= kanji.stroke_count %>"
              data-jlpt="<%= kanji.jlptLevel %>"
              data-url="<%= kanji_path(kanji) %>"
              data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
 
-          <div class="stars">★★★☆☆</div>
+          <div class="stars"><%= stars %></div>
           <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
           <div class="white-box-for">
             <div class="question-mark">?</div>
           </div>
         </div>
-        <% end %>
       <% end %>
+
       <% not_done = (
         (@n5_total - @n5_done)[..10] +
         (@n4_total - @n4_done)[..10] +
@@ -91,7 +97,16 @@
         (@n2_total - @n2_done)[..10] +
         (@n1_total - @n1_done)[..10]
         ) %>
-       <% (not_done).each_with_index do |kanji, index| %>
+      <% (not_done).each_with_index do |kanji, index| %>
+        <% stroke_count = kanji.stroke_count %>
+        <% stars = case stroke_count
+                   when 1..2 then "★☆☆☆☆"
+                   when 3..5 then "★★☆☆☆"
+                   when 6..8 then "★★★☆☆"
+                   when 9..12 then "★★★★☆"
+                   else "★★★★★"
+                   end %>
+
         <div class="card" data-kanji="<%= kanji.kanji %>"
              data-meaning="<%= kanji.meaning %>"
              data-onyomi="<%= kanji.onyomi %>"
@@ -101,15 +116,13 @@
              data-url="<%= kanji_path(kanji) %>"
              data-solved="<%= @puzzles.any? {|p| p.kanji == kanji} ? 1 : 0 %>">
 
-          <div class="stars">★★★☆☆</div>
+          <!-- Displaying dynamic stars -->
+          <div class="stars"><%= stars %></div>
           <div class="level level-<%= kanji.jlptLevel %>">N<%= kanji.jlptLevel %></div>
           <div class="white-box-for">
             <div class="question-mark">?</div>
           </div>
         </div>
-        <% if @puzzles.any? {|p| p.kanji == kanji} %>
-        <% end %>
       <% end %>
     </div>
   </div>
-</div>

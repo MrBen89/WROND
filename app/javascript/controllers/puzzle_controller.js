@@ -55,17 +55,21 @@ let seconds = 0;
 let minutes = 0;
 let seconds_absolute = 0;
 
-let timer = (() => {setInterval(() => {
-  document.getElementById('timerBox').innerHTML=
-  (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
-  seconds ++;
-  seconds_absolute ++;
-  if (seconds >= 60) {
-      minutes ++;
-      seconds = 0
-    }
-  }, 1000);
-})
+// let clock
+
+// let timer = (() => {
+//   clock = setInterval(() => {
+//     document.getElementById('timerBox').innerHTML=
+//     (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+//     seconds ++;
+//     seconds_absolute ++;
+//     if (seconds >= 60) {
+//         minutes ++;
+//         seconds = 0
+//       }
+//     }, 1000);
+// })
+
 
 // Connects to data-controller="puzzle"
 export default class extends Controller {
@@ -88,7 +92,17 @@ export default class extends Controller {
     let mode = "draw"
 
     document.querySelector(".startButton").remove()
-    timer()
+    let timer = 0;
+    timer = setInterval(() => {
+      document.getElementById('timerBox').innerHTML=
+      (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+      seconds ++;
+      seconds_absolute ++;
+      if (seconds >= 60) {
+          minutes ++;
+          seconds = 0
+        }
+      }, 1000);
     //current patern is the working array
     let current_pattern = []
     //puzzledata is the solution array
@@ -169,7 +183,8 @@ export default class extends Controller {
 
               //check for win
               if (checkArrays(current_pattern, puzzledata)){
-                  this.stop_puzzle(handleClick)
+                clearInterval(timer)
+                this.stop_puzzle(handleClick)
               }
 
             } else if (mouse_status == "right") {
@@ -188,7 +203,6 @@ export default class extends Controller {
           const handleClick = () => {
             event.button == 0 ? mouse_status = "left" : mouse_status = "right"
             if (mouse_status == "left"){
-              console.log("left")
               if (event.currentTarget.classList.contains("selected")){
                 mode = "erase"
               } else if (!event.currentTarget.classList.contains("selected")){
@@ -205,8 +219,6 @@ export default class extends Controller {
           }
 
           const handleRightClick = () => {
-            //console.log(mouse_status)
-            //console.log(event.currentTarget.classList)
             if (mouse_status == "right"){
               if (event.currentTarget.classList.contains("flagged")){
                 mode = "erase"
@@ -232,17 +244,41 @@ export default class extends Controller {
   }
 
   check_for_level_up() {
-    let xp = document.getElementById("xp_field").value
     let level = parseInt(document.getElementById("level_field").value)
-    console.log(document.getElementById("level_field").value)
+    let base_xp = parseInt(this.data.get("base_xp"))
     document.getElementById("level-span").innerText = level;
-    document.getElementById("level-up-span").innerText = Math.floor(xp / 100);
-    if (xp / 100 >= (level + 1)) {
-      document.getElementById("level_field").value = Math.floor(xp / 100);
-      console.log("levelup")
+    document.getElementById("level-up-span").innerText = level + 1;
+    if (base_xp + this.get_xp() >= (50 + (level * 50)) ) {
+      document.getElementById("level_field").value = level + 1;
       return true
     }
     return false
+  }
+
+  update_xp_bar () {
+    const xp_bar_level_element = document.getElementById("xp_bar_level");
+    const xp_bar_current_element = document.getElementById("xp_bar_current");
+    const xp_bar_level_next = document.getElementById("xp_bar_next");
+    const fillbar = document.getElementById("fillbar");
+    let level = parseInt(xp_bar_level_element.innerText)
+    let total_xp = parseInt(xp_bar_current_element.innerText) + this.get_xp();
+    let next_xp = parseInt(xp_bar_level_next.innerText)
+    console.log(total_xp)
+    console.log(next_xp)
+    if (total_xp >= next_xp){
+      total_xp -= next_xp
+      level += 1
+      next_xp = (50 + level * 50)
+    }
+    xp_bar_current_element.innerText = total_xp
+    xp_bar_level_next.innerText = next_xp
+    xp_bar_level_element.innerText = level
+    fillbar.style.width = `${100 - (total_xp / next_xp * 100)}%`
+  }
+
+  get_xp() {
+    const level = parseInt(document.getElementById("jlpt-level").innerText)
+    return 175 - (25 * level)
   }
 
   create_puzzle_record() {
@@ -250,11 +286,11 @@ export default class extends Controller {
     document.getElementById("puzzle_form").requestSubmit();
   }
   update_user_record() {
-    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 100
+    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + this.get_xp()
   }
 
   experience_roller() {
-    let target = 100;
+    let target = this.get_xp();
     let count = parseInt(document.getElementById("xp-value").innerText);
     let increment = 1;
     if (count < target) {
@@ -262,7 +298,7 @@ export default class extends Controller {
       document.getElementById("xp-value").innerText = `${count}`;
       setTimeout(() => {
         this.experience_roller()
-      }, 5);
+      }, 10);
     }
 
   }
@@ -311,22 +347,29 @@ export default class extends Controller {
         });
         document.querySelector('.highscores').classList.add("expanded");
         document.getElementById("next_link").classList.remove("hidden");
+        let unlockedKanjiLink = document.getElementById("unlocked_kanji_link");
+        if (unlockedKanjiLink) {
+        unlockedKanjiLink.classList.remove("hidden");
+      }
       });
       this.experience_roller()
+      this.update_xp_bar()
       if (this.check_for_level_up()) {
 
         setTimeout(() => {
           document.getElementById('level-up').classList.remove("hidden");
           setTimeout(() => {
             document.getElementById('level-up').classList.add("expanded");
+            document.getElementById("level_up_audio").play()
           },1)
 
           //document.getElementById('level-up-image').classList.remove("hidden");
         },1500)
       }
+      this.update_user_record();
+      this.create_puzzle_record();
 
     },1000)
-    this.update_user_record();
-    this.create_puzzle_record();
+
   };
 }

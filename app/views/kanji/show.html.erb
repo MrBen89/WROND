@@ -1,3 +1,11 @@
+<div data-controller="hint">
+    <div class="button_box d-flex justify-content-center">
+    <%= link_to "Back", kanji_index_path, class: "level-filter level-1 m-3 back" %>
+    <%= link_to "Another Puzzle?", kanji_path(@next_kanji), class: "hidden level-filter level-4 m-3 another", id: "next_link" %>
+    <%= link_to "Unlocked Kanji", flashcards_path, class: "hidden level-filter level-2 m-3 flashcards", id: "unlocked_kanji_link" %>
+</div>
+</div>
+
 <div class="container d-flex">
   <div>
     <div class="spacer"></div>
@@ -18,6 +26,7 @@
       data-puzzle-background_style="<%= @user_profile.background_style.name %>"
       data-puzzle-active_style="<%= @user_profile.active_style.name %>"
       data-puzzle-flagged_style="<%= @user_profile.flagged_style.name %>"
+      data-puzzle-base_xp="<%= @current_xp %>"
       >
       </div>
   </div>
@@ -26,9 +35,9 @@
     <div class="spacer"></div>
     <div class="kanji-data" id="kanji-data">
         <p><span id="kanji-display"><%= @kanji.kanji %></span></p>
-        <p><strong>Meaning:</strong> <span id="meaning"><%= @kanji.meaning %></span></p>
-        <p><strong>Onyomi:</strong> <span id="onyomi"><%= @kanji.onyomi%></span></p>
-        <p><strong>Kunyomi:</strong> <span id="kunyomi"><%= @kanji.kunyomi %></span></p>
+        <p><strong>Meaning:</strong> <span id="meaning"><%= @kanji.meaning[..2].join(" ").gsub("[", "").gsub("]", "") %></span></p>
+        <p><strong>Onyomi:</strong> <span id="onyomi"><%= @kanji.onyomi[1..-2]%></span></p>
+        <p><strong>Kunyomi:</strong> <span id="kunyomi"><%= @kanji.kunyomi[1..-2] %></span></p>
         <p><strong>JLPT Level:</strong> <span id="jlpt-level"><%= @kanji.jlptLevel %></span></p>
     </div>
     </div>
@@ -50,21 +59,29 @@
   <%= render "kanji/conclussion" %>
 </div>
 
-<div class="ask-wrondarou-btn hidden" data-controller="hint" data-target="hint">
-  <span>
-    Ask Wrondarou-sama for a hint?
+<div class="ask-wrondarou-btn hidden" data-target="hint">
+  <span id="click_me">
+    Click on Wrondarou-sama for a hint...
   </span>
 
-  <div class="hidden words-of-wisdom" data-hint-target="hint">
+  <div class="words-of-wisdom" data-hint-target="hint">
     <p><%= @content %></p>
   </div>
 </div>
 
-<div class="button_box">
-  <%= link_to "Back", kanji_index_path %>
-  <%= link_to "Another Puzzle?", kanji_path(@next_kanji), class: "hidden", id: "next_link" %>
+<div class="gif-container-bottom">
+  <%= image_tag asset_path("click-me-wrondarou.GIF"),
+                class: "game-gif-bottom",
+                data:{hint_target: "wrondarou", action: "click->hint#appear"}
+  %>
 </div>
 
-  <div class="gif-container-bottom" data-action="click->hint#toggle">
-    <%= image_tag "tanuki.gif", class: "game-gif-bottom" %>
-  </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  let gif = document.querySelector(".game-gif-bottom");
+
+  // Ensure the GIF is visible when the page loads
+  gif.style.display = "block";
+});
+</script>

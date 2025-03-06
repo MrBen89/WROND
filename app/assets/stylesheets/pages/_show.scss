@@ -1,4 +1,3 @@
-
 .puzzle-header {
   display: flex;
   //justify-content: center;
@@ -35,14 +34,6 @@
   transition: all .5s ease-in-out;
 }
 
-.right-side {
-  display: flex;
-  flex-direction: column; /* Ensure the children are stacked vertically */
-  justify-content: center; /* Center the children vertically */
-  align-items: center;
-  height: 100vh; /* Ensure the parent container takes up the full height */
-  width: 100%;
-}
 
 .kanji-data {
   transform-origin: left;
@@ -81,7 +72,7 @@
   font-size: 70px;
 }
 .spacer {
-  height: 125px;
+  height: 140px;
   width: 350px;
 }
 
@@ -198,7 +189,14 @@
   border: none;
   padding: 10px 20px;
   margin: 100px 200px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.startButton.swoosh {
+  transform: translateX(1000px) rotate(360deg); /* Adjust the values as needed */
+  opacity: 0;
 }
 
 .puzzle {
@@ -216,12 +214,77 @@
   transform: scaleX(1);
 }
 
-.main-container {
+@keyframes cloudFadeIn {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(1.2); /* Slightly larger, like it's materializing */
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+    transform: scale(1); /* Normal size */
+  }
+}
+
+.words-of-wisdom {
+  margin-top: 50px;
+  background: #ddd;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 3px 3px 0px #000;
+  border: none;
+  transition: transform 0.2s, background 0.2s;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;/* Rounded corners for a cloud-like shape */
+  // box-shadow:
+
+  //   20px -10px lightgrey, 40px -5px lightgrey,
+  //   -20px 10px lightgrey, 0px 10px lightgrey, 20px 10px lightgrey, 40px 10px lightgrey, 60px 10px lightgrey,
+  //   -25px 30px lightgrey, -5px 30px lightgrey, 15px 30px lightgrey, 35px 30px lightgrey, 55px 30px lightgrey, 75px 30px lightgrey,
+  //   0px 50px lightgrey, 20px 50px lightgrey, 40px 50px lightgrey;
+  image-rendering: pixelated;
+
+  opacity: 0; /* Start invisible */
+  filter: blur(10px);
+  transform: translate(-50%, -50%) scale(1.2);
+
+  position: absolute;
+  top: 70%;
+  left: 50%;
+}
+p.words-of-wisdom {
+  width: 100%;
+  height: 100%;
+}
+
+/* Apply animation when .show is added */
+.words-of-wisdom.show {
+  animation: cloudFadeIn 1.5s ease-out forwards, cloudShake 2s ease-in-out;
+}
+
+@keyframes cloudFadeIn {
+  0% {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes cloudShake {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  25% { transform: translate(calc(-50% - 2px), calc(-50% + 2px)) rotate(-2deg); }
+  50% { transform: translate(calc(-50% + 2px), calc(-50% - 2px)) rotate(2deg); }
+  75% { transform: translate(calc(-50% - 1px), calc(-50% + 1px)) rotate(-1deg); }
+  100% { transform: translate(-50%, -50%) rotate(0deg); }
 }
 
 .ask-wrondarou-btn {
@@ -233,6 +296,7 @@
   padding-right: 40px;
   height: 15%;
   margin: auto;
+  margin-top: 50px;
 }
 
 .gif-container-bottom {
@@ -253,11 +317,15 @@
   image-rendering: pixelated;
   position: absolute;
   animation: walkAnimation 10s linear infinite alternate;
+  display: block !important;
+  opacity: 1;
+  visibility: visible;
 }
 
 .button_box {
   width: 100%;
   text-align: center;
+  justify-content: space-between;
 }
 
 @keyframes walkAnimation {

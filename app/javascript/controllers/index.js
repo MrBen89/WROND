@@ -9,6 +9,7 @@ import P1PuzzleController from "controllers/p1_puzzle_controller"
 import P2PuzzleController from "controllers/p2_puzzle_controller"
 import WrondarouController from "controllers/wrondarou_controller"  // Import your ModeSelectorController
 import IndexSideMenuController from "controllers/index_side_menu_controller"
+import FadeController from "./fade_controller";
 
 eagerLoadControllersFrom("controllers", application)
 application.register("puzzle", PuzzleController)
@@ -19,3 +20,4 @@ application.register("p2_puzzle", P2PuzzleController)
 application.register("timer", TimerController)
 application.register("hint", WrondarouController)
 application.register("index-side-menu", IndexSideMenuController)
+application.register("fade", FadeController);

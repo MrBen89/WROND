@@ -1,0 +1,10 @@
+<div class="xpbar d-flex">
+  <div class="xp-value">
+    Lv<span id="xp_bar_level"><%= current_user.user_profile.level %></span> : <span id="xp_bar_current"><%= @current_xp %></span> / <span id="xp_bar_next"><%= @next_level %><span>
+  </div>
+  <div class="fill-container">
+    <div class="fillbar" id="fillbar" style="width: <%= @ratio %>%">
+    </div>
+  </div>
+</div>
+<%= audio_tag "levelup.mp3", id: "level_up_audio" %>

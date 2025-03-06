@@ -8,6 +8,14 @@
     data-p2_puzzle-p2data="<%= conflict.u2_state || [] %>"
     data-p2_puzzle-user1="<%= conflict.user1.id %>"
     data-p2_puzzle-user2="<%= conflict.user2.nil? ? 0 : conflict.user2.id %>"
-    data-p2_puzzle-status="<%=conflict.status%>">
+    data-p2_puzzle-status="<%=conflict.status%>"
+    data-p2_puzzle-u1_cell_style="<%= conflict.user1.user_profile.cell_style.name %>"
+    data-p2_puzzle-u1_background_style="<%= conflict.user1.user_profile.background_style.name %>"
+    data-p2_puzzle-u1_active_style="<%= conflict.user1.user_profile.active_style.name %>"
+    data-p2_puzzle-u1_flagged_style="<%= conflict.user1.user_profile.flagged_style.name %>"
+    data-p2_puzzle-u2_cell_style="<%= "#{conflict.user2.nil? ? 0 : conflict.user2.user_profile.cell_style.name}" %>"
+    data-p2_puzzle-u2_background_style="<%= conflict.user2.nil? ? 0 : conflict.user2.user_profile.background_style.name %>"
+    data-p2_puzzle-u2_active_style="<%= conflict.user2.nil? ? 0 : conflict.user2.user_profile.active_style.name %>"
+    data-p2_puzzle-u2_flagged_style="<%= conflict.user2.nil? ? 0 : conflict.user2.user_profile.flagged_style.name %>">
     </div>
   </div>

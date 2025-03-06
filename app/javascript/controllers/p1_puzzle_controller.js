@@ -84,9 +84,11 @@ export default class extends Controller {
     //rootDiv is where to mount the puzzle
     const rootDiv = this.p1RootDivTarget;
     let status = this.data.get("status")
+    let winner = this.data.get("winner")
     this.start_puzzle = this.start_puzzle.bind(this);
     this.stop_puzzle = this.stop_puzzle.bind(this);
     this.check_for_start = this.check_for_start.bind(this);
+    console.log(winner)
     if (status == "in_progress"){
       this.start_puzzle()
     } else if (status == "complete"){
@@ -130,9 +132,11 @@ export default class extends Controller {
   }
 
   start_puzzle() {
+    const user_id = document.getElementById("user_id").innerText
     const rootDiv = this.p1RootDivTarget
     let mouse_status = "up"
     let mode = "draw"
+    console.log(typeof user_id)
 
     if (document.querySelector(".p1startButton")) {document.querySelector(".p1startButton").remove()}
     // clearInterval(timer)
@@ -140,7 +144,7 @@ export default class extends Controller {
     //current pattern is the working array
     //puzzledata is the solution array
     const puzzledata = JSON.parse(this.data.get("variable"));
-    const user_id = document.getElementById("user_id").innerText
+
 
     let current_pattern = []
 
@@ -175,10 +179,10 @@ export default class extends Controller {
     let xValues = xWriter(puzzledata);
     let yValues = yWriter(puzzledata);
 
-    const bg_style = this.data.get("background_style").replace(" ", "_")
-    const cell_style = this.data.get("cell_style").replace(" ", "_")
-    const active_style = this.data.get("active_style").replace(" ", "_")
-    const flagged_style = this.data.get("flagged_style").replace(" ", "_")
+    const bg_style = this.data.get(`u${player}_background_style`).replace(" ", "_")
+    const cell_style = this.data.get(`u${player}_cell_style`).replace(" ", "_")
+    const active_style = this.data.get(`u${player}_active_style`).replace(" ", "_")
+    const flagged_style = this.data.get(`u${player}_flagged_style`).replace(" ", "_")
 
     rootDiv.classList.add(bg_style)
 
@@ -331,29 +335,41 @@ export default class extends Controller {
   };
 
   check_for_level_up() {
-    let xp = document.getElementById("xp_field").value
     let level = parseInt(document.getElementById("level_field").value)
+    let base_xp = parseInt(this.data.get("base_xp"))
     document.getElementById("level-span").innerText = level;
-    document.getElementById("level-up-span").innerText = Math.floor(xp / 100);
-    if (xp / 100 >= (level + 1)) {
-      document.getElementById("level_field").value = Math.floor(xp / 100);
-    return true
+    document.getElementById("level-up-span").innerText = level + 1;
+    if (base_xp + this.get_xp() >= (50 + level * 50) ) {
+      document.getElementById("level_field").value = level + 1;
+      return true
     }
     return false
   }
 
   update_conflict() {
+    const user_id = document.getElementById("user_id")
+    console.log(user_id)
+    console.log(user_id.innerText)
     document.getElementById("time_field").value = parseInt(document.getElementById("seconds_abs").innerText);
     document.getElementById("status_field").value = "complete";
-    document.getElementById("winner_field").value = user_id;
+    document.getElementById("winner_field").value = user_id.innerText;
     document.getElementById("conflict_form").requestSubmit();
   }
   update_user_record() {
-    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 100
+    document.getElementById("xp_field").value = parseInt(document.getElementById("xp_field").value) + 50
+  }
+
+  get_xp() {
+    let winner = this.data.get("winner")
+    if (winner == user_id){
+      return 150;
+    } else {
+      return 50;
+    }
   }
 
   experience_roller() {
-    let target = 100;
+    let target = this.get_xp();
     let count = parseInt(document.getElementById("xp-value").innerText);
     let increment = 1;
     if (count < target) {
@@ -361,50 +377,114 @@ export default class extends Controller {
       document.getElementById("xp-value").innerText = `${count}`;
       setTimeout(() => {
         this.experience_roller()
-      }, 5);
+      }, 10);
     }
 
   };
 
+  update_xp_bar () {
+    const xp_bar_level_element = document.getElementById("xp_bar_level");
+    const xp_bar_current_element = document.getElementById("xp_bar_current");
+    const xp_bar_level_next = document.getElementById("xp_bar_next");
+    const fillbar = document.getElementById("fillbar");
+    let level = parseInt(xp_bar_level_element.innerText)
+    let total_xp = parseInt(xp_bar_current_element.innerText) + this.get_xp();
+    let next_xp = parseInt(xp_bar_level_next.innerText)
+    if (total_xp > next_xp){
+      total_xp -= next_xp
+      level += 1
+      next_xp = (50 + level * 50)
+    }
+    xp_bar_current_element.innerText = total_xp
+    xp_bar_level_next.innerText = next_xp
+    xp_bar_level_element.innerText = level
+    fillbar.style.width = `${100 - (total_xp / next_xp * 100)}%`
+  }
+
   stop_puzzle(handleClick) {
-    let minutes = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) / 60)
-    let seconds = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) % 60)
-    document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
-    let block = document.querySelector(".cornerBlock");
-    block.classList.add("cleared");
-    let cells = document.getElementsByClassName("cell");
-    for (const cell of cells) {
-      cell.replaceWith(cell.cloneNode(true))
-    }
-    let guides = document.getElementsByClassName("xGuide");
-    for (const guide of guides) {
-      guide.classList.add("cleared")
-    }
-    guides = document.getElementsByClassName("yGuide");
-    for (const guide of guides) {
-      guide.classList.add("cleared")
-    }
+    console.log(user_id.value)
+    // let minutes = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) / 60)
+    // let seconds = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) % 60)
+    // document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
+    // let block = document.querySelector(".cornerBlock");
+    // block.classList.add("cleared");
+    // let cells = document.getElementsByClassName("cell");
+    // for (const cell of cells) {
+    //   cell.replaceWith(cell.cloneNode(true))
+    // }
+    // let guides = document.getElementsByClassName("xGuide");
+    // for (const guide of guides) {
+    //   guide.classList.add("cleared")
+    // }
+    // guides = document.getElementsByClassName("yGuide");
+    // for (const guide of guides) {
+    //   guide.classList.add("cleared")
+    // }
+    // setTimeout(() => {
+    //   let cells = document.getElementsByClassName("cell");
+    //   for (const cell of cells) {
+    //     cell.classList.remove("flagged")
+    //     cell.classList.add("finished")
+    //   }
+    //   for (const guide of guides) {
+    //     guide.innerText = ""
+    //   }
+    //   guides = document.getElementsByClassName("xGuide");
+    //   for (const guide of guides) {
+    //     guide.innerText = ""
+    //   }
+    // },1);
+    let winner = this.data.get("winner")
     setTimeout(() => {
-      let cells = document.getElementsByClassName("cell");
-      for (const cell of cells) {
-        cell.classList.remove("flagged")
-        cell.classList.add("finished")
+      let conclussionModal = document.getElementById('conclussionModal')
+      if (winner == user_id) {
+        conclussionModal.classList.add("win")
+      } else {
+        conclussionModal.classList.add("lose")
       }
-      for (const guide of guides) {
-        guide.innerText = ""
+      conclussionModal.classList.remove("hidden");
+
+      if (this.check_for_level_up) {
+        setTimeout(() => {
+          document.getElementById('level-up').classList.remove("hidden");
+          setTimeout(() => {
+            document.getElementById('level-up').classList.add("expanded");
+            document.getElementById("level_up_audio").play()
+          },1)
+
+          //document.getElementById('level-up-image').classList.remove("hidden");
+        },1500)
       }
-      guides = document.getElementsByClassName("xGuide");
-      for (const guide of guides) {
-        guide.innerText = ""
-      }
-    },1);
+      this.update_xp_bar()
+      this.experience_roller();
+      this.update_user_record();
+      this.update_conflict(user_id);
+      for(let i=0; i<100; i++)
+        {
+            window.clearInterval(i);
+        }
+    },1000)
+    let conclussionModal = document.getElementById('conclussionModal')
+    if (winner == user_id) {
+      conclussionModal.classList.add("win")
+    } else {
+      conclussionModal.classList.add("lose")
+    }
+    conclussionModal.classList.remove("hidden");
+  };
+
+  puzzle_ended() {
+    let winner = this.data.get("winner")
+
     setTimeout(() => {
-      document.getElementById('conclussionModal').classList.remove("hidden");
-      document.getElementById('popup-button').addEventListener("click", () => {
-        document.getElementById('conclussionModal').style.display = "none";
-        // document.getElementById('kanji-data').classList.add("expanded");
-        // document.getElementById('highscores').classList.add("expanded");
-      });
+      let conclussionModal = document.getElementById('conclussionModal')
+      if (winner == user_id.innerText) {
+        conclussionModal.classList.add("win")
+      } else {
+        conclussionModal.classList.add("lose")
+      }
+      conclussionModal.classList.remove("hidden");
+
       if (this.check_for_level_up) {
         setTimeout(() => {
           document.getElementById('level-up').classList.remove("hidden");
@@ -415,19 +495,6 @@ export default class extends Controller {
           //document.getElementById('level-up-image').classList.remove("hidden");
         },1500)
       }
-      this.experience_roller();
-      this.check_for_level_up();
-      this.update_user_record();
-      this.update_conflict();
-      for(i=0; i<100; i++)
-        {
-            window.clearInterval(i);
-        }
-    },1000)
-
-  };
-
-  puzzle_ended() {
     const p1data = JSON.parse(this.data.get("p1data"));
     const rootDiv = this.p1RootDivTarget
     for (let i = 0; i < 16; i++){
@@ -454,5 +521,5 @@ export default class extends Controller {
         row.appendChild(box);
       }
     }
-  }
+  })}
 }
