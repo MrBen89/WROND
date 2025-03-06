@@ -88,7 +88,6 @@ export default class extends Controller {
     this.start_puzzle = this.start_puzzle.bind(this);
     this.stop_puzzle = this.stop_puzzle.bind(this);
     this.check_for_start = this.check_for_start.bind(this);
-    console.log(winner)
     if (status == "in_progress"){
       this.start_puzzle()
     } else if (status == "complete"){
@@ -105,7 +104,6 @@ export default class extends Controller {
   }
 
   check_for_start(){
-    console.log(player)
     if ((this.data.get("status") == "p2ready" && player == 1) || (this.data.get("status") == "p1ready" && player == 2)){
       this.start_puzzle()
     } else if (player == 1){
@@ -154,7 +152,6 @@ export default class extends Controller {
     }
 
     if (current_pattern.length == 0){
-      console.log("reset array");
       current_pattern = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -294,7 +291,6 @@ export default class extends Controller {
               }
             }
               //check for win
-              console.log(current_pattern.map(x =>  x.map(y => y == "2" ? "0" : y)))
               if (checkArrays(current_pattern.map(x =>  x.map(y => y == "2" ? "0" : y)), puzzledata)){
                 this.stop_puzzle(handleClick)
             }
@@ -336,11 +332,11 @@ export default class extends Controller {
   check_for_level_up() {
     let level = parseInt(document.getElementById("level_field").value)
     let base_xp = parseInt(this.data.get("base_xp"))
+    console.log(level)
+    console.log(this.data.get("base_xp"))
     document.getElementById("level-span").innerText = level;
     document.getElementById("level-up-span").innerText = level + 1;
-    console.log(parseInt(base_xp))
-    console.log(this.get_xp)
-    if (parseInt(base_xp) + this.get_xp() >= (50 + level * 50) ) {
+    if (base_xp + this.get_xp() >= (50 + level * 50) ) {
       document.getElementById("level_field").value = level + 1;
       return true
     }
@@ -349,8 +345,6 @@ export default class extends Controller {
 
   update_conflict() {
     const user_id = document.getElementById("user_id")
-    console.log(user_id)
-    console.log(user_id.innerText)
     document.getElementById("time_field").value = parseInt(document.getElementById("seconds_abs").innerText);
     document.getElementById("status_field").value = "complete";
     document.getElementById("winner_field").value = user_id.innerText;
@@ -362,8 +356,7 @@ export default class extends Controller {
 
   get_xp() {
     let winner = this.data.get("winner")
-    console.log(winner)
-    console.log(user_id)
+    const user_id = document.getElementById("user_id")
     if (winner == user_id.innerText){
       return 150;
     } else {
@@ -422,7 +415,7 @@ export default class extends Controller {
     let level = parseInt(xp_bar_level_element.innerText)
     let total_xp = parseInt(xp_bar_current_element.innerText) + this.get_xp();
     let next_xp = parseInt(xp_bar_level_next.innerText)
-    if (total_xp > next_xp){
+    if (total_xp >= next_xp){
       total_xp -= next_xp
       level += 1
       next_xp = (50 + level * 50)
@@ -468,6 +461,8 @@ export default class extends Controller {
     let winner = this.data.get("winner")
     setTimeout(() => {
       let conclussionModal = document.getElementById('conclussionModal')
+      let con_con = document.querySelector(".conflicts-container")
+      con_con.classList.add("hidden")
       conclussionModal.classList.add("win")
       //this.draw_answer()
       conclussionModal.classList.remove("hidden");
@@ -483,9 +478,9 @@ export default class extends Controller {
           //document.getElementById('level-up-image').classList.remove("hidden");
         },1500)
       }
-      this.update_xp_bar()
-      this.experience_roller();
-      this.update_user_record();
+      // this.update_xp_bar()
+      // this.experience_roller();
+      // this.update_user_record();
       this.update_conflict();
       for(let i=0; i<100; i++)
         {
@@ -506,6 +501,8 @@ export default class extends Controller {
         conclussionModal.classList.add("lose")
       }
       conclussionModal.classList.remove("hidden");
+      let con_con = document.querySelector(".conflicts-container")
+      con_con.classList.add("hidden")
       if (this.check_for_level_up()) {
         setTimeout(() => {
           document.getElementById('level-up').classList.remove("hidden");

@@ -66,6 +66,12 @@ class ConflictsController < ApplicationController
     @user_profile = UserProfile.find(current_user.user_profile.id)
     @user = current_user
     authorize @user_profile
+    if edit_conflict_params.has_key?(:total_xp)
+      userprof = UserProfile.find(current_user.user_profile.id)
+      userprof.total_xp = edit_conflict_params[:total_xp]
+      userprof.level = edit_conflict_params[:level]
+      userprof.save
+    end
     if User.find(edit_conflict_params[:player]) == @conflict.user1
       @conflict.u1_state = edit_conflict_params[:state]
     elsif User.find(edit_conflict_params[:player]) == @conflict.user2
