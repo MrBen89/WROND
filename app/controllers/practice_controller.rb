@@ -9,7 +9,7 @@ class PracticeController < ApplicationController
       model: "gpt-4o-mini",
       messages: [{
         role: "system",
-        content: "Make an example story using #{@unlocked_kanji} in Japanese in N5 level.\nOnly give the example story and use all the kanji."
+        content: "Make an example story using #{@unlocked_kanji} in Japanese in N5 level.\nOnly give the example story and use all the kanji and make it short"
       }]
     })
     @content = chatgpt_response["choices"][0]["message"]["content"]
