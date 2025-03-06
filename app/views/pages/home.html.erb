@@ -74,6 +74,7 @@
   <%= image_tag "tanuki.gif", class: "game-gif" %>
 </div>
 
+<% if user_signed_in? %>
 <div class="stats-panel">
   <h3>Total XP: <span class="stat-number"><%= @user_profile.total_xp %></span></h3>
   <h3>Level: <span class="stat-number"><%= @user_profile.level %></span></h3>
@@ -93,6 +94,8 @@
 
   <h4>Kanji Completed: <span class="stat-number"><%= @unlocked_kanji.count %></span> / <%= Kanji.count %></h4>
 </div>
+
+<% end %>
 
 <div class="tutorial-container">
   <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
