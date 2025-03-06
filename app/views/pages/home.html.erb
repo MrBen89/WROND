@@ -1,35 +1,35 @@
 <div class="kanji-rain-container"></div>
 
+<div class="d-flex gap-4 justify-content-center mt-4"data-controller="mode-selector">
+  <div class="left-game-container">
+    <div class="mode-selection">
+      <form action="/kanji/index" method="get">
+        <div class="mode-options">
+          <button
+            type="button"
+            class="mode-box"
+            data-action="click->mode-selector#setMode"
+            data-mode="kanji"
+            data-target="mode-selector.button"
+          >
+            <div class="white-box" data-mode="kanji">
+              <span class="kanji-text" data-mode="kanji">漢字</span>
+            </div>
+            <p class="mode-label">KANJI MODE</p>
+          </button>
 
-<div class="game-container" data-controller="mode-selector">
-  <div class="mode-selection">
-    <form action="/kanji/index" method="get">
-      <div class="mode-options">
-        <button
-          type="button"
-          class="mode-box"
-          data-action="click->mode-selector#setMode"
-          data-mode="kanji"
-          data-target="mode-selector.button"
-        >
-          <div class="white-box" data-mode="kanji">
-            <span class="kanji-text" data-mode="kanji">漢字</span>
-          </div>
-          <p class="mode-label">KANJI MODE</p>
-        </button>
-
-        <button
-          type="button"
-          class="mode-box"
-          data-action="click->mode-selector#setMode"
-          data-mode="story"
-          data-target="mode-selector.button"
-        >
-          <div class="white-box" data-mode="story">
-            <span class="kanji-text" data-mode="story">物語</span>
-          </div>
-          <p class="mode-label">STORY MODE</p>
-        </button>
+          <button
+            type="button"
+            class="mode-box"
+            data-action="click->mode-selector#setMode"
+            data-mode="story"
+            data-target="mode-selector.button"
+          >
+            <div class="white-box" data-mode="story">
+              <span class="kanji-text" data-mode="story">物語</span>
+            </div>
+            <p class="mode-label">STORY MODE</p>
+          </button>
 
         <button
           type="button"
@@ -38,81 +38,68 @@
           data-mode="battle"
           data-target="mode-selector.button"
         >
-          <div class="white-box" data-mode="battle">
-            <span class="kanji-text" data-mode="battle">競争</span>
-          </div>
-          <p class="mode-label">BATTLE MODE</p>
-        </button>
+            <div class="white-box" data-mode="battle">
+              <span class="kanji-text" data-mode="battle">競争</span>
+            </div>
+            <p class="mode-label">BATTLE MODE</p>
+          </button>
+            </div>
+          </form>
 
-        <button
-          type="button"
-          class="mode-box"
-          data-action="click->mode-selector#setMode"
-          data-mode="daily"
-          data-target="mode-selector.button"
-        >
-          <div class="white-box" data-mode="daily">
-            <span class="kanji-text" data-mode="daily">毎日</span>
-          </div>
-          <p class="mode-label">DAILY CHALLENGE</p>
-        </button>
+          <p class="mode-description" id="mode-description" data-target="mode-selector.modeDescription">Choose a mode!</p>
+
+          <form action="/" method="get">
+            <input type="hidden" name="mode" id="selected-mode" data-target="mode-selector.selectedMode" value="">
+            <button type="submit" class="play-button" id="play-btn" data-target="mode-selector.playButton" disabled>Play!</button>
+          </form>
+    </div>
+  </div>
+
+
+  <div class="right-game-container">
+    <% if user_signed_in? %>
+      <div class="stats-panel">
+        <h3>Total XP: <span class="stat-number"><%= @user_profile.total_xp %></span></h3>
+        <h3>Level: <span class="stat-number"><%= @user_profile.level %></span></h3>
+
+        <h4>Last 5 completed Kanji:</h4>
+        <ul>
+          <% @last_five_kanji.each do |kanji| %>
+            <li>
+              <a href="<%= flashcards_path(kanji.id) %>" class="kanji-link">
+                <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
+                  <%= kanji.kanji %>
+                </span>
+              </a>
+            </li>
+          <% end %>
+        </ul>
+
+        <h4>Kanji Completed: <span class="stat-number"><%= @unlocked_kanji.count %></span> / <%= Kanji.count %></h4>
       </div>
-    </form>
+    <% end %>
 
-    <p class="mode-description" id="mode-description" data-target="mode-selector.modeDescription">
-      Choose a mode!
-    </p>
 
-    <form action="/" method="get">
-      <input type="hidden" name="mode" id="selected-mode" data-target="mode-selector.selectedMode" value="">
-      <button type="submit" class="play-button" id="play-btn" data-target="mode-selector.playButton" disabled>Play!</button>
+    <form action="/kanji/index" method="get">
+        <div class="d-flex justify-content-center align-items-center flex-column gap-4">
+          <button
+            type="button"
+            class="mode-box"
+            data-action="click->mode-selector#setMode"
+            data-mode="daily"
+            data-target="mode-selector.button"
+          >
+            <div class="white-box" data-mode="daily">
+              <span class="kanji-text" data-mode="daily">毎日</span>
+            </div>
+            <p class="mode-label">DAILY CHALLENGE</p>
+          </button>
+
+        </div>
     </form>
   </div>
 </div>
 
 <div class="gif-container">
   <%= image_tag "tanuki.gif", class: "game-gif" %>
-</div>
-
-<% if user_signed_in? %>
-<div class="stats-panel">
-  <h3>Total XP: <span class="stat-number"><%= @user_profile.total_xp %></span></h3>
-  <h3>Level: <span class="stat-number"><%= @user_profile.level %></span></h3>
-
-  <h4>Last 5 completed Kanji:</h4>
-  <ul>
-    <% @last_five_kanji.each do |kanji| %>
-      <li>
-        <a href="<%= flashcards_path(kanji.id) %>" class="kanji-link">
-          <span class="kanji-character" data-kanji-target="kanji" data-kanji="<%= kanji %>">
-            <%= kanji.kanji %>
-          </span>
-        </a>
-      </li>
-    <% end %>
-  </ul>
-
-  <h4>Kanji Completed: <span class="stat-number"><%= @unlocked_kanji.count %></span> / <%= Kanji.count %></h4>
-</div>
-
-<% end %>
-
-<div class="tutorial-container">
-  <button type="button" class="tutorial-button" data-action="click->mode-selector#toggleTutorial">
-    Tutorial
-  </button>
-</div>
-
-<!-- Overlay to darken background -->
-<div class="overlay" id="overlay" data-action="click->mode-selector#toggleTutorial"></div>
-
-<!-- Tutorial Content -->
-<div class="tutorial-content" id="tutorial-content">
-  <div class="gif-container">
-    <h2>Kanji Mode:</h2>
-
-
-    <h2>Practice Mode:</h2>
-
-  </div>
 </div>

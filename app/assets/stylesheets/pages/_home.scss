@@ -1,3 +1,28 @@
+
+.left-game-container {
+  flex: 1;
+  max-width: 38rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.right-game-container {
+  flex: 1;
+  max-width: 38rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;;
+  gap: 2rem;
+}
+
+.stats-panel {
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+
+
 .white-box {
   background: #fff;
   border-radius: 8px;
@@ -11,8 +36,8 @@
 .game-container {
   margin-top: 110px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
   flex-direction: column;
   transform: none;
   gap: 20px;
@@ -33,14 +58,14 @@ font-family: 'Press Start 2P';
 }
 
 #mode-description {
+  max-width: 38rem;
   margin-top: 100px;
 }
 
 .mode-options {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
 }
 
 .mode-box {
@@ -168,7 +193,6 @@ button {
   justify-content: center;
   width: 540px;
   height: 300px;
-  position: absolute; /* Position it absolutely */
   left: 50px;
 }
 
@@ -223,49 +247,49 @@ button {
   text-decoration: none; /* Add underline on hover */
 }
 /* Tutorial Button in Top Right */
-.tutorial-container {
-  position: fixed;
-  top: 80%;
-  right: 10px;
-  z-index: 1000;
-  height: 30%;
-  max-height: 150px;
-  min-height: 100px;
-}
+// .tutorial-container {
+//   position: fixed;
+//   top: 80%;
+//   right: 10px;
+//   z-index: 1000;
+//   height: 30%;
+//   max-height: 150px;
+//   min-height: 100px;
+// }
 
-.tutorial-button {
-  background: #ccc;
-  padding: 10px 20px;
-  cursor: pointer;
-  border: none;
-  text-align: center;
-  transition: transform 0.2s, background 0.2s;
-}
+// .tutorial-button {
+//   background: #ccc;
+//   padding: 10px 20px;
+//   cursor: pointer;
+//   border: none;
+//   text-align: center;
+//   transition: transform 0.2s, background 0.2s;
+// }
 
-.tutorial-button:hover {
-  background: #bbb;
-  transform: scale(1.05);
-}
+// .tutorial-button:hover {
+//   background: #bbb;
+//   transform: scale(1.05);
+// }
 
-/* Hidden Tutorial Content (Initially Hidden) */
-.tutorial-content {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 50%;
-  height: 100%;
-  background: black;
-  box-shadow: -3px 0px 15px rgba(0, 0, 0, 0.3);
-  z-index: 999;
-  padding: 20px;
-  display: none; /* Initially hidden */
-  transform: translateX(100%);
-  transition: transform 0.3s ease-in-out;
-}
+// /* Hidden Tutorial Content (Initially Hidden) */
+// .tutorial-content {
+//   position: fixed;
+//   top: 0;
+//   right: 0;
+//   width: 50%;
+//   height: 100%;
+//   background: black;
+//   box-shadow: -3px 0px 15px rgba(0, 0, 0, 0.3);
+//   z-index: 999;
+//   padding: 20px;
+//   display: none; /* Initially hidden */
+//   transform: translateX(100%);
+//   transition: transform 0.3s ease-in-out;
+// }
 
-.tutorial-content.active {
-  transform: translateX(0); /* Slide in */
-}
+// .tutorial-content.active {
+//   transform: translateX(0); /* Slide in */
+// }
 
 // /* GIF Containers */
 // .gif-container {
