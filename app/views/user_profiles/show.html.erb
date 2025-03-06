@@ -2,12 +2,12 @@
 <div class="profile-container" data-outline-color="<%= outline_color_for_level(@user_profile.level) %>">
   <div class="profile-pic">
     <% if @user_profile.profile_pic.present? %>
-    <img src="<%= @user_profile.profile_pic %>" alt="<%= @user_profile.username %>'s Profile Pic">
+      <img src="<%= @user_profile.profile_pic %>" alt="<%= @user_profile.username %>'s Profile Pic">
     <% else %>
       <%= image_tag("WROND.png") %>
     <% end %>
   </div>
-  <h1 font="Chicago"><%= @user_profile.username %></h1>
+  <h1 class="font-chicago"><%= @user_profile.username %></h1>
   <p><strong>Tagline:</strong> <%= @user_profile.tagline || "No tagline set" %></p>
   <p><strong>Bio:</strong> <%= @user_profile.bio || "No bio available" %></p>
   <p><strong>Level:</strong> <%= @user_profile.level %></p>
@@ -15,117 +15,127 @@
 
   <hr class="divider">
 
-  <div class="upgrades">
-    <h2><%=  @user_profile.username %>'s unlocks</h2>
-    <% user_profile_color_options.each do |color, level| %>
-      <% if upgrade_unlocked?(@user_profile.level, level) %>
-        <div class="upgrade selectable" data-color="<%= color %>">
-          <%= color.capitalize %>
-        </div>
-      <% else %>
-        <div class="upgrade locked">
-          <%= color.capitalize %>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
   <div class="edit-button">
     <%= link_to "Edit Profile", edit_user_profile_path(@user_profile), class: "btn btn-primary" %>
   </div>
 </div>
 
+<!-- Bootstrap Tabs -->
+<div class="upgrades-container mt-4">
+  <ul class="nav nav-tabs" id="upgradeTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="cell-tab" data-bs-toggle="tab" href="#cell" role="tab" aria-controls="cell" aria-selected="true">Background Colors</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="active-tab" data-bs-toggle="tab" href="#active" role="tab" aria-controls="active" aria-selected="false">Selected Square Colors</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="flagged-tab" data-bs-toggle="tab" href="#flagged" role="tab" aria-controls="flagged" aria-selected="false">Flagged Square Colors</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="background-tab" data-bs-toggle="tab" href="#background" role="tab" aria-controls="background" aria-selected="false">Backgrounds</a>
+    </li>
+  </ul>
 
-  <div class="upgrades-container d-flex flex-column" >
-    <h2>Background Colors</h2>
-     <hr class="divider">
-     <div class="upgrades-box d-flex">
-      <% @upgrades.where(upgrade_type: "cell").each do |upgrade| %>
-        <% if @user_profile.level.to_i >= upgrade.level.to_i %>
-        <%= button_to user_profile_path(@user_profile), :method=> :patch, params: { upgrade: upgrade }, remote: true do %>
-          <div class="upgradeCard selectable <%= "selected" if @user_profile.cell_style == upgrade%>">
-            <h2><%= upgrade.name %></h2>
-            <hr class="divider">
-            <p> <%= upgrade.description %></p>
-          </div>
-        <% end %>
-        <% else %>
-          <div class="upgradeCard locked">
-            <h2><%= upgrade.name %></h2>
-            <hr class="divider">
-            <p> <%= upgrade.description %></p>
-            <hr class="divider">
-            <p class="unlock"> Unlocked at Level <%= upgrade.level %>
-          </div>
-        <% end %>
-      <% end %>
-    </div>
-    <h2>Selected Square Colors</h2>
-     <hr class="divider">
-     <div class="upgrades-box d-flex">
-      <% @upgrades.where(upgrade_type: "active").each do |upgrade| %>
-        <% if @user_profile.level.to_i >= upgrade.level.to_i %>
-        <%= button_to user_profile_path(@user_profile), :method=> :patch, params: { upgrade: upgrade }, remote: true do %>
-          <div class="upgradeCard selectable  <%= "selected" if @user_profile.active_style == upgrade%>">
-            <h2><%= upgrade.name %></h2>
-            <hr class="divider">
-            <p> <%= upgrade.description %></p>
-          </div>
+  <div class="tab-content mt-4" id="upgradeTabContent">
+    <!-- Background Colors Tab -->
+    <div class="tab-pane fade show active" id="cell" role="tabpanel" aria-labelledby="cell-tab">
+      <div class="upgrades-box d-flex">
+        <% @upgrades.where(upgrade_type: "cell").each do |upgrade| %>
+          <% if @user_profile.level.to_i >= upgrade.level.to_i %>
+            <%= button_to user_profile_path(@user_profile), method: :patch, params: { upgrade: upgrade }, remote: true do %>
+              <div class="upgradeCard selectable <%= "selected" if @user_profile.cell_style == upgrade %>">
+                <h2><%= upgrade.name %></h2>
+                <hr class="divider">
+                <p><%= upgrade.description %></p>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="upgradeCard locked">
+              <h2><%= upgrade.name %></h2>
+              <hr class="divider">
+              <p><%= upgrade.description %></p>
+              <hr class="divider">
+              <p class="unlock">Unlocked at Level <%= upgrade.level %></p>
+            </div>
           <% end %>
-        <% else %>
-          <div class="upgradeCard locked">
-            <h2><%= upgrade.name %></h2>
-            <hr class="divider">
-            <p> <%= upgrade.description %></p>
-            <hr class="divider">
-            <p class="unlock"> Unlocked at Level <%= upgrade.level %>
-          </div>
         <% end %>
-      <% end %>
+      </div>
     </div>
-    <h2>Flagged Square Colors</h2>
-     <hr class="divider">
-     <div class="upgrades-box d-flex">
-      <% @upgrades.where(upgrade_type: "flagged").each do |upgrade| %>
-        <% if @user_profile.level.to_i >= upgrade.level.to_i %>
-        <%= button_to user_profile_path(@user_profile), :method=> :patch, params: { upgrade: upgrade }, remote: true do %>
-          <div class="upgradeCard selectable  <%= "selected" if @user_profile.flagged_style == upgrade%>">
-            <h2><%= upgrade.name %></h2>
-            <hr class="divider">
-            <p> <%= upgrade.description %></p>
-          </div>
+
+    <!-- Selected Square Colors Tab -->
+    <div class="tab-pane fade" id="active" role="tabpanel" aria-labelledby="active-tab">
+      <div class="upgrades-box d-flex">
+        <% @upgrades.where(upgrade_type: "active").each do |upgrade| %>
+          <% if @user_profile.level.to_i >= upgrade.level.to_i %>
+            <%= button_to user_profile_path(@user_profile), method: :patch, params: { upgrade: upgrade }, remote: true do %>
+              <div class="upgradeCard selectable <%= "selected" if @user_profile.active_style == upgrade %>">
+                <h2><%= upgrade.name %></h2>
+                <hr class="divider">
+                <p><%= upgrade.description %></p>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="upgradeCard locked">
+              <h2><%= upgrade.name %></h2>
+              <hr class="divider">
+              <p><%= upgrade.description %></p>
+              <hr class="divider">
+              <p class="unlock">Unlocked at Level <%= upgrade.level %></p>
+            </div>
           <% end %>
-        <% else %>
-          <div class="upgradeCard locked">
-            <h2><%= upgrade.name %></h2>
-            <hr class="divider">
-            <p> <%= upgrade.description %></p>
-            <hr class="divider">
-            <p class="unlock"> Unlocked at Level <%= upgrade.level %>
-          </div>
         <% end %>
-      <% end %>
+      </div>
     </div>
-    <h2>Backgrounds</h2>
-     <hr class="divider">
-     <div class="upgrades-box d-flex">
-      <% @upgrades.where(upgrade_type: "background").each do |upgrade| %>
-        <% if @user_profile.level.to_i >= upgrade.level.to_i %>
-        <%= button_to user_profile_path(@user_profile), :method=> :patch, params: { upgrade: upgrade }, remote: true do %>
-          <div class="upgradeCard selectable  <%= "selected" if @user_profile.background_style == upgrade%>">
-            <h2><%= upgrade.name %></h2>
-            <hr class="divider">
-            <p> <%= upgrade.description %></p>
-          </div>
+
+    <!-- Flagged Square Colors Tab -->
+    <div class="tab-pane fade" id="flagged" role="tabpanel" aria-labelledby="flagged-tab">
+      <div class="upgrades-box d-flex">
+        <% @upgrades.where(upgrade_type: "flagged").each do |upgrade| %>
+          <% if @user_profile.level.to_i >= upgrade.level.to_i %>
+            <%= button_to user_profile_path(@user_profile), method: :patch, params: { upgrade: upgrade }, remote: true do %>
+              <div class="upgradeCard selectable <%= "selected" if @user_profile.flagged_style == upgrade %>">
+                <h2><%= upgrade.name %></h2>
+                <hr class="divider">
+                <p><%= upgrade.description %></p>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="upgradeCard locked">
+              <h2><%= upgrade.name %></h2>
+              <hr class="divider">
+              <p><%= upgrade.description %></p>
+              <hr class="divider">
+              <p class="unlock">Unlocked at Level <%= upgrade.level %></p>
+            </div>
           <% end %>
-        <% else %>
-          <div class="upgradeCard locked">
-            <h2><%= upgrade.name %></h2>
-            <hr class="divider">
-            <p> <%= upgrade.description %></p>
-            <hr class="divider">
-            <p class="unlock"> Unlocked at Level <%= upgrade.level %>
-          </div>
         <% end %>
-      <% end %>
+      </div>
+    </div>
+
+    <!-- Backgrounds Tab -->
+    <div class="tab-pane fade" id="background" role="tabpanel" aria-labelledby="background-tab">
+      <div class="upgrades-box d-flex">
+        <% @upgrades.where(upgrade_type: "background").each do |upgrade| %>
+          <% if @user_profile.level.to_i >= upgrade.level.to_i %>
+            <%= button_to user_profile_path(@user_profile), method: :patch, params: { upgrade: upgrade }, remote: true do %>
+              <div class="upgradeCard selectable <%= "selected" if @user_profile.background_style == upgrade %>">
+                <h2><%= upgrade.name %></h2>
+                <hr class="divider">
+                <p><%= upgrade.description %></p>
+              </div>
+            <% end %>
+          <% else %>
+            <div class="upgradeCard locked">
+              <h2><%= upgrade.name %></h2>
+              <hr class="divider">
+              <p><%= upgrade.description %></p>
+              <hr class="divider">
+              <p class="unlock">Unlocked at Level <%= upgrade.level %></p>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
+</div>
