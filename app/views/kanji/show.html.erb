@@ -1,8 +1,9 @@
 <div data-controller="hint">
-  <div class="button_box d-flex">
+    <div class="button_box d-flex justify-content-center">
     <%= link_to "Back", kanji_index_path, class: "level-filter level-1 m-3 back" %>
     <%= link_to "Another Puzzle?", kanji_path(@next_kanji), class: "hidden level-filter level-4 m-3 another", id: "next_link" %>
-    <div class="blank"></div>
+    <%= link_to "Unlocked Kanji", flashcards_path, class: "hidden level-filter level-2 m-3 flashcards", id: "unlocked_kanji_link" %>
+</div>
 </div>
 
 <div class="container d-flex">
@@ -33,10 +34,10 @@
   <div>
     <div class="spacer"></div>
     <div class="kanji-data" id="kanji-data">
-        <p><span id="kanji-display"><%= @kanji.kanji %></span></p>
+        <div class="kanji-display-container"><p><span id="kanji-display"><%= @kanji.kanji %></span></p></div>
         <p><strong>Meaning:</strong> <span id="meaning"><%= @kanji.meaning[..2].join(" ").gsub("[", "").gsub("]", "") %></span></p>
-        <p><strong>Onyomi:</strong> <span id="onyomi"><%= @kanji.onyomi[1..-2]%></span></p>
-        <p><strong>Kunyomi:</strong> <span id="kunyomi"><%= @kanji.kunyomi[1..-2] %></span></p>
+        <p><strong>Onyomi:</strong> <span id="onyomi" class="kanji-font"><%= @kanji.onyomi[1..-2]%></span></p>
+        <p><strong>Kunyomi:</strong> <span id="kunyomi" class="kanji-font"><%= @kanji.kunyomi[1..-2] %></span></p>
         <p><strong>JLPT Level:</strong> <span id="jlpt-level"><%= @kanji.jlptLevel %></span></p>
     </div>
     </div>

@@ -34,11 +34,10 @@
 <div class="main-container" data-controller="index-side-menu">
   <div class="left-side">
     <div class="info-card">
-      <p>Kanji:</p>
-      <p><span id="kanji-display">?</span></p>
+      <div class="kanji-display-container"><p><span id="kanji-display">?</span></p></div>
       <p><strong>Meaning:</strong> <span id="meaning">?</span></p>
-      <p><strong>Onyomi:</strong> <span id="onyomi">?</span></p>
-      <p><strong>Kunyomi:</strong> <span id="kunyomi">?</span></p>
+      <p><strong>Onyomi:</strong> <span id="onyomi" class="kanji-font">?</span></p>
+      <p><strong>Kunyomi:</strong> <span id="kunyomi" class="kanji-font">?</span></p>
       <p><strong>Stroke Count:</strong> <span id="stroke-count">?</span></p>
       <p><strong>JLPT Level:</strong> <span id="jlpt-level">?</span></p>
 
@@ -62,7 +61,7 @@
   </div>
 
    <div class="right-side">
-    <div class="card-container">
+    <div class="card-container index-bottom-fade" data-controller="fade">
       <% (@all_done).each_with_index do |kanji, index| %>
         <% stroke_count = kanji.stroke_count %>
         <% stars = case stroke_count

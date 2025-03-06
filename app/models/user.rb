@@ -22,6 +22,7 @@ class User < ApplicationRecord
     user_prof.total_xp = 0
     user_prof.tagline = "I Love Pies"
     user_prof.bio = "Tell us about yourself!"
+    user_prof.profile_pic = "avatars/coin_avatar.png"
     user_prof.cell_style = Upgrade.where(name: "Grey Background", upgrade_type: "cell").first
     user_prof.active_style = Upgrade.where(name: "Grey Squares", upgrade_type: "active").first
     user_prof.flagged_style = Upgrade.where(name: "Grey Squares", upgrade_type: "flagged").first
