@@ -61,7 +61,7 @@
   </div>
 
    <div class="right-side">
-    <div class="card-container">
+    <div class="card-container index-bottom-fade" data-controller="fade">
       <% (@all_done).each_with_index do |kanji, index| %>
         <% stroke_count = kanji.stroke_count %>
         <% stars = case stroke_count

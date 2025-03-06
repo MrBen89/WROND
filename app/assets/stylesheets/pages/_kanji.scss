@@ -72,7 +72,7 @@
   overflow-y: auto;
   width: 100%; /* Adjust to make it take full width */
   justify-content: center;
-  height: auto;
+  min-height: 70vh;
 }
 
 #onyomi, #kunyomi {
