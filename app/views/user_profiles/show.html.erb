@@ -2,7 +2,7 @@
 <div class="profile-container" data-outline-color="<%= outline_color_for_level(@user_profile.level) %>">
   <div class="profile-pic">
     <% if @user_profile.profile_pic.present? %>
-    <%= image_tag "#{@user_profile.profile_pic}"%>
+      <%= image_tag "#{@user_profile.profile_pic}"%>
     <% else %>
       <%= image_tag("WROND.png") %>
     <% end %>
@@ -12,14 +12,11 @@
   <p><strong>Bio:</strong> <%= @user_profile.bio || "No bio available" %></p>
   <p><strong>Level:</strong> <%= @user_profile.level %></p>
   <p><strong>Total XP:</strong> <%= @user_profile.total_xp %></p>
-
   <hr class="divider">
-
   <div class="edit-button">
     <%= link_to "Edit Profile", edit_user_profile_path(@user_profile), class: "btn btn-primary" %>
   </div>
 </div>
-
 <!-- Bootstrap Tabs -->
 <div class="upgrades-container mt-4">
   <ul class="nav nav-tabs" id="upgradeTab" role="tablist">
@@ -36,7 +33,6 @@
       <a class="nav-link" id="background-tab" data-bs-toggle="tab" href="#background" role="tab" aria-controls="background" aria-selected="false">Backgrounds</a>
     </li>
   </ul>
-
   <div class="tab-content mt-4" id="upgradeTabContent">
     <!-- Background Colors Tab -->
     <div class="tab-pane fade show active" id="cell" role="tabpanel" aria-labelledby="cell-tab">
@@ -62,7 +58,6 @@
         <% end %>
       </div>
     </div>
-
     <!-- Selected Square Colors Tab -->
     <div class="tab-pane fade" id="active" role="tabpanel" aria-labelledby="active-tab">
       <div class="upgrades-box d-flex">
@@ -87,7 +82,6 @@
         <% end %>
       </div>
     </div>
-
     <!-- Flagged Square Colors Tab -->
     <div class="tab-pane fade" id="flagged" role="tabpanel" aria-labelledby="flagged-tab">
       <div class="upgrades-box d-flex">
@@ -112,7 +106,6 @@
         <% end %>
       </div>
     </div>
-
     <!-- Backgrounds Tab -->
     <div class="tab-pane fade" id="background" role="tabpanel" aria-labelledby="background-tab">
       <div class="upgrades-box d-flex">
