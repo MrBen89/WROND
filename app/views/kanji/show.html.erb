@@ -34,10 +34,10 @@
   <div>
     <div class="spacer"></div>
     <div class="kanji-data" id="kanji-data">
-        <p><span id="kanji-display"><%= @kanji.kanji %></span></p>
+        <div class="kanji-display-container"><p><span id="kanji-display"><%= @kanji.kanji %></span></p></div>
         <p><strong>Meaning:</strong> <span id="meaning"><%= @kanji.meaning[..2].join(" ").gsub("[", "").gsub("]", "") %></span></p>
-        <p><strong>Onyomi:</strong> <span id="onyomi"><%= @kanji.onyomi[1..-2]%></span></p>
-        <p><strong>Kunyomi:</strong> <span id="kunyomi"><%= @kanji.kunyomi[1..-2] %></span></p>
+        <p><strong>Onyomi:</strong> <span id="onyomi" class="kanji-font"><%= @kanji.onyomi[1..-2]%></span></p>
+        <p><strong>Kunyomi:</strong> <span id="kunyomi" class="kanji-font"><%= @kanji.kunyomi[1..-2] %></span></p>
         <p><strong>JLPT Level:</strong> <span id="jlpt-level"><%= @kanji.jlptLevel %></span></p>
     </div>
     </div>

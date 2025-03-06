@@ -2,7 +2,7 @@
 <div class="profile-container" data-outline-color="<%= outline_color_for_level(@user_profile.level) %>">
   <div class="profile-pic">
     <% if @user_profile.profile_pic.present? %>
-      <img src="<%= @user_profile.profile_pic %>" alt="<%= @user_profile.username %>'s Profile Pic">
+    <%= image_tag "#{@user_profile.profile_pic}"%>
     <% else %>
       <%= image_tag("WROND.png") %>
     <% end %>
