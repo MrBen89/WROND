@@ -189,7 +189,14 @@
   border: none;
   padding: 10px 20px;
   margin: 100px 200px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.startButton.swoosh {
+  transform: translateX(1000px) rotate(360deg); /* Adjust the values as needed */
+  opacity: 0;
 }
 
 .puzzle {
@@ -221,20 +228,24 @@
 }
 
 .words-of-wisdom {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-top: 50px;
+  background: #ddd;
+  padding: 30px;
+  border-radius: 8px;
   text-align: center;
-  background: lightgrey;
-  width: 400px;
-  height: 120px; /* Increased height for a more cloud-like shape */
-  border-radius: 0.1px; /* Rounded corners for a cloud-like shape */
-  box-shadow:
+  box-shadow: 3px 3px 0px #000;
+  border: none;
+  transition: transform 0.2s, background 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;/* Rounded corners for a cloud-like shape */
+  // box-shadow:
 
-    20px -10px lightgrey, 40px -5px lightgrey,
-    -20px 10px lightgrey, 0px 10px lightgrey, 20px 10px lightgrey, 40px 10px lightgrey, 60px 10px lightgrey,
-    -25px 30px lightgrey, -5px 30px lightgrey, 15px 30px lightgrey, 35px 30px lightgrey, 55px 30px lightgrey, 75px 30px lightgrey,
-    0px 50px lightgrey, 20px 50px lightgrey, 40px 50px lightgrey;
+  //   20px -10px lightgrey, 40px -5px lightgrey,
+  //   -20px 10px lightgrey, 0px 10px lightgrey, 20px 10px lightgrey, 40px 10px lightgrey, 60px 10px lightgrey,
+  //   -25px 30px lightgrey, -5px 30px lightgrey, 15px 30px lightgrey, 35px 30px lightgrey, 55px 30px lightgrey, 75px 30px lightgrey,
+  //   0px 50px lightgrey, 20px 50px lightgrey, 40px 50px lightgrey;
   image-rendering: pixelated;
 
   opacity: 0; /* Start invisible */
@@ -244,6 +255,10 @@
   position: absolute;
   top: 70%;
   left: 50%;
+}
+p.words-of-wisdom {
+  width: 100%;
+  height: 100%;
 }
 
 /* Apply animation when .show is added */
@@ -281,6 +296,7 @@
   padding-right: 40px;
   height: 15%;
   margin: auto;
+  margin-top: 50px;
 }
 
 .gif-container-bottom {
@@ -309,6 +325,7 @@
 .button_box {
   width: 100%;
   text-align: center;
+  justify-content: space-between;
 }
 
 @keyframes walkAnimation {

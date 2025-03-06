@@ -3,7 +3,7 @@
   justify-content: space-between;
   padding: 5px;
   width: 100vw;
-  height: 80vh;
+  height: 80%;
   transition: all 1s ease-in-out;
   margin-top: 60px;
   margin-left: 5px;
@@ -25,9 +25,29 @@
   position: relative;
   max-height: 100%;
   overflow-y: auto;
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 5%, rgba(0, 0, 0, 0) 95%);
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 5%, rgba(0, 0, 0, 0) 95%);
-  transition: mask-image 15s ease-in-out, -webkit-mask-image 15s ease-in-out, opacity 15s ease-in-out;
+
+    /* Smooth fade effect */
+    -webkit-mask-image: linear-gradient(to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 1) 15%,
+        rgba(0, 0, 0, 1) 85%,
+        rgba(0, 0, 0, 0) 100%);
+
+    mask-image: linear-gradient(to bottom,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 1) 15%,
+        rgba(0, 0, 0, 1) 85%,
+        rgba(0, 0, 0, 0) 100%);
+
+    transition: mask-image 1s ease, -webkit-mask-image 1.8s ease;
+}
+
+.scroll-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #ccc;
 }
 
 .right-side {

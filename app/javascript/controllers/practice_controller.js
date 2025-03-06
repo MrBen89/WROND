@@ -94,6 +94,25 @@ export default class extends Controller {
     }
   }
 
+  update_xp_bar () {
+    const xp_bar_level_element = document.getElementById("xp_bar_level");
+    const xp_bar_current_element = document.getElementById("xp_bar_current");
+    const xp_bar_level_next = document.getElementById("xp_bar_next");
+    const fillbar = document.getElementById("fillbar");
+    let level = parseInt(xp_bar_level_element.innerText)
+    let total_xp = parseInt(xp_bar_current_element.innerText) + parseInt(document.getElementById("kanji_count").innerText) * 25;
+    let next_xp = parseInt(xp_bar_level_next.innerText)
+    if (total_xp > next_xp){
+      total_xp -= next_xp
+      level += 1
+      next_xp = (50 + level * 50)
+    }
+    xp_bar_current_element.innerText = total_xp
+    xp_bar_level_next.innerText = next_xp
+    xp_bar_level_element.innerText = level
+    fillbar.style.width = `${100 - (total_xp / next_xp * 100)}%`
+  }
+
   checkCompletion() {
     const dropZones = document.querySelectorAll(".drop-zone");
     const allCorrect = [...dropZones].every(zone => zone.textContent === zone.dataset.expectedKanji);
@@ -105,12 +124,14 @@ export default class extends Controller {
           document.getElementById("conclussionModal").style.display = "none";
           this.update_user_record();
         });
+        this.update_xp_bar()
         this.experience_roller();
         if (this.check_for_level_up()) {
           setTimeout(() => {
             document.getElementById("level-up").classList.remove("hidden");
             setTimeout(() => {
               document.getElementById("level-up").classList.add("expanded");
+              document.getElementById("level_up_audio").play()
             }, 1);
           }, 1500);
         }
