@@ -347,6 +347,10 @@ export default class extends Controller {
         });
         document.querySelector('.highscores').classList.add("expanded");
         document.getElementById("next_link").classList.remove("hidden");
+        let unlockedKanjiLink = document.getElementById("unlocked_kanji_link");
+        if (unlockedKanjiLink) {
+        unlockedKanjiLink.classList.remove("hidden");
+      }
       });
       this.experience_roller()
       this.update_xp_bar()
