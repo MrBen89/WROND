@@ -88,7 +88,6 @@ export default class extends Controller {
     this.start_puzzle = this.start_puzzle.bind(this);
     this.stop_puzzle = this.stop_puzzle.bind(this);
     this.check_for_start = this.check_for_start.bind(this);
-    console.log(winner)
     if (status == "in_progress"){
       this.start_puzzle()
     } else if (status == "complete"){
@@ -105,7 +104,6 @@ export default class extends Controller {
   }
 
   check_for_start(){
-    console.log(player)
     if ((this.data.get("status") == "p2ready" && player == 1) || (this.data.get("status") == "p1ready" && player == 2)){
       this.start_puzzle()
     } else if (player == 1){
@@ -136,7 +134,6 @@ export default class extends Controller {
     const rootDiv = this.p1RootDivTarget
     let mouse_status = "up"
     let mode = "draw"
-    console.log(typeof user_id)
 
     if (document.querySelector(".p1startButton")) {document.querySelector(".p1startButton").remove()}
     // clearInterval(timer)
@@ -155,7 +152,6 @@ export default class extends Controller {
     }
 
     if (current_pattern.length == 0){
-      console.log("reset array");
       current_pattern = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -295,7 +291,6 @@ export default class extends Controller {
               }
             }
               //check for win
-              console.log(current_pattern.map(x =>  x.map(y => y == "2" ? "0" : y)))
               if (checkArrays(current_pattern.map(x =>  x.map(y => y == "2" ? "0" : y)), puzzledata)){
                 this.stop_puzzle(handleClick)
             }
@@ -337,6 +332,8 @@ export default class extends Controller {
   check_for_level_up() {
     let level = parseInt(document.getElementById("level_field").value)
     let base_xp = parseInt(this.data.get("base_xp"))
+    console.log(level)
+    console.log(this.data.get("base_xp"))
     document.getElementById("level-span").innerText = level;
     document.getElementById("level-up-span").innerText = level + 1;
     if (base_xp + this.get_xp() >= (50 + level * 50) ) {
@@ -348,8 +345,6 @@ export default class extends Controller {
 
   update_conflict() {
     const user_id = document.getElementById("user_id")
-    console.log(user_id)
-    console.log(user_id.innerText)
     document.getElementById("time_field").value = parseInt(document.getElementById("seconds_abs").innerText);
     document.getElementById("status_field").value = "complete";
     document.getElementById("winner_field").value = user_id.innerText;
@@ -361,7 +356,8 @@ export default class extends Controller {
 
   get_xp() {
     let winner = this.data.get("winner")
-    if (winner == user_id){
+    const user_id = document.getElementById("user_id")
+    if (winner == user_id.innerText){
       return 150;
     } else {
       return 50;
@@ -382,6 +378,35 @@ export default class extends Controller {
 
   };
 
+  draw_answer() {
+    const p1data = JSON.parse(this.data.get("variable"));
+    const rootDiv = document.getElementById("ending_puzzle")
+    for (let i = 0; i < 16; i++){
+      let row = document.createElement("div")
+      row.classList.add("row");
+      rootDiv.appendChild(row);
+      //create columns
+      for (let n = 0; n < 16; n++){
+          //add columns to current_patern
+          let box = document.createElement("div");
+          box.classList.add(`col${n}`);
+          box.classList.add(`row${i}`);
+          box.classList.add(`cell`);
+          box.classList.add(`Grey_Background`);
+          box.classList.add(`Grey_Squares`);
+          box.classList.add("finished")
+          if (p1data[i][n] == 1){
+            box.classList.add("selected")
+          }
+          box.dataset.x = n;
+          box.dataset.y = i;
+        row.appendChild(box);
+      }
+    }
+  }
+
+
+
   update_xp_bar () {
     const xp_bar_level_element = document.getElementById("xp_bar_level");
     const xp_bar_current_element = document.getElementById("xp_bar_current");
@@ -390,7 +415,7 @@ export default class extends Controller {
     let level = parseInt(xp_bar_level_element.innerText)
     let total_xp = parseInt(xp_bar_current_element.innerText) + this.get_xp();
     let next_xp = parseInt(xp_bar_level_next.innerText)
-    if (total_xp > next_xp){
+    if (total_xp >= next_xp){
       total_xp -= next_xp
       level += 1
       next_xp = (50 + level * 50)
@@ -402,7 +427,6 @@ export default class extends Controller {
   }
 
   stop_puzzle(handleClick) {
-    console.log(user_id.value)
     // let minutes = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) / 60)
     // let seconds = Math.floor(parseInt(document.getElementById("seconds_abs").innerText) % 60)
     // document.getElementById("time-span").innerText = (minutes > 9 ? minutes : "0" + minutes) + ':'+ (seconds > 9 ? seconds : "0" + seconds);
@@ -437,11 +461,10 @@ export default class extends Controller {
     let winner = this.data.get("winner")
     setTimeout(() => {
       let conclussionModal = document.getElementById('conclussionModal')
-      if (winner == user_id) {
-        conclussionModal.classList.add("win")
-      } else {
-        conclussionModal.classList.add("lose")
-      }
+      let con_con = document.querySelector(".conflicts-container")
+      con_con.classList.add("hidden")
+      conclussionModal.classList.add("win")
+      //this.draw_answer()
       conclussionModal.classList.remove("hidden");
 
       if (this.check_for_level_up) {
@@ -455,26 +478,20 @@ export default class extends Controller {
           //document.getElementById('level-up-image').classList.remove("hidden");
         },1500)
       }
-      this.update_xp_bar()
-      this.experience_roller();
-      this.update_user_record();
-      this.update_conflict(user_id);
+      // this.update_xp_bar()
+      // this.experience_roller();
+      // this.update_user_record();
+      this.update_conflict();
       for(let i=0; i<100; i++)
         {
             window.clearInterval(i);
         }
     },1000)
-    let conclussionModal = document.getElementById('conclussionModal')
-    if (winner == user_id) {
-      conclussionModal.classList.add("win")
-    } else {
-      conclussionModal.classList.add("lose")
-    }
-    conclussionModal.classList.remove("hidden");
   };
 
   puzzle_ended() {
     let winner = this.data.get("winner")
+    this.draw_answer()
 
     setTimeout(() => {
       let conclussionModal = document.getElementById('conclussionModal')
@@ -484,8 +501,9 @@ export default class extends Controller {
         conclussionModal.classList.add("lose")
       }
       conclussionModal.classList.remove("hidden");
-
-      if (this.check_for_level_up) {
+      let con_con = document.querySelector(".conflicts-container")
+      con_con.classList.add("hidden")
+      if (this.check_for_level_up()) {
         setTimeout(() => {
           document.getElementById('level-up').classList.remove("hidden");
           setTimeout(() => {
@@ -521,5 +539,9 @@ export default class extends Controller {
         row.appendChild(box);
       }
     }
-  })}
+  },1)
+  this.update_xp_bar()
+  this.experience_roller();
+  this.update_user_record();
+  }
 }

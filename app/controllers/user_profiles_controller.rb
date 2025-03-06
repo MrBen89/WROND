@@ -14,12 +14,12 @@ class UserProfilesController < ApplicationController
   end
 
   def update
-    if !user_profile_params[:total_xp].nil?
-      @user_profile.total_xp = user_profile_params[:total_xp]
-      @user_profile.level = user_profile_params[:level]
-      @user_profile.save
-      redirect_to "/"
-    elsif  params[:upgrade].exist?
+    # if !user_profile_params[:total_xp].nil?
+    #   @user_profile.total_xp = user_profile_params[:total_xp]
+    #   @user_profile.level = user_profile_params[:level]
+    #   @user_profile.save
+    #   redirect_to "/"
+    if  params.has_key?(:upgrade)
       if Upgrade.find(params[:upgrade]).upgrade_type == "cell"
         @user_profile.update(cell_style: Upgrade.find(params[:upgrade].to_i))
         redirect_to @user_profile, notice: "Style changed."
