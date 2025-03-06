@@ -9,7 +9,7 @@ import P1PuzzleController from "controllers/p1_puzzle_controller"
 import P2PuzzleController from "controllers/p2_puzzle_controller"
 import WrondarouController from "controllers/wrondarou_controller"  // Import your ModeSelectorController
 import IndexSideMenuController from "controllers/index_side_menu_controller"
-import FadeController from "./fade_controller";
+import FadeController from "controllers/fade_controller";
 
 eagerLoadControllersFrom("controllers", application)
 application.register("puzzle", PuzzleController)
