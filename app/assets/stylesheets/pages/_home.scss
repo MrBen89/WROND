@@ -161,12 +161,24 @@ button {
   padding: 100px;
 }
 
+.gif-container-home {
+  height: 10rem;
+  overflow: visible; /* Prevents scrollbars */
+  padding: 0;
+}
+
 .game-gif {
   width: 250px;
   height: auto;
   image-rendering: pixelated;
   position: absolute;
   // animation: walkAnimation 10s linear infinite alternate; /* Smooth left-right movement */
+}
+
+.game-gif.game-gif-home {
+  width: 16rem;
+  translate: -50% -30%;
+  inset: 50%;
 }
 
 // @keyframes walkAnimation {
