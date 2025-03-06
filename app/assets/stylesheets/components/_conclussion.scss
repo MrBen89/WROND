@@ -8,6 +8,7 @@
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4)
 }
+
 .popup.win {
   background-color: rgba(0, 248, 0, 0.465); /* Fallback color */
 }
@@ -22,6 +23,27 @@
   border: 1px solid #888;
   width: 35%;
   height: auto; /* Could be more or less, depending on screen size */
+}
+
+.popup-content-conclussion {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%;
+  height: 50%; /* Could be more or less, depending on screen size */
+}
+
+.answer_container {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px;
+}
+.level-up-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .popup-waiting {
@@ -53,4 +75,9 @@
 .expanded {
   transform: scaleY(1);
   transform: scaleX(1);
+}
+
+.celebrate {
+  width: 256px;
+  image-rendering: pixelated;
 }
