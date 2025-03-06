@@ -45,14 +45,14 @@
           <% if @user_profile.level.to_i >= upgrade.level.to_i %>
             <%= button_to user_profile_path(@user_profile), method: :patch, params: { upgrade: upgrade }, remote: true do %>
               <div class="upgradeCard selectable <%= "selected" if @user_profile.cell_style == upgrade %>">
-                <h2><%= upgrade.name %></h2>
+                <h5><%= upgrade.name %></h5>
                 <hr class="divider">
                 <p><%= upgrade.description %></p>
               </div>
             <% end %>
           <% else %>
             <div class="upgradeCard locked">
-              <h2><%= upgrade.name %></h2>
+              <h5><%= upgrade.name %></h5>
               <hr class="divider">
               <p><%= upgrade.description %></p>
               <hr class="divider">
@@ -70,14 +70,14 @@
           <% if @user_profile.level.to_i >= upgrade.level.to_i %>
             <%= button_to user_profile_path(@user_profile), method: :patch, params: { upgrade: upgrade }, remote: true do %>
               <div class="upgradeCard selectable <%= "selected" if @user_profile.active_style == upgrade %>">
-                <h2><%= upgrade.name %></h2>
+                <h5><%= upgrade.name %></h5>
                 <hr class="divider">
                 <p><%= upgrade.description %></p>
               </div>
             <% end %>
           <% else %>
             <div class="upgradeCard locked">
-              <h2><%= upgrade.name %></h2>
+              <h5><%= upgrade.name %></h5>
               <hr class="divider">
               <p><%= upgrade.description %></p>
               <hr class="divider">
@@ -95,14 +95,14 @@
           <% if @user_profile.level.to_i >= upgrade.level.to_i %>
             <%= button_to user_profile_path(@user_profile), method: :patch, params: { upgrade: upgrade }, remote: true do %>
               <div class="upgradeCard selectable <%= "selected" if @user_profile.flagged_style == upgrade %>">
-                <h2><%= upgrade.name %></h2>
+                <h5><%= upgrade.name %></h5>
                 <hr class="divider">
                 <p><%= upgrade.description %></p>
               </div>
             <% end %>
           <% else %>
             <div class="upgradeCard locked">
-              <h2><%= upgrade.name %></h2>
+              <h5><%= upgrade.name %></h5>
               <hr class="divider">
               <p><%= upgrade.description %></p>
               <hr class="divider">
@@ -120,14 +120,14 @@
           <% if @user_profile.level.to_i >= upgrade.level.to_i %>
             <%= button_to user_profile_path(@user_profile), method: :patch, params: { upgrade: upgrade }, remote: true do %>
               <div class="upgradeCard selectable <%= "selected" if @user_profile.background_style == upgrade %>">
-                <h2><%= upgrade.name %></h2>
+                <h5><%= upgrade.name %></h5>
                 <hr class="divider">
                 <p><%= upgrade.description %></p>
               </div>
             <% end %>
           <% else %>
             <div class="upgradeCard locked">
-              <h2><%= upgrade.name %></h2>
+              <h5><%= upgrade.name %></h5>
               <hr class="divider">
               <p><%= upgrade.description %></p>
               <hr class="divider">
