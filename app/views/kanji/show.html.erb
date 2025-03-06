@@ -1,9 +1,9 @@
 <div data-controller="hint">
-  <div class="button_box d-flex">
+    <div class="button_box d-flex justify-content-center">
     <%= link_to "Back", kanji_index_path, class: "level-filter level-1 m-3 back" %>
     <%= link_to "Another Puzzle?", kanji_path(@next_kanji), class: "hidden level-filter level-4 m-3 another", id: "next_link" %>
     <%= link_to "Unlocked Kanji", flashcards_path, class: "hidden level-filter level-2 m-3 flashcards", id: "unlocked_kanji_link" %>
-    <div class="blank"></div>
+</div>
 </div>
 
 <div class="container d-flex">
