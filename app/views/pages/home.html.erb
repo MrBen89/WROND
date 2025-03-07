@@ -1,5 +1,6 @@
 <div class="kanji-rain-container"></div>
 <div class="d-flex gap-4 justify-content-center mt-5" data-controller="mode-selector">
+<div class="middle-game-container">
   <div class="left-game-container">
     <div class="mode-selection">
       <form action="/kanji/index" method="get">
@@ -40,15 +41,18 @@
             </div>
             <p class="mode-label">BATTLE MODE</p>
           </button>
-          <button
-                    type="button"
-                    class="mode-box"
-                  >
-            <div class="white-box">
-              <span class="kanji-text">休戦</span>
-            </div>
-            <p class="mode-label">CHILL MODE</p>
-          </button>
+        <button
+            type="button"
+            class="mode-box"
+            data-action="click->mode-selector#setMode"
+          data-mode="daily"
+          data-target="mode-selector.button"
+          >
+          <div class="white-box" data-mode="daily">
+            <span class="kanji-text" data-mode="daily">毎日</span>
+          </div>
+          <p class="mode-label">DAILY CHALLENGE</p>
+        </button>
         </div>
       </form>
       <p class="mode-description" id="mode-description" data-target="mode-selector.modeDescription">Choose a mode!</p>
@@ -97,21 +101,19 @@
     <% end %>
     <form action="/kanji/index" method="get">
       <div class="d-flex justify-content-center align-items-center flex-column gap-4">
-        <button
-            type="button"
-            class="mode-box"
-            data-action="click->mode-selector#setMode"
-          data-mode="daily"
-          data-target="mode-selector.button"
-          >
-          <div class="white-box" data-mode="daily">
-            <span class="kanji-text" data-mode="daily">毎日</span>
-          </div>
-          <p class="mode-label">DAILY CHALLENGE</p>
-        </button>
       </div>
     </form>
+          <button
+                    type="button"
+                    class="mode-box"
+                  >
+            <div class="white-box">
+              <span class="kanji-text">訓練</span>
+            </div>
+            <p class="mode-label">PRACTICE MODE</p>
+          </button>
   </div>
+</div>
 </div>
 <div class="gif-container gif-container-home">
   <%= image_tag "tanuki.gif", class: "game-gif game-gif-home" %>
