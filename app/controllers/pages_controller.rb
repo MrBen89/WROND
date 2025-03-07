@@ -20,10 +20,10 @@ class PagesController < ApplicationController
       redirect_to kanji_path(kanji)
     end
 
-    @user_profile = current_user.user_profile
-    @current_xp = @user_profile.total_xp
-    @next_level = calculate_next_level_xp
-    @ratio = (@current_xp.to_f / @next_level * 100).round(2)
+    # @user_profile = current_user.user_profile
+    # @current_xp = @user_profile.total_xp
+    # @next_level = calculate_next_level_xp
+    # @ratio = (@current_xp.to_f / @next_level * 100).round(2)
 
     @kanji_progress = {
       "N5" => { percentage: calculate_kanji_percentage("5") },
@@ -31,7 +31,7 @@ class PagesController < ApplicationController
       "N3" => { percentage: calculate_kanji_percentage("3") },
       "N2" => { percentage: calculate_kanji_percentage("2") },
       "N1" => { percentage: calculate_kanji_percentage("1") }
-    }
+    } if user_signed_in?
 
     @last_five_kanji = last_five_kanji(@user_profile)
     @unlocked_kanji = policy_scope(Unlock).where(user: current_user).map { |unlock| unlock.kanji.kanji }.reverse.take(5)
@@ -55,7 +55,7 @@ class PagesController < ApplicationController
     return 0 if total_kanji == 0
 
     completed_kanji = current_user.unlocked_kanji.where(jlptLevel: level).count
-    percentage = (completed_kanji.to_f / total_kanji * 100).round(2)
+    percentage = (completed_kanji / total_kanji * 100)
     [ percentage, ease_out(percentage)]
   end
 
