@@ -20,10 +20,10 @@ class PagesController < ApplicationController
       redirect_to kanji_path(kanji)
     end
 
-    @user_profile = current_user.user_profile
-    @current_xp = @user_profile.total_xp - (50 + (@user_profile.level * 50))
-    @next_level = calculate_next_level_xp
-    @ratio = (@current_xp.to_f / @next_level * 100).round(2)
+    # @user_profile = current_user.user_profile
+    # @current_xp = @user_profile.total_xp - (50 + (@user_profile.level * 50))
+    # @next_level = calculate_next_level_xp
+    # @ratio = (@current_xp.to_f / @next_level * 100).round(2)
 
     @kanji_progress = {
       "N5" => { percentage: calculate_kanji_percentage("5") },
