@@ -5,7 +5,7 @@ class KanjiController < ApplicationController
     @kanji = policy_scope(Kanji)
     @puzzles = Puzzle.where(user: current_user)
 
-    @n5_done = Kanji.joins(:puzzles).distinct.where(jlptLevel: "5")
+    @n5_done = Unlock.select { |kanji| kanji.jlptLevel == "5" }
     @n5_total = Kanji.where(jlptLevel: "5")
 
     @n4_done = Kanji.joins(:puzzles).distinct.where(jlptLevel: "4")
