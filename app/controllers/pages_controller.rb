@@ -55,11 +55,10 @@ class PagesController < ApplicationController
 
   def calculate_kanji_percentage(level)
     total_kanji = Kanji.where(jlptLevel: level).count
-    p total_kanji
     return 0 if total_kanji == 0
 
     completed_kanji = current_user.unlocked_kanji.where(jlptLevel: level).count
-    percentage = (completed_kanji / total_kanji * 100)
+    percentage = (completed_kanji.to_f / total_kanji.to_i) * 100
     [ percentage, ease_out(percentage)]
   end
 
