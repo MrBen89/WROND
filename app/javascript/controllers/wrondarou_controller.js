@@ -4,6 +4,7 @@ export default class extends Controller {
   static targets = ["hint", "wrondarou", "button"];
 
   connect() {
+    console.log("connected");
     this.clickable = false;
     setTimeout(() => {
       document.querySelector(".ask-wrondarou-btn").classList.remove("hidden");
