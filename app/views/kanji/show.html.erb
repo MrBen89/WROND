@@ -1,22 +1,19 @@
 <div data-controller="hint">
-    <div class="button_box d-flex justify-content-center">
+  <div class="button_box d-flex justify-content-center">
     <%= link_to "Back", kanji_index_path, class: "level-filter level-1 m-3 back" %>
     <%= link_to "Another Puzzle?", kanji_path(@next_kanji), class: "hidden level-filter level-4 m-3 another", id: "next_link" %>
     <%= link_to "Unlocked Kanji", flashcards_path, class: "hidden level-filter level-2 m-3 flashcards", id: "unlocked_kanji_link" %>
-</div>
-</div>
-
-<div class="container d-flex">
-  <div>
-    <div class="spacer"></div>
+  </div>
+  <div class="container d-flex">
+    <div>
+      <div class="spacer"></div>
+      ß
       <% turbo_stream_from "highscores#{@kanji.id}"%>
       <div class="highscores" id="highscores<%=@kanji.id%>">
         <%= render "puzzles/puzzle", puzzles: @puzzles %>
       </div>
-  </div>
-
-
-  <div class="puzzle-window">
+    </div>
+    <div class="puzzle-window">
       <div class="puzzle"
       id="puzzle"
       data-controller="puzzle"
@@ -29,59 +26,52 @@
       data-puzzle-base_xp="<%= @current_xp %>"
       >
       </div>
-  </div>
-
-  <div>
-    <div class="spacer"></div>
-    <div class="kanji-data" id="kanji-data">
-        <div class="kanji-display-container"><p><span id="kanji-display"><%= @kanji.kanji %></span></p></div>
+    </div>
+    <div>
+      <div class="spacer"></div>
+      <div class="kanji-data" id="kanji-data">
+        <div class="kanji-display-container">
+          <p><span id="kanji-display"><%= @kanji.kanji %></span></p>
+        </div>
         <p><strong>Meaning:</strong> <span id="meaning"><%= @kanji.meaning[..2].join(" ").gsub("[", "").gsub("]", "") %></span></p>
         <p><strong>Onyomi:</strong> <span id="onyomi" class="kanji-font"><%= @kanji.onyomi[1..-2]%></span></p>
         <p><strong>Kunyomi:</strong> <span id="kunyomi" class="kanji-font"><%= @kanji.kunyomi[1..-2] %></span></p>
         <p><strong>JLPT Level:</strong> <span id="jlpt-level"><%= @kanji.jlptLevel %></span></p>
+      </div>
     </div>
-    </div>
-
-</div>
-
-
-<div class="hidden">
-  <%= simple_form_for @puzzle, remote: true, html: { id: :puzzle_form } do |f| %>
-    <%= f.input :time ,input_html: {id: "time_field" }%>
-    <%= f.input :kanji_id, input_html: {value: @kanji.id } %>
-    <%= f.input :total_xp ,input_html: {id: "xp_field", value: @user_profile.total_xp }%>
-    <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
-    <%= f.button :submit, id: "puzzle-submit" %>
-  <% end %>
-</div>
-
-<div>
-  <%= render "kanji/conclussion" %>
-</div>
-
-<div class="ask-wrondarou-btn hidden" data-target="hint">
-  <span id="click_me">
-    Click on Wrondarou-sama for a hint...
-  </span>
-
-  <div class="words-of-wisdom" data-hint-target="hint">
-    <p><%= @content %></p>
   </div>
-</div>
-
-<div class="gif-container-bottom">
-  <%= image_tag asset_path("click-me-wrondarou.GIF"),
+  <div class="hidden">
+    <%= simple_form_for @puzzle, remote: true, html: { id: :puzzle_form } do |f| %>
+      <%= f.input :time ,input_html: {id: "time_field" }%>
+      <%= f.input :kanji_id, input_html: {value: @kanji.id } %>
+      <%= f.input :total_xp ,input_html: {id: "xp_field", value: @user_profile.total_xp }%>
+      <%= f.input :level, input_html: {id: "level_field", value: @user_profile.level } %>
+      <%= f.button :submit, id: "puzzle-submit" %>
+    <% end %>
+  </div>
+  <div>
+    <%= render "kanji/conclussion" %>
+  </div>
+  <div class="ask-wrondarou-btn hidden" data-target="hint">
+    <span id="click_me">
+      Click on Wrondarou-sama for a hint...
+    </span>
+    <div class="words-of-wisdom" data-hint-target="hint">
+      <p><%= @content %></p>
+    </div>
+  </div>
+  <div class="gif-container-bottom" data-action="click->hint#appear">
+    <%= image_tag asset_path("click-me-wrondarou.GIF"),
                 class: "game-gif-bottom",
                 data:{hint_target: "wrondarou", action: "click->hint#appear"}
   %>
-</div>
-
+  </div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  let gif = document.querySelector(".game-gif-bottom");
+  document.addEventListener("DOMContentLoaded", function() {
+    let gif = document.querySelector(".game-gif-bottom");
 
-  // Ensure the GIF is visible when the page loads
-  gif.style.display = "block";
-});
+    // Ensure the GIF is visible when the page loads
+    gif.style.display = "block";
+  });
 </script>
