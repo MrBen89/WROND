@@ -11,6 +11,9 @@ class PagesController < ApplicationController
     if params[:mode] == "battle"
       redirect_to conflicts_path
     end
+      if params[:mode] == "practice"
+        redirect_to flashcards_path
+    end
     if params[:mode] == "daily"
       p "daily kanji"
       p Rails.cache.fetch(:todays_kanji)

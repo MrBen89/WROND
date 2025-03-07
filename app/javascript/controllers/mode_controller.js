@@ -29,7 +29,8 @@ export default class extends Controller {
         kanji: "Kanji mode allows you to practice individual kanji.<br>The classic mode!",
         story: "Try and practice the kanji you've learnt by making<br>SENTENCES!",
         battle: "Take on an opponent to see who can finish fastest.",
-        daily: "Challenge our daily puzzle, and try and get the high score!"
+        daily: "Challenge our daily puzzle, and try and get the high score!",
+        practice: "Practice your kanji writing with our interactive cards.",
       };
       this.modeDescriptionTarget.innerHTML = descriptions[mode];
     }
