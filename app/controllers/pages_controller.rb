@@ -37,7 +37,7 @@ class PagesController < ApplicationController
     } if user_signed_in?
 
     @last_five_kanji = last_five_kanji(@user_profile)
-    @unlocked_kanji = policy_scope(Unlock).where(user: current_user).map { |unlock| unlock.kanji.kanji }.reverse.take(5)
+    @unlocked_kanji = policy_scope(Unlock).where(user: current_user).map { |unlock| unlock.kanji.kanji }.reverse
   end
 
   def index
@@ -55,6 +55,7 @@ class PagesController < ApplicationController
 
   def calculate_kanji_percentage(level)
     total_kanji = Kanji.where(jlptLevel: level).count
+    p total_kanji
     return 0 if total_kanji == 0
 
     completed_kanji = current_user.unlocked_kanji.where(jlptLevel: level).count

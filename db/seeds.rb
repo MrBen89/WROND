@@ -222,15 +222,17 @@ n5kanji = Kanji.where(jlptLevel: "5")
 ben = UserProfile.where(username: "bigben").first
 p ben
 n5kanji.each do |kanji|
-  Puzzle.create!(
-    kanji: kanji,
-    user_id: ben.user_id,
-    time: 220
-  )
-  Unlock.create!(
-    kanji: kanji,
-    user_id: ben.user_id,
-  )
+  if kanji.kanji != "三"
+    Puzzle.create!(
+      kanji: kanji,
+      user_id: ben.user_id,
+      time: 220
+    )
+    Unlock.create!(
+      kanji: kanji,
+      user_id: ben.user_id,
+    )
+  end
 end
 
 # puzzle_records = puzzle_data.filter_map do |p|
