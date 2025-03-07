@@ -20,10 +20,10 @@ class PagesController < ApplicationController
       redirect_to kanji_path(kanji)
     end
 
-    @user_profile = current_user.user_profile
-    @current_xp = @user_profile.total_xp
-    @next_level = calculate_next_level_xp
-    @ratio = (@current_xp.to_f / @next_level * 100).round(2)
+    # @user_profile = current_user.user_profile
+    # @current_xp = @user_profile.total_xp - (50 + (@user_profile.level * 50))
+    # @next_level = calculate_next_level_xp
+    # @ratio = (@current_xp.to_f / @next_level * 100).round(2)
 
     @kanji_progress = {
       "N5" => { percentage: calculate_kanji_percentage("5") },
@@ -62,7 +62,7 @@ class PagesController < ApplicationController
   def calculate_next_level_xp
     # Implement your logic to calculate the XP needed for the next level
     # For example:
-    next_level_xp = 1000 # Replace with actual calculation
+    next_level_xp = (50 + (@user_profile.level * 50)) # Replace with actual calculation
     next_level_xp
   end
 end
