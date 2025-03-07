@@ -1,6 +1,6 @@
 class KanjiController < ApplicationController
 
-
+# lookin good
   def index
     @kanji = policy_scope(Kanji)
     @puzzles = Puzzle.where(user: current_user)
@@ -37,7 +37,7 @@ class KanjiController < ApplicationController
       model: "gpt-4o-mini",
       messages: [{
         role: "system",
-        content: "Act as Wrondarou, an 8-bit pixelated samurai who gives cryptic but short helpful kanji hints.\nFormat hints as follows:\n1. Wrondarou's wisdom: A poetic, but accurate haiku-esque reference to the meaning about the kanji.\nGenerate a hint for this kanji: #{@kanji.kanji}\nMake it accurate and less cryptic"
+        content: "Act as Wrondarou, an 8-bit pixelated samurai who gives cryptic but short helpful kanji hints.\nFormat hints as follows:\n A poetic, but accurate haiku-esque reference to the meaning about the kanji.\nGenerate a hint for this kanji: #{@kanji.kanji}\nMake it accurate and less cryptic"
       }]
     })
     @content = chatgpt_response["choices"][0]["message"]["content"]

@@ -25,13 +25,6 @@
   margin-top: 0.5%;
 }
 
-.stats-panel {
-  max-width: 500px;
-  margin-top: 20px;
-}
-
-
-
 .white-box {
   background: #fff;
   border-radius: 8px;
@@ -203,7 +196,6 @@ button {
   align-items: center;
   justify-content: center;
   width: 540px;
-  height: 300px;
   left: 50px;
 }
 
@@ -324,5 +316,93 @@ button {
   to {
     transform: translateY(100vh);
     opacity: 0;
+  }
+}
+
+.jlpt-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 50%;
+  // min-height: fit-content;
+}
+
+.jlpt-container {
+  width: 100%;
+  display: flex;
+}
+
+.jlpt-fillbar {
+  width: 100%;
+}
+
+.level-segment {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.percentage-label, .level-label {
+  padding: 0px 4px;
+}
+.percentage-label {
+  min-width: 56px;
+  text-align: right;
+}
+
+.level-segment.n5 {
+  background-color: #81beef;
+  .level-label {
+    background-color: #2196f3; /* Blue for N5 */
+  }
+  .percentage-label {
+    background-color: #0f538b; /* Blue for N5 */
+  }
+}
+
+.level-segment.n4 {
+  background-color: #7fb681;
+  .level-label {
+    background-color: #4caf50; /* Green for N4 */
+  }
+  .percentage-label {
+    background-color: #235324; /* Green for N4 */
+  }
+}
+
+.level-segment.n3 {
+  background-color: #fcf4ae;
+  .level-label {
+    background-color: #ffeb3b; /* Yellow for N3 */
+  }
+  .percentage-label {
+    background-color: #cecbad; /* Yellow for N3 */
+  }
+  color: black; /* Adjust text color for better contrast */
+}
+
+.level-segment.n2 {
+  background-color: #ffe1b4;
+  .level-label {
+    background-color: #ff9800; /* Orange for N2 */
+  }
+  .percentage-label {
+    background-color: rgb(66, 42, 3); /* Orange for N2 */
+  }
+}
+
+.level-segment.n1 {
+  background-color: #facbc7;
+  .level-label {
+    background-color: #f44336; /* Red for N1 */
+  }
+  .percentage-label {
+    background-color: #481411; /* Orange for N2 */
   }
 }
