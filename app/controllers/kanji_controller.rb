@@ -1,6 +1,6 @@
 class KanjiController < ApplicationController
 
-
+# lookin good
   def index
     @kanji = policy_scope(Kanji)
     @puzzles = Puzzle.where(user: current_user)
