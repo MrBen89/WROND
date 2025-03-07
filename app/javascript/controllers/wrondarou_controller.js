@@ -12,6 +12,7 @@ export default class extends Controller {
   }
 
   appear() {
+    console.log("clicked")
     if (!this.clickable) return;
     document.getElementById("click_me").innerText = ""
     this.hintTarget.classList.add("show");
