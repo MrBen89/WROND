@@ -1,8 +1,10 @@
 .flashcards-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: inline-flex;
   gap: 20px;
   justify-content: center;
+  margin-block: 12px;
+  overflow: hidden;
+  min-width: 100%;
 }
 
 .flashcard {

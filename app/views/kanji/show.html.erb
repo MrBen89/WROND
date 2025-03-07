@@ -7,7 +7,6 @@
   <div class="container d-flex">
     <div>
       <div class="spacer"></div>
-      ß
       <% turbo_stream_from "highscores#{@kanji.id}"%>
       <div class="highscores" id="highscores<%=@kanji.id%>">
         <%= render "puzzles/puzzle", puzzles: @puzzles %>
