@@ -87,11 +87,12 @@
   box-shadow: 3px 3px 0px #000;
   text-align: center;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
+  // transition: background 0.3s ease-in-out;
   min-width: 200px;
   flex-basis: 10%;
   margin: 3px;
   gap: 5px;
+  height:220px
 }
 
 .card.active {
